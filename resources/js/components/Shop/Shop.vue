@@ -16,12 +16,12 @@
                         <!-- <ul class="p-b-54">
                             <li class="p-t-4">
                                 <v-btn raised color="success" @click="catAll" v-if="cat_id === null">All</v-btn>
-                                <v-btn flat color="primary" @click="catAll" v-else>All</v-btn>
+                                <v-btn text color="primary" @click="catAll" v-else>All</v-btn>
                             </li>
 
                             <li class="p-t-4" v-for="menu in menus" :key="menu.id">
                                 <v-btn raised color="success" @click="catId(menu.id)" v-if="menu.id === cat_id">{{ menu.name }}</v-btn>
-                                <v-btn flat color="primary" @click="catId(menu.id)" v-else>{{ menu.name }}</v-btn>
+                                <v-btn text color="primary" @click="catId(menu.id)" v-else>{{ menu.name }}</v-btn>
                             </li>
                         </ul> -->
 
@@ -174,7 +174,7 @@
 
                                         <div class="block2-btn-addcart w-size1 trans-0-4">
                                             <!-- Button -->
-                                            <v-btn color="success" @click="addToCart(product.id)">Add to Cart</v-btn>
+                                            <v-btn color="success" @click="addToCart(product)">Add to Cart</v-btn>
                                         </div>
                                     </div>
                                 </div>
@@ -196,9 +196,10 @@
                                             <span>Wish list</span>
                                         </v-tooltip>
 
+
                                         <div class="block2-btn-addcart w-size1 trans-0-4">
                                             <!-- Button -->
-                                            <v-btn color="primary" @click="addToCart(product.id)">Add to Cart</v-btn>
+                                            <v-btn color="primary" @click="addToCart(product)">Add to Cart</v-btn>
                                         </div>
                                     </div>
                                 </div>
@@ -284,16 +285,16 @@ export default {
     methods: {
         searchItems() {
             eventBus.$emit("progressEvent");
-            axios
-                .post("/search", this.form)
-                .then(response => {
-                    eventBus.$emit("StoprogEvent");
-                    this.products = response.data;
-                })
-                .catch(error => {
-                    eventBus.$emit("StoprogEvent");
-                    this.errors = error.response.data.errors;
-                });
+            // axios
+            //     .post("/search", this.form)
+            //     .then(response => {
+            //         eventBus.$emit("StoprogEvent");
+            //         this.products = response.data;
+            //     })
+            //     .catch(error => {
+            //         eventBus.$emit("StoprogEvent");
+            //         this.errors = error.response.data.errors;
+            //     });
         },
         redirect(proId) {
             // alert('oooo')
@@ -313,19 +314,14 @@ export default {
             this.FilterShop();
         },
         getProducts() {
-            this.loader = true;
-            axios
-                .get("/products")
-                .then(response => {
-                    this.loader = false;
-                    this.products = response.data;
-                })
-                .catch(error => {
-                    this.loader = false;
-                    this.errors = error.response.data.errors;
-                });
+            var payload = {
+                model: 'products',
+                update_list: 'updateProductsList',
+            }
+            this.$store.dispatch('getItems', payload)
         },
         addToCart(cart) {
+            cart.order_qty = 1
             eventBus.$emit("addCartEvent", cart);
         },
 
@@ -419,6 +415,7 @@ export default {
     mounted() {
         // this.loader = true;
         this.FilterShop();
+        this.getProducts();
         this.getMenus();
         eventBus.$emit("ScollTopEvent");
     },

@@ -2,15 +2,15 @@
 <el-tabs v-model="activeName" @tab-click="handleClick">
     <el-tab-pane :label="item.category" :name="item.category" v-for="item in categories.data" :key="item.id">
         <v-row>
-            <v-col v-for="product in item.products" :key="product.id" cols="12" sm="6" md="3" lg="3">
+            <v-col v-for="(product, index) in item.products" :key="product.id" cols="12" sm="6" md="3" lg="3">
                 <v-hover v-slot:default="{ hover }">
                     <v-card class="mx-auto" color="grey lighten-4">
-                        <v-img :aspect-ratio="16/9" src="https://cdn.vuetifyjs.com/images/cards/kitchen.png" height="300px">
+                        <v-img :aspect-ratio="16/9" :src="product.image" height="300px">
                             <v-expand-transition>
                                 <div v-if="hover" class="d-flex transition-fast-in-fast-out black darken-2 v-card--reveal display-3 white--text" style="height: 100%;">
                                     <v-tooltip bottom>
                                         <template v-slot:activator="{ on }">
-                                            <v-btn icon v-on="on" @click="product_view(item)">
+                                            <v-btn icon v-on="on" @click="product_view(item.products[index])">
                                                 <v-icon color="primary">visibility</v-icon>
                                             </v-btn>
                                         </template>
@@ -26,7 +26,7 @@
                                     </v-tooltip>
                                     <v-tooltip bottom>
                                         <template v-slot:activator="{ on }">
-                                            <v-btn icon v-on="on">
+                                            <v-btn icon v-on="on" @click="addToCart(item.products[index])">
                                                 <v-icon color="primary">mdi-cart</v-icon>
                                             </v-btn>
                                         </template>
@@ -70,6 +70,15 @@ export default {
                 update_list: 'updateCategoryList',
             }
             this.$store.dispatch('getItems', payload)
+        },
+
+        product_view(product) {
+            eventBus.$emit("viewProEvent", product);
+        },
+
+        addToCart(cart) {
+            cart.order_qty = 1
+            eventBus.$emit("addCartEvent", cart);
         },
     },
     mounted() {

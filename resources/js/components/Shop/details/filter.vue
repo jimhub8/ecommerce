@@ -69,7 +69,7 @@ export default {
                 model: 'categories',
                 update: 'updateCategoryList',
             }
-            this.$store.dispatch('getData', payload)
+            this.$store.dispatch('getItems', payload)
         }
     },
     mounted() {

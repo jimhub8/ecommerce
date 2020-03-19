@@ -61,6 +61,8 @@ Route::resource('attributes', 'AttributeController');
 Route::resource('product_attribute', 'ProductAttributeController');
 Route::resource('attribute_value', 'AttributeValueController');
 Route::resource('address', 'AddressController');
+Route::resource('shipping', 'ShippingaddressController');
+Route::resource('billing', 'BillingaddressController');
 
 Route::get('/ecommerce', 'HomeController@ecommerce')->name('ecommerce')->middleware('verified');
 Route::get('/getReviews/{id}', 'ReviewController@getReviews')->name('getReviews');
@@ -79,9 +81,9 @@ Route::get('/newProA', 'SliderController@newProA')->name('newProA');
 
 Route::post('/cart/{id}', 'CartController@addToCart')->name('addToCart');
 Route::get('/getCart', 'CartController@getCart')->name('getCart');
-Route::post('/subToCart/{id}', 'CartController@subToCart')->name('subToCart');
+Route::post('/update_cart/{id}', 'CartController@update_cart')->name('update_cart');
 Route::post('/cartAdd/{id}', 'CartController@cartAdd')->name('cartAdd');
-Route::post('/flashCart', 'CartController@flashCart')->name('flashCart');
+Route::post('/flashCart/{id}', 'CartController@flashCart')->name('flashCart');
 Route::get('/getCartProduct', 'CartController@getCartProduct')->name('getCartProduct');
 Route::get('/cart_total', 'CartController@cart_total')->name('cart_total');
 Route::get('/cart_count', 'CartController@cart_count')->name('cart_count');
@@ -172,9 +174,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/filterproducts', 'ProductController@filterproducts')->name('filterproducts');
     Route::get('/randomSku', 'ProductController@randomSku')->name('randomSku');
     Route::post('/filterProd_table', 'ProductController@filterProd_table')->name('filterProd_table');
+
+
 });
 // });
 
+Route::get('product_variant/{id}', 'VariantController@product_variant')->name('product_variant');
+Route::post('variants_values/{id}', 'SkuController@variants_values')->name('variants_values');
 
 // Route::group(['prefix'  =>   'attributes'], function() {
 

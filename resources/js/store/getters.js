@@ -39,8 +39,8 @@ export default {
     sales(state) {
         return state.sales
     },
-    cart(state) {
-        return state.cart
+    carts(state) {
+        return state.carts
     },
     cart_count(state) {
         return state.cart_count
@@ -64,6 +64,9 @@ export default {
     },
     brands(state) {
         return state.brands;
+    },
+    cart_total(state) {
+        return state.cart_total;
     },
 
 

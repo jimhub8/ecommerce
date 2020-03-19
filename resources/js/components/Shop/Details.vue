@@ -116,7 +116,7 @@
                     </h3>
                 </div> -->
             <v-data-iterator :items="relatedProducts" :rows-per-page-items="rowsPerPageItems" :pagination.sync="pagination" content-tag="v-layout" row wrap>
-                <v-toolbar slot="header" class="mb-2" color="white darken-5" dark flat>
+                <v-toolbar slot="header" class="mb-2" color="white darken-5" dark text>
                     <v-toolbar-title style="color: #000; margin: auto;">Related Products</v-toolbar-title>
                 </v-toolbar>
                 <v-flex slot="item" slot-scope="props" xs12 sm6 md4 lg3>
@@ -137,7 +137,7 @@
 
                                     <!-- <div class="after">This is some content</div> -->
                                     <div class="caption after text-center" :class="{'selected': isSelected(props.item.id)}">
-                                        <!-- <v-btn color="primary" flat style="margin: auto;" @click="view(prod)">view prod</v-btn>  -->
+                                        <!-- <v-btn color="primary" text style="margin: auto;" @click="view(prod)">view prod</v-btn>  -->
                                         <div id="tooltip">
                                             <v-tooltip bottom class="" data-wow-delay="0.4s">
                                                 <v-btn icon class="mx-0" slot="activator" @click="view(props.item)" style="margin-top: 100px;">
@@ -164,7 +164,7 @@
                         </v-card-text>
                         <v-divider></v-divider>
                         <div class="text-center" style="background: #f0f0f0;">
-                            <v-btn flat color="orange" @click="redirect(props.item.id)">{{ props.item.product_name }}</v-btn>
+                            <v-btn text color="orange" @click="redirect(props.item.id)">{{ props.item.product_name }}</v-btn>
                             <br>
                             <div class="row">
                                 <div class="col-6">

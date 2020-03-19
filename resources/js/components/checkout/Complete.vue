@@ -21,7 +21,7 @@
                 {{ account.phone }} <br>
             </v-flex>
         </v-layout>
-        <myCart :account="account"></myCart>
+        <myCart :account="account" :checkout="checkout"></myCart>
     </v-container>
 </div>
 </template>

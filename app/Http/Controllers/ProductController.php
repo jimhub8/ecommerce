@@ -14,19 +14,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::paginate(10);
+        $products = Product::paginate(10);
+        return $this->transform_product($products);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -34,31 +25,37 @@ class ProductController extends Controller
      * @param  \App\models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        //
+        $products = Product::where('id', $id)->get();
+        $$products = $this->transform_product($products);
+        return $$products[0];
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Product $product)
+    public function transform_product($products)
     {
-        //
+
+        $products->transform(function ($product) {
+            // dd($product->skus);
+            // dd(count($product->product_variants));
+            if (count($product->product_variants) == 0) {
+                if (count($product->skus) > 0) {
+                    // dd(($product->skus[0]->price));
+                    $product->sku_no = $product->skus[0]->sku_no;
+                    $product->price = $product->skus[0]->price;
+                    $product->quantity = $product->skus[0]->quantity;
+                }
+            } else {
+
+            }
+            foreach ($product->images as  $pro_image) {
+                if ($pro_image->display) {
+                    $product->image = $pro_image->image;
+                }
+            }
+            return $product;
+        });
+        return $products;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Product $product)
-    {
-        //
-    }
 }

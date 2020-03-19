@@ -14,18 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return Category::with('products')->paginate();
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        $categories = Category::with('products')->paginate();
+        return $this->transform_cat($categories);
     }
 
     /**
@@ -39,26 +29,31 @@ class CategoryController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Category $category)
+    public function transform_cat($categories)
     {
-        //
-    }
+        $categories->transform(function ($category) {
+            $category->products->transform(function ($product) {
+                // dd($product->skus);
+                // dd(count($product->product_variants));
+                if (count($product->product_variants) == 0) {
+                    if (count($product->skus) > 0) {
+                        // dd(($product->skus[0]->price));
+                        $product->sku_no = $product->skus[0]->sku_no;
+                        $product->price = $product->skus[0]->price;
+                        $product->quantity = $product->skus[0]->quantity;
+                    }
+                } else {
+                }
+                foreach ($product->images as  $pro_image) {
+                    if ($pro_image->display) {
+                        $product->image = $pro_image->image;
+                    }
+                }
+                return $product;
+            });
+            return $category;
+        });
+        return $categories;
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Category $category)
-    {
-        //
     }
 }

@@ -35,18 +35,21 @@ import myRegister from './components/register/Register.vue';
 import myFooter from './components/include/Footer.vue';
 import myNav from './components/include/Headervue';
 
+import * as VueGoogleMaps from 'vue2-google-maps'
+
+
 // Vue.use(VueGoodTablePlugin);
 Vue.use(ElementUI, { locale });
 
 // Vue.use(VueLazyload)
 // Vue.use(VueCarousel);
-// Vue.use(VueGoogleMaps, {
-//     load: {
-//         key: 'AIzaSyBNzKeF6ZwxlAOUCyeH8UxvvYRHP_w_Guk',
-//         libraries: ['geometry', 'places'],
-//         // libraries: 'places',
-//     },
-// })
+Vue.use(VueGoogleMaps, {
+    load: {
+        key: 'AIzaSyBNzKeF6ZwxlAOUCyeH8UxvvYRHP_w_Guk',
+        libraries: ['geometry', 'places'],
+        // libraries: 'places',
+    },
+})
 Vue.use(VueScrollTo, {
     container: "body",
     duration: 500,

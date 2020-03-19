@@ -15,7 +15,7 @@ export default {
         discount: [],
         sales: [],
         groups: [],
-        cart: [],
+        carts: [],
         discounts: [],
         clients: [],
         cart_count: [],
@@ -25,7 +25,7 @@ export default {
         brands: [],
         wish_count: null,
         option_values: [],
-
+        cart_total: null,
         // Deleted
         deleted_clients: [],
 

@@ -33,11 +33,14 @@ export default {
         state.sales = payload
     },
     // Unique
-    updateCartList(state, payload) {
-        state.cart = payload
+    updateCartsList(state, payload) {
+        state.carts = payload
     },
     updateCartCountList(state, payload) {
         state.cart_count = payload
+    },
+    updateCartTotalList(state, payload) {
+        state.cart_total = payload
     },
     updateWishCountList(state, payload) {
         state.wish_count = payload

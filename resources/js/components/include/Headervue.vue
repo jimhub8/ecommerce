@@ -12,11 +12,11 @@
                 <myCartmenu :menus="menus" :categories="categories"></myCartmenu>
             </div>
             <router-link @click.native="progressBar" to="/" class="logo">
-                <img src="/storage/delmat.jpg" alt="Delmat">
+                <img src="storage/logo/dellmat.png" alt="Delmat">
             </router-link>
 
             <!--  <div class="after col-md-3" @mouseleave="menuShow = false">
-                    <v-btn flat color="info" @click="catShow = !catShow">Categories</v-btn>
+                    <v-btn text color="info" @click="catShow = !catShow">Categories</v-btn>
                     <div class="row" style="z-index: 1000;position: absolute;background:transparant" v-show="catShow">
                         <div class="col-2" style="min-width: 300px;max-width: 300px;margin-left: -5vw;background: #eee;">
                             <div class="list-group" id="list-tab" role="tablist" style="text-align: right;">
@@ -84,10 +84,10 @@
                 <!-- <a href="/login" class="header-wrapicon1 dis-block" v-if="user">
             <img src="/storage/icons/icon-header-01.png" class="header-icon1" alt="ICON">
           </a> -->
-                <a href="/vendors" class="v-btn v-btn--flat theme--light primary--text" style="text-decoration: none;">Become a seller</a>
+                <a href="/vendors" class="v-btn v-btn--text theme--light primary--text" style="text-decoration: none;">Become a seller</a>
                 <Logout :user="user" v-if="user"></Logout>
 
-                <v-btn href="/login" class="v-btn v-btn--flat theme--light primary--text" style="text-decoration: none;" v-else>Login</v-btn>
+                <v-btn href="/login" class="v-btn v-btn--text theme--light primary--text" style="text-decoration: none;" v-else>Login</v-btn>
 
                 <span class="linedivide1"></span>
 
@@ -126,7 +126,7 @@
 
                 <!-- Logo2 -->
                 <router-link to="/" class="logo2">
-                    <img src="/storage/logo/logo.png" alt="Delmat" style="height: 50px !important;">
+                    <img src="/storage/logo/dellmat.png" alt="Delmat" style="height: 50px !important;">
                 </router-link>
 
                 <div class="topbar-child2">
@@ -142,10 +142,10 @@
                     <!-- <a href="/login" class="header-wrapicon1 dis-block m-l-30" v-if="user">
               <img src="/storage/icons/icon-header-01.png" class="header-icon1" alt="ICON">
             </a> -->
-                    <a href="/vendors" class="v-btn v-btn--flat theme--light primary--text" style="text-decoration: none;">Become a seller</a>
+                    <a href="/vendors" class="v-btn v-btn--text theme--light primary--text" style="text-decoration: none;">Become a seller</a>
                     <Logout :user="user" v-if="user"></Logout>
 
-                    <a href="/login" class="v-btn v-btn--flat theme--light primary--text" style="text-decoration: none;" v-else>Login</a>
+                    <a href="/login" class="v-btn v-btn--text theme--light primary--text" style="text-decoration: none;" v-else>Login</a>
 
                     <span class="linedivide1"></span>
 
@@ -169,7 +169,7 @@
 
                 <myCartmenu :menus="menus" :categories="categories"></myCartmenu>
                 <!-- <div class="after col-md-3" @mouseleave="menuShow = false">
-                    <v-btn flat color="info" @click="catShow = !catShow">Categories</v-btn>
+                    <v-btn text color="info" @click="catShow = !catShow">Categories</v-btn>
                     <div class="row" style="z-index: 1000;position: absolute;background:transparent" v-show="catShow">
                         <div class="col-2" style="min-width: 300px;max-width: 300px;margin-left: -5vw;background: #eee;">
                             <div class="list-group" id="list-tab" role="tablist" style="text-align: right;">
@@ -246,7 +246,7 @@
         <div class="wrap_header_mobile">
             <!-- Logo moblie -->
             <a href="index.html" class="logo-mobile">
-                <img src="/storage/logo/logo.png" alt="Delmat" style="max-width: 100px;">
+                <img src="/storage/logo/dellmat.png" alt="Delmat" style="max-width: 100px;">
             </a>
 
             <!-- Button show menu -->
@@ -264,10 +264,10 @@
                         </a>
                         <span>Become a seller</span>
                     </v-tooltip>
-                    <!-- <a href="/vendor" class="v-btn v-btn--flat theme--light primary--text" style="text-decoration: none;">Become a seller</a> -->
+                    <!-- <a href="/vendor" class="v-btn v-btn--text theme--light primary--text" style="text-decoration: none;">Become a seller</a> -->
                     <Logout :user="user" v-if="user"></Logout>
 
-                    <a href="/login" class="v-btn v-btn--flat theme--light primary--text" style="text-decoration: none;" v-else>Login</a>
+                    <a href="/login" class="v-btn v-btn--text theme--light primary--text" style="text-decoration: none;" v-else>Login</a>
 
                     <span class="linedivide2"></span>
 
@@ -445,6 +445,19 @@ export default {
         onScroll(e) {
             this.offsetTop = window.pageYOffset || document.documentElement.scrollTop;
         },
+        update_cart(cart, quantity) {
+            cart.quantity = quantity
+            var payload = {
+                model: 'update_cart',
+                id: cart.id,
+                data: cart,
+            }
+            this.$store.dispatch('postItem', payload).then((res) => {
+                this.getCart()
+                this.get_cart_total()
+                this.get_cart_count()
+            })
+        },
         addToCart(cart) {
             // console.log(cart);
             eventBus.$emit("progressEvent");
@@ -465,27 +478,38 @@ export default {
             //     eventBus.$emit("alertRequest", "Cart Added");
             // })
 
-            axios
-                .post(`/cart/${cart}`)
-                .then(response => {
-                    eventBus.$emit("StoprogEvent");
-                    if (response.data.errors) {
-                        eventBus.$emit("errorRequest", response.data.errors);
+            var payload = {
+                model: 'cartAdd',
+                id: cart.id,
+                data: cart,
+            }
 
-                        return (this.err_ms = response.data.errors);
-                    } else {
-                        eventBus.$emit("cartEvent", response.data);
-                        // this.cart = response.data
-                        // this.message = "added";
-                        eventBus.$emit("alertRequest", "Cart Added");
-                    }
-                    // this.snackbar = true;
-                })
-                .catch(error => {
-                    eventBus.$emit("StoprogEvent");
-                    this.loading = false;
-                    this.errors = error.response.data.errors;
-                });
+            this.$store.dispatch('postItem', payload).then((res) => {
+                this.getCart()
+                this.get_cart_total()
+                this.get_cart_count()
+            })
+            // axios
+            //     .post(`/cart/${cart}`)
+            //     .then(response => {
+            //         eventBus.$emit("StoprogEvent");
+            //         if (response.data.errors) {
+            //             eventBus.$emit("errorRequest", response.data.errors);
+
+            //             return (this.err_ms = response.data.errors);
+            //         } else {
+            //             eventBus.$emit("cartEvent", response.data);
+            //             // this.cart = response.data
+            //             // this.message = "added";
+            //             eventBus.$emit("alertRequest", "Cart Added");
+            //         }
+            //         // this.snackbar = true;
+            //     })
+            //     .catch(error => {
+            //         eventBus.$emit("StoprogEvent");
+            //         this.loading = false;
+            //         this.errors = error.response.data.errors;
+            //     });
         },
         categoryPro(data) {
             // console.log(data)
@@ -499,6 +523,21 @@ export default {
             eventBus.$emit("unfilterEvent");
         },
         getCart() {
+            var payload = {
+                model: 'getCart',
+                update_list: 'updateCartsList',
+            }
+            this.$store.dispatch('getItems', payload)
+        },
+
+        get_cart_total() {
+            var payload = {
+                model: 'cart_total',
+                update_list: 'updateCartTotalList',
+            }
+            this.$store.dispatch('getItems', payload)
+        },
+        get_cart_count() {
 
             var payload = {
                 model: 'cart_count',
@@ -597,6 +636,9 @@ export default {
         eventBus.$on("addCartEvent", data => {
             this.addToCart(data);
         });
+        eventBus.$on("subCartEvent", data => {
+            this.update_cart(data);
+        });
         eventBus.$on("WishListEvent", data => {
             this.addToWish(data);
         });
@@ -633,6 +675,35 @@ export default {
             this.getCart();
             // eventBus.$emit("cartEvent", response.data);
         }, 60000);
+
+
+        eventBus.$on('addCartVariantEvent', res_data => {
+            var choices = res_data.choices
+            var data = res_data.skus
+            this.product = data.product
+
+            // console.log(data);
+
+            // if (this.cart_item.cart.length > 0) {
+            //     this.cart_item.cart.forEach(element => {
+            //         if (data.sku_no == element.sku_no) {
+            //             data.product = element
+            //         }
+            //     });
+            // }
+            data.product.sku_no = data.sku_no
+            data.product.order_qty = 1
+            data.product.price = data.price
+            data.product.quantity = data.quantity
+            data.product.sku_id = data.sku_id
+
+            if (choices) {
+                data.product.choices = choices
+            }
+
+            this.addToCart(data.product);
+            // this.addCart(data.product)
+        })
     },
 
     computed: {

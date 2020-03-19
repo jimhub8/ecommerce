@@ -73,6 +73,7 @@ export default {
                 this.error_msg = "Quantity must be greater than 1";
             } else {
 
+                this.productD.order_qty = this.form.quantity
                 var payload = {
                     model: 'cartAdd',
                     id: this.productD.id,

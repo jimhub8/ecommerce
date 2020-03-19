@@ -23,7 +23,7 @@
             <v-card color="white lighten-1" class="mb-5">
                 <myComplete :account="account"></myComplete>
             </v-card>
-            <!-- <v-btn color="primary" @click="finish">Finish</v-btn> -->
+            <!-- <v-btn color="primary" @click="finish">Place order</v-btn> -->
             <v-btn flat @click="e6 = 2">Back</v-btn>
         </v-stepper-content>
     </v-stepper>
@@ -61,18 +61,18 @@ export default {
                 return
             }
             this.e6 = 2
-            axios.patch(`/address/${this.user.id}`, this.account).
-            then((response) => {})
-                .catch((error) => {
-                    if (error.response.status === 500) {
-                        eventBus.$emit('errorEvent', error.response.statusText)
-                        return
-                    } else {
-                        eventBus.$emit('errorEvent', 'Please confirm if all fields  with * are filled')
-                        this.errors = error.response.data.errors
-                    }
-                    // console.log()
-                })
+            // axios.patch(`/address/${this.user.id}`, this.account).
+            // then((response) => {})
+            //     .catch((error) => {
+            //         if (error.response.status === 500) {
+            //             eventBus.$emit('errorEvent', error.response.statusText)
+            //             return
+            //         } else {
+            //             eventBus.$emit('errorEvent', 'Please confirm if all fields  with * are filled')
+            //             this.errors = error.response.data.errors
+            //         }
+            //         // console.log()
+            //     })
         },
         goToStep3() {
             if (!this.account.payment) {
@@ -88,24 +88,34 @@ export default {
                 return
             }
             this.loading = true
-            axios.post('/vendor_user', this.$data.account).
-            then((response) => {
-                    this.loading = false 
-                    this.$emit('alertRequest', 'Account Created');
-                    // eventBus.$emit("userResponse");
-                })
-                .catch((error) => {
-                    this.loading = false
-                    if (error.response.status === 500) {
-                        eventBus.$emit('errorEvent', error.response.statusText)
-                        return
-                    } else {
-                        eventBus.$emit('errorEvent', 'Please confirm if all fields  with * are filled')
-                        this.e6 = 1
-                        this.errors = error.response.data.errors
-                    }
-                    // console.log()
-                })
+
+            this.productD.order_qty = this.form.quantity
+            var payload = {
+                model: 'cartAdd',
+                id: this.productD.id,
+                data: this.productD,
+            }
+
+            this.$store.dispatch('postItem', payload)
+
+            // axios.post('/vendor_user', this.$data.account).
+            // then((response) => {
+            //         this.loading = false
+            //         this.$emit('alertRequest', 'Account Created');
+            //         // eventBus.$emit("userResponse");
+            //     })
+            //     .catch((error) => {
+            //         this.loading = false
+            //         if (error.response.status === 500) {
+            //             eventBus.$emit('errorEvent', error.response.statusText)
+            //             return
+            //         } else {
+            //             eventBus.$emit('errorEvent', 'Please confirm if all fields  with * are filled')
+            //             this.e6 = 1
+            //             this.errors = error.response.data.errors
+            //         }
+            //         // console.log()
+            //     })
         },
         cancel() {
             window.location.replace('/')

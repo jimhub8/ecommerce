@@ -7,7 +7,7 @@
         <v-progress-circular :width="3" indeterminate color="red" style="margin: 1rem"></v-progress-circular>
     </div>
     <v-tooltip bottom>
-        <v-btn slot="activator" icon class="mx-0" @click="getCartProduct">
+        <v-btn slot="activator" icon class="mx-0" @click="getCart">
             <v-icon small color="orange darken-2">refresh</v-icon>
         </v-btn>
         <span>Cart</span>
@@ -31,18 +31,23 @@
                         <tr class="table-row" v-for="cart in carts" :key="cart.id">
                             <td class="column-1">
                                 <div class="cart-img-product b-rad-4 o-f-hidden" @click="flashCart(cart)">
-                                    <img :src="cart.name.image" alt="IMG-PRODUCT">
+                                    <img :src="cart.product.image" alt="">
+                                </div>
+                                <div v-if="cart.attributes.length > 0">
+                                    <div v-for="(attribute, index) in cart.attributes" :key="index">
+                                        <el-tag  v-for="(attr, key) in attribute" :key="key">{{ attr }}</el-tag>
+                                    </div>
                                 </div>
                             </td>
                             <td class="column-2">{{ cart.name.product_name }}</td>
-                            <td class="column-3">{{ cart.name.price }}</td>
+                            <td class="column-3">{{ cart.price }}</td>
                             <td class="column-4">
                                 <div class="flex-w bo5 of-hidden w-size17">
-                                    <v-btn icon small @click="subtructCart(cart.name.id)">
+                                    <v-btn icon small @click="subtructCart(cart, -1)">
                                         <i class="fa fa-minus"></i>
                                     </v-btn>
-                                    <p style="text-align: center; margin: auto;">{{ cart.qty }}</p>
-                                    <v-btn icon small @click="addToCart(cart.name.id)">
+                                    <p style="text-align: center; margin: auto;">{{ cart.quantity }}</p>
+                                    <v-btn icon small @click="addToCart(cart, 1)">
                                         <v-icon>add</v-icon>
                                     </v-btn>
                                 </div>
@@ -93,7 +98,8 @@
 
                     <span class="m-text21 w-size20 w-full-sm">KSH {{ parseFloat(cart_total) - parseFloat(totalCoupon) }}</span>
                 </div>
-                <button style="height: 44px;" class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4" @click="goToCheckout">Proceed to Checkout</button>
+
+                <button style="height: 44px;" class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4" @click="goToCheckout" v-if="checkout != 'checkout'">Proceed to Checkout</button>
             </div>
         </div>
         <!-- <div v-else style="background: #f0f0f0;">
@@ -115,6 +121,7 @@
 <script>
 import headerP from "../include/Headerpartial";
 export default {
+    props: ['checkout'],
     components: {
         headerP
     },
@@ -123,7 +130,6 @@ export default {
             csrf: document
                 .querySelector('meta[name="csrf-token"]')
                 .getAttribute("content"),
-            carts: [],
             loader: false,
             totalCoupon: 0,
             totalPrice: 0,
@@ -132,7 +138,6 @@ export default {
             coupon: {
                 c_value: ""
             },
-            cart_total: null,
             couponSessin: [],
             CartProduct: [],
             err_ms: '',
@@ -143,12 +148,11 @@ export default {
     },
     methods: {
         getCart() {
-            axios.get("/getCart").then(response => {
-                eventBus.$emit("StoprogEvent");
-                this.carts = response.data;
-                this.loader = false;
-                eventBus.$emit("cartEvent", response.data);
-            });
+            var payload = {
+                model: 'getCart',
+                update_list: 'updateCartsList',
+            }
+            this.$store.dispatch('getItems', payload)
         },
         cash_delivery() {
             eventBus.$emit("progressEvent");
@@ -169,57 +173,28 @@ export default {
                 });
         },
         get_cart_total() {
-            axios.get('cart_total')
-                .then(response => {
-                    this.cart_total = response.data
-                    this.getCouponT(response.data)
-                })
-                .catch(error => {
-                    this.errors = error.response.data.errors;
-                });
+
+            var payload = {
+                model: 'cart_total',
+                update_list: 'updateCartTotalList',
+            }
+            this.$store.dispatch('getItems', payload)
         },
         flashCart(cart) {
             eventBus.$emit("progressEvent");
-            // eventBus.$emit("loadingRequest");
-            axios
-                .post('/flashCart', cart)
-                .then(response => {
-                    eventBus.$emit("StoprogEvent");
-                    eventBus.$emit("cartEvent", response.data);
-                    eventBus.$emit("alertRequest", "Item Removed");
-                    this.carts = response.data;
-                    // this.message = "added";
-                    // this.snackbar = true;
-                })
-                .catch(error => {
-                    eventBus.$emit("StoprogEvent");
-                    this.loading = false;
-                    this.errors = error.response.data.errors;
-                });
+            var payload = {
+                model: 'flashCart',
+                update_list: 'updateCartsList',
+            }
+            this.$store.dispatch('getItems', payload)
         },
         subtructCart(cart) {
-            eventBus.$emit("progressEvent");
-            // eventBus.$emit("loadingRequest");
-            axios
-                .post(`/subToCart/${cart}`)
-                .then(response => {
-                    this.get_cart_total()
-                    eventBus.$emit("StoprogEvent");
-                    eventBus.$emit("cartEvent", response.data);
-                    eventBus.$emit("alertRequest", "Cart Reduced");
-                    this.carts = response.data;
-                    // this.message = "added";
-                    // this.snackbar = true;
-                })
-                .catch(error => {
-                    eventBus.$emit("StoprogEvent");
-                    this.loading = false;
-                    this.errors = error.response.data.errors;
-                });
+            cart.order_qty = -1
+            eventBus.$emit("subCartEvent", cart)
         },
         addToCart(cart) {
-            eventBus.$emit("addCartEvent", cart)
-                    this.get_cart_total()
+            cart.order_qty = 1
+            eventBus.$emit("subCartEvent", cart)
         },
         couponApply() {
             axios
@@ -246,21 +221,6 @@ export default {
                 });
         },
 
-        getCartProduct() {
-            eventBus.$emit("progressEvent");
-            axios
-                .get("/getCart")
-                .then(response => {
-                    // console.log(response.data);
-
-                    eventBus.$emit("StoprogEvent");
-                    this.CartProduct = response.data;
-                })
-                .catch(error => {
-                    eventBus.$emit("StoprogEvent");
-                    this.errors = error.response.data.errors;
-                });
-        },
         getCouponSess() {
             eventBus.$emit("progressEvent");
             axios
@@ -310,7 +270,7 @@ export default {
         }
     },
     mounted() {
-        this.loader = true;
+        // this.loader = true;
         this.getCouponSess();
         this.get_cart_total();
         this.getCart();
@@ -336,6 +296,12 @@ export default {
             }
 
             return this.totalPrice;*/
+        },
+        carts() {
+            return this.$store.getters.carts
+        },
+        cart_total() {
+            return this.$store.getters.cart_total
         },
         getTotal() {
             if (this.carts.length > 0) {

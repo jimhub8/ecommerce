@@ -2,28 +2,94 @@
 
 namespace App\Http\Controllers;
 
-use Cart;
 use App\models\CouponSession;
 use App\models\Product;
 use App\models\ProductAttribute;
+use App\models\Sku;
+use Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
-    public function addToCart(Request $request, $id)
+    public function cartAdd(Request $request, $id)
     {
         // return $request->all();
-        $product = Product::find($id);
-        Cart::add(['id' => $id, 'product' => $product, 'name' => $product->product_name, 'qty' => 1, 'price' => $product->price]);
-        return $this->getCart();
+        // Cart::clear();
+        $product = $request->all();
+        // return $product['sku_no'];
+        // return ['id' => $id, 'product' => $product, 'name' => $product['product_name'], 'quantity' => $request->order_qty, 'price' => $request->price];
+        $product['skus'] = null;
+        $product['product_variants'] = null;
+        $product['categories'] = null;
+        $product['images'] = null;
+        // return $product;
+        // $product = Product::setEagerLoads([])->find($id);
+        if (!$request->price) {
+            $request->price = 0;
+        }
+        // $product_name = ($request->product_name) ? $product->product_name;
+        // Cart::add(['id' => $id, 'product' => $product, 'name' => $product['product_name'], 'quantity' => $request->order_qty, 'price' => $request->price]);
+        $sku_id = Sku::where('sku_no', $request->sku_no)->first('id');
+        $sku_id = $sku_id->id;
+        // return $sku_id;
+        Cart::add([
+            'id' => $sku_id,
+            'name' => $product,
+            'quantity' => $request->order_qty,
+            'price' => $request->price,
+            'product_i' => ['test'],
+            'attributes' => array( // attributes field is optional
+                $request->choices
+            )
+        ]);
+    }
+    public function update_cart(Request $request, $id)
+    {
+        // return $request->all();
+
+        $sku_id = Sku::where('sku_no', $request->name['sku_no'])->first('id');
+        $sku_id = $sku_id->id;
+
+        // return $sku_id;
+
+        $quantity = $request->order_qty;
+        $cart_available = Cart::get($id);
+        if ($cart_available->quantity < 2 && $quantity == -1) {
+            $this->flashCart($id);
+            return;
+        }
+        // dd($quantity);
+        Cart::update($id, ['quantity' => $quantity]);
+        return;
     }
 
-    public function subToCart(Request $request, $id)
+    public function flashCart($id)
     {
-        $product = Product::find($id);
-        Cart::add(['id' => $id, 'product' => $product, 'name' => $product->product_name, 'qty' => -1, 'price' => $product->price]);
-        return $this->getCart();
+        Cart::remove($id);
+    }
+    public function getCart()
+    {
+        $cart_d =  Cart::getContent();
+        foreach ($cart_d as $cart) {
+            $sku = Sku::where('id', (int) $cart->id)->first('product_id');
+            // return $sku;
+            $products = Product::setEagerLoads([])->where('id', $sku->product_id)->get();
+
+            $prod_tras = new ProductController;
+            $prod_tras = $prod_tras->transform_product($products);
+
+            $cart['product'] = $prod_tras[0];
+            // return ($cart);
+        }
+        // $cart_d->transform(function ($cart) {
+        // dd($cart->id);
+        // $product = Product::setEagerLoads([])->find((int) $cart->id);
+        // // dd($product);
+        // $cart->product = $product;
+        // return $cart;
+        // });
+        return $cart_d;
     }
 
     public function getCartProduct()
@@ -39,20 +105,7 @@ class CartController extends Controller
         }
         return $product;
     }
-    public function getCart()
-    {
-        // Cart::destroy();
-        // return;
-        $cart_d =  Cart::content();
-        $cart_d->transform(function ($cart) {
-            // dd($cart->id);
-            $product = Product::setEagerLoads([])->find((int) $cart->id);
-            // dd($product);
-            $cart->name = $product;
-            return $cart;
-        });
-        return $cart_d;
-    }
+
 
     public function couponSes()
     {
@@ -61,11 +114,11 @@ class CartController extends Controller
         return $coupon->getCoupon();
     }
 
-    public function cartAdd(Request $request, $id)
+    public function cartAdd_1(Request $request, $id)
     {
         // Cart::destroy();
         // return;
-        // return $request->all();
+        return $request->all();
         $product = Product::setEagerLoads([])->find($id);
         if ($request->attribute) {
             $attr_ = ProductAttribute::select('quantity', 'value', 'price')->find($request->attribute);
@@ -88,32 +141,16 @@ class CartController extends Controller
         }
     }
 
-    public function flashCart(Request $request)
-    {
-        // return $request->all();
-        $rowId = $request->rowId;
-
-        Cart::remove($rowId);
-        // $product = Product::find($id);
-        // $oldCart = Session::has('cart') ? Session::get('cart') : null;
-        // // dd($oldCart);
-        // $cart = new Cart($oldCart);
-        // $cart->flashCart($product->id);
-        // $cartA = [];
-        // foreach ($cart->items as $itemsC) {
-        //     $cartA[] = $itemsC;
-        // }
-        // $request->session()->put('cart', $cart);
-        // return $cartA;
-    }
 
     public function cart_total()
     {
-        $cart = Cart::total();
+        return $cart = Cart::getSubTotal();
         return str_replace(',', '', $cart);
     }
 
-    public function cart_count() {
-        return Cart::count();
+    public function cart_count()
+    {
+        $cart_d =  Cart::getContent();
+        return $cart_d->count();
     }
 }

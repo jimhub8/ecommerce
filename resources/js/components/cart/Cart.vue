@@ -7,25 +7,25 @@
                     <strong>Your Cart</strong>
                 </h3>
             </v-card-title>
-            <v-card-text v-for="cart in carts" :key="cart.item.id">
+            <v-card-text v-for="cart in carts" :key="cart.id">
                 <!-- <div> -->
                 <v-layout wrap>
                     <v-flex sm3>
-                        <avatar :username="cart.item.name" style="font-size: 15px;margin: auto;padding: 10px;"></avatar>
+                        <avatar :username="cart.image" style="font-size: 15px;margin: auto;padding: 10px;"></avatar>
                     </v-flex>
                     <v-divider vertical></v-divider>
                     <v-flex sm7 offset-sm1>
-                        {{ cart.item.name }}
+                        {{ cart.name }}
                         <br>
                         <!-- <v-divider></v-divider> -->
-                        {{ cart.qty }} X {{ cart.item.price }}
+                        {{ cart.qty }} X {{ cart.price }}
                         <br>
-                        <v-btn icon small color="primary" @click="subtructCart(cart.item.id)">
+                        <v-btn icon small color="primary" @click="subtructCart(cart.id)">
                             <!-- <v-icon>minimize</v-icon> -->
                             <i class="fas fa-minus"></i>
                         </v-btn>
-                        {{ cart.qty }}
-                        <v-btn icon small color="primary" @click="addToCart(cart.item.id)">
+                        {{ cart.quantity }}
+                        <v-btn icon small color="primary" @click="addToCart(cart.id)">
                             <v-icon>add</v-icon>
                         </v-btn>
                     </v-flex>

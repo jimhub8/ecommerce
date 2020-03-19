@@ -9,9 +9,9 @@
             <div class="text-center">
                 <h3>Thank you for shopping</h3>
                 <v-list>
-                <router-link style="text-decoration: none; text-transform: none;" to="/shop" class="v-btn v-btn--flat theme--light primary--text">
+                <router-link style="text-decoration: none; text-transform: none;" to="/shop" class="v-btn v-btn--text theme--light primary--text">
                     <div class="v-btn__content">Go to Shop</div>
-                            
+
                 </router-link>
             </v-list>
             </div>
@@ -25,7 +25,7 @@ import headerP from "../include/Headerpartial";
 export default {
     data() {
         return {
-            loader: false 
+            loader: false
         }
     },
 };

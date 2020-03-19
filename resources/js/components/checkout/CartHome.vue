@@ -24,23 +24,23 @@
                         <tr class="table-row" v-for="cart in carts" :key="cart.id">
                             <td class="column-1">
                                 <div class="cart-img-product b-rad-4 o-f-hidden" @click="flashCart(cart)">
-                                    <img :src="cart.name.image" alt="IMG-PRODUCT">
+                                    <img :src="cart.product.image" alt="">
                                 </div>
                             </td>
-                            <td class="column-2">{{ cart.name.name }}</td>
-                            <td class="column-3">{{ cart.name.price }}</td>
+                            <td class="column-2">{{ cart.name.product_name }}</td>
+                            <td class="column-3">{{ cart.price }}</td>
                             <td class="column-4">
                                 <div class="flex-w bo5 of-hidden w-size17">
-                                    <v-btn icon small @click="subtructCart(cart.name.id)">
+                                    <v-btn icon small @click="subtructCart(car, -1)">
                                         <i class="fa fa-minus"></i>
                                     </v-btn>
-                                    <p style="text-align: center; margin: auto;">{{ cart.qty }}</p>
-                                    <v-btn icon small @click="addToCart(cart.name.id)">
+                                    <p style="text-align: center; margin: auto;">{{ cart.quantity }}</p>
+                                    <v-btn icon small @click="addToCart(cart,1)">
                                         <v-icon>add</v-icon>
                                     </v-btn>
                                 </div>
                             </td>
-                            <td class="column-5">{{ cart_total }}</td>
+                            <td class="column-5">{{ cart.subtotal }}</td>
                         </tr>
                     </table>
                 </div>
@@ -114,14 +114,15 @@
 
 <script>
 export default {
+    name: 'cart_home',
     props: ['account'],
     data() {
         return {
             csrf: document
                 .querySelector('meta[name="csrf-token"]')
                 .getAttribute("content"),
-            carts: [],
-            cart_total: null,
+
+
             loader: false,
             totalCoupon: 0,
             totalPrice: 0,
@@ -172,13 +173,12 @@ export default {
             });
         },
         get_cart_total() {
-            axios.get('cart_total')
-                .then(response => {
-                    this.cart_total = response.data
-                })
-                .catch(error => {
-                    this.errors = error.response.data.errors;
-                });
+
+            var payload = {
+                model: 'cart_total',
+                update_list: 'updateCartTotalList',
+            }
+            this.$store.dispatch('getItems', payload)
         },
         flashCart(cart) {
             console.log(cart);
@@ -201,26 +201,12 @@ export default {
                 });
         },
         subtructCart(cart) {
-            eventBus.$emit("progressEvent");
-            // eventBus.$emit("loadingRequest");
-            axios
-                .post(`/subToCart/${cart}`)
-                .then(response => {
-                    eventBus.$emit("StoprogEvent");
-                    eventBus.$emit("cartEvent", response.data);
-                    eventBus.$emit("alertRequest", "Cart Reduced");
-                    this.carts = response.data;
-                    // this.message = "added";
-                    // this.snackbar = true;
-                })
-                .catch(error => {
-                    eventBus.$emit("StoprogEvent");
-                    this.loading = false;
-                    this.errors = error.response.data.errors;
-                });
+            cart.order_qty = -1
+            eventBus.$emit("subCartEvent", cart)
         },
         addToCart(cart) {
-            eventBus.$emit("addCartEvent", cart);
+            cart.order_qty = 1
+            eventBus.$emit("subCartEvent", cart)
         },
         couponApply() {
             axios
@@ -302,6 +288,13 @@ export default {
                 }
             }
             return this.totalPrice;
+        },
+
+        carts() {
+            return this.$store.getters.carts
+        },
+        cart_total() {
+            return this.$store.getters.cart_total
         },
         getTotal() {
             if (this.carts.length > 0) {
