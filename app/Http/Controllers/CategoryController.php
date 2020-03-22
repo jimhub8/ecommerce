@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\models\Category;
+use App\models\CategoryProduct;
+use App\models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -24,9 +27,22 @@ class CategoryController extends Controller
      * @param  \App\models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
-        //
+        // DB::enableQueryLog(); // Enable query log
+
+        $product_id = CategoryProduct::where('category_id', $id)->get('product_id');
+        $products = [];
+        foreach ($product_id as $key => $value) {
+            $products[] = $value->product_id;
+        }
+
+
+
+        $products_a = Product::whereIn('id', $products)->paginate();
+        // dd(DB::getQueryLog()); // Show results of log
+        $prod_trans = new ProductController;
+        return $prod_trans->transform_product($products_a);
     }
 
     public function transform_cat($categories)

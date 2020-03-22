@@ -64,14 +64,14 @@ class PaymentController extends Controller
         $qty = 0;
         $price = 0;
         foreach ($this->getCart() as $cart) {
-            // dd($cart);
-            $name = $cart->name->product_name;
+            // dd($cart->name);
+            $name = $cart->name['product_name'];
             // $total = $total + ($cart['item']['price'] * $cart['qty']);
             $item = new Item();
             // dd($cart['item']['price']);
             // dd($cart['qty']);
-            $qty = $cart->qty;
-            $price = $cart->price;
+            $qty = $cart->name['order_qty'];
+            $price = $cart->name['price'];
             $price = $price  * $rate;
             // $convert = new CurrencyConversion;
             // $price = $convert->convert($price);
@@ -164,33 +164,37 @@ class PaymentController extends Controller
         $execution->addTransaction($transaction);
         $result = $payment->execute($execution, $apiContext);
         // dd($total);
-        $order = new Order;
-        $order->buyer_id = Auth::id();
+
+        $this->paypal_payment($payment);
+
+
+        // $order = new Order;
         // $order->buyer_id = Auth::id();
-        $order->payment_id = $payment->id;
+        // // $order->buyer_id = Auth::id();
+        // $order->payment_id = $payment->id;
 
-        // foreach ($cart as $product) {
-        //     $order->company_id = $product['item']['company_id'];
+        // // foreach ($cart as $product) {
+        // //     $order->company_id = $product['item']['company_id'];
+        // // }
+        // $order->address = 'Nairobi';
+        // $order->status = 'Payed';
+        // $order->amount = $amount->total;
+        // $order->name = Auth::user()->name;
+        // $order->cart = serialize($this->getCart());
+        // $order->paypal = serialize($payment);
+        // // $orderSave = Auth::user()->orders()->save();
+        // $order->save();
+        // $cart = $this->getCart();
+        // // $this->getCartProduct();
+        // $user = Auth::user();
+        // // $this->sales('Payed', 'test');
+
+        // $sale_update = new Sale_update();
+        // $sale_update->sold('Paid', $order->id);
+        // Notification::send($user, new OrderNotification($order, $cart));
+        // if ($order->save()) {
+        //     $request->session()->forget('cart');
         // }
-        $order->address = 'Nairobi';
-        $order->status = 'Payed';
-        $order->amount = $amount->total;
-        $order->name = Auth::user()->name;
-        $order->cart = serialize($this->getCart());
-        $order->paypal = serialize($payment);
-        // $orderSave = Auth::user()->orders()->save();
-        $order->save();
-        $cart = $this->getCart();
-        // $this->getCartProduct();
-        $user = Auth::user();
-        // $this->sales('Payed', 'test');
-
-        $sale_update = new Sale_update();
-        $sale_update->sold('Paid', $order->id);
-        Notification::send($user, new OrderNotification($order, $cart));
-        if ($order->save()) {
-            $request->session()->forget('cart');
-        }
         return redirect('/#/thankyou');
         // Create Orders
 
@@ -198,6 +202,20 @@ class PaymentController extends Controller
         // return $payment;
         // return $request('paymentId');
     }
+
+
+    public function paypal_payment($payment)
+    {
+        // return $request->all();
+        // dd($this->getCart());
+        $cart_same = new SaleController;
+        $cart = $this->getCart();
+        // return $cart;
+
+        $res = $cart_same->sale($cart, 'Paypal', $payment);
+        return $res;
+    }
+
 
     public function cash_delivery(Request $request)
     {
@@ -207,7 +225,7 @@ class PaymentController extends Controller
         $cart = $this->getCart();
         // return $cart;
 
-        $res = $cart_same->sale($cart);
+        $res = $cart_same->sale($cart, 'Cash on delivery', null);
         return $res;
 
 
@@ -235,7 +253,7 @@ class PaymentController extends Controller
 
 
 
-        
+
         $user = Auth::user();
         $order = new Order;
         $order->buyer_id = Auth::id();
@@ -380,9 +398,11 @@ class PaymentController extends Controller
         return $product;
     }
 
+
     public function cart_total()
     {
-        $cart = Cart::subtotal();
+        return $cart = Cart::getSubTotal();
         return str_replace(',', '', $cart);
     }
+
 }

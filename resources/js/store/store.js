@@ -18,21 +18,24 @@ export default {
         carts: [],
         discounts: [],
         clients: [],
-        cart_count: [],
+        cart_count: null,
         categories: [],
         menu: [],
         subcategories: [],
         brands: [],
         wish_count: null,
         option_values: [],
+        orders: [],
         cart_total: null,
         // Deleted
         deleted_clients: [],
 
         // Api
         options: [],
-
+        sliderS: [],
+        slider: [],
         cart: [],
+        product_setting: [],
 
     },
     getters,

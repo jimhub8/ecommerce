@@ -124,7 +124,6 @@ export default {
 
 
     nextPage(context, payload) {
-
         var path = payload.path
         var page = payload.page
         var update_ = payload.update_list
@@ -341,6 +340,41 @@ export default {
                 context.commit('loading', false)
 
                 context.commit(update_, response.data)
+                resolve(response)
+            }).catch((error) => {
+                console.log(error);
+                reject(error);
+
+                context.commit('loading', false)
+                if (error.response.status === 500) {
+                    eventBus.$emit('errorEvent', error.response.statusText)
+                    return
+                } else if (error.response.status === 401 || error.response.status === 409) {
+                    eventBus.$emit('reloadRequest', error.response.statusText)
+                } else if (error.response.status === 422) {
+                    eventBus.$emit('errorEvent', error.response.data.message + ': ' + error.response.statusText)
+                    context.commit('errors', error.response.data.errors)
+                    return
+                }
+                context.commit('errors', error.response.data.errors)
+            })
+        });
+    },
+
+
+
+    filterItems(context, payload) {
+        // console.log(payload);
+
+        var model = payload.model
+        var update = payload.update
+        var data = payload.data
+        context.commit('loading', true)
+        return new Promise((resolve, reject) => {
+            axios.post(model, data).then((response) => {
+                context.commit('loading', false)
+
+                context.commit(update, response.data)
                 resolve(response)
             }).catch((error) => {
                 console.log(error);

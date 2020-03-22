@@ -20,17 +20,18 @@ class SaleController extends Controller
      */
     public function index()
     {
-        $sales = Sale::paginate(500);
+
+        $sales = Sale::where('client_id', Auth::id())->paginate(500);
         $sales->transform(function ($sale) {
-            $sale->discount = ($sale->discount != null) ? $sale->discount : 0;
-            $total = 0;
-            foreach ($sale->products as $product) {
-                $total += $product->price;
-            }
+            // $sale->discount = ($sale->discount != null) ? $sale->discount : 0;
+            // $total = 0;
+            // foreach ($sale->products as $product) {
+            //     $total += $product->price;
+            // }
             $sale->sub_total = $sale->sub_total;
             $sale->total = $sale->sub_total - $sale->discount;
-            $sale->client_name = $sale->client->name;
-            $sale->user_name = $sale->user->name;
+            // $sale->client_name = $sale->client->name;
+            $sale->user = Auth::user();
             return $sale;
         });
         return $sales;
@@ -42,7 +43,7 @@ class SaleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function sale($carts)
+    public function sale($carts, $method, $payment)
     {
         $client_id = Auth::id();
         $total_price = $this->cart_total();
@@ -55,6 +56,11 @@ class SaleController extends Controller
         $sale->client_id = $client_id;
         $order_no = new AutoGenerate;
         $sale->order_no = $order_no->order_no();
+        $sale->payment_method = 'method';
+        if ($method == 'Paypal') {
+            $sale->payment_id = $payment->id;
+            $sale->paypal = $payment;
+        }
         $sale->save();
         foreach ($carts as $cart) {
             // dd($cart);

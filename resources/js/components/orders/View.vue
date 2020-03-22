@@ -12,22 +12,16 @@
             <div class="card">
                 <div class="card-header">
                     <ul class="list-group text-center">
-                        <li class="list-group-item active">{{ order.buyer_name }}'s' Orders</li>
+                        <!-- <li class="list-group-item active">{{ order.buyer_name }}'s' Orders</li> -->
                     </ul>
                 </div>
                 <div class="card-body">
-                    <!-- <li class="list-group-item">
-                        <span class="badge" style="float: right; color: #fff; background: #000;">{{ cart.item.price }}</span>
-                        {{ cart.item.name }} | {{ cart.qty }}
-                    </li> -->
-
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Product</th>
                                 <!-- <th scope="col">Payment Id</th> -->
-                                <th scope="col">Description</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">List Price</th>
                                 <th scope="col">Order Date</th>
@@ -35,12 +29,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr v-for="product in order.products" :key="product.id" >
                                 <th scope="row">1.</th>
-                                <td>{{ carts.name }}</td>
-                                <!-- <td>{{ carts.payment_id }}</td> -->
-                                <td>{{ carts.description }}</td>
-                                <td class="badge" style="color: #fff; background: #f00;">{{ carts.price }}</td>
+                                <td>{{ product.product_name }}</td>
+                                <td class="badge" style="color: #fff; background: #f00;">{{ product.price }}</td>
 
                                 <td>{{ carts.list_price }}</td>
                                 <td>{{ carts.created_at }}</td>
@@ -51,7 +43,7 @@
                 </div>
             </div>
             <v-card-actions>
-                <v-btn flat @click="close">Close</v-btn>
+                <v-btn text @click="close">Close</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -78,7 +70,7 @@ export default {
     created() {
         eventBus.$on("viewOrdEvent", data => {
             this.order = data;
-            this.carts = data.cart;
+            this.carts = data;
             this.dialog = true;
         });
     },

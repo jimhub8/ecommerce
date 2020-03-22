@@ -1,9 +1,15 @@
 <template>
 <v-app>
     <v-container fluid>
+        <VBtn color="success" @click="getProducts">text</VBtn>
         <div style="width:100%;auto;height:600px">
             <myCategory></myCategory>
-            <myProducts></myProducts>
+            <myVariants></myVariants>
+
+            <myFeatured></myFeatured>
+            <myNew></myNew>
+            <myBest></myBest>
+
         </div>
     </v-container>
 </v-app>
@@ -12,7 +18,11 @@
 <script>
 // import slider components
 import myCategory from './category'
-import myProducts from './Best'
+import myVariants from './variants'
+import myBest from './Best'
+import myFeatured from './Featured'
+import myNew from './New'
+
 import {
     slider,
     slideritem
@@ -22,8 +32,8 @@ export default {
     components: {
         slider,
         slideritem,
-        myProducts,
-        myCategory
+        myBest,
+        myCategory, myVariants, myNew, myFeatured
     },
     data() {
         return {
@@ -38,14 +48,22 @@ export default {
             }
             this.$store.dispatch('getItems', payload)
         },
+        getProductsettings() {
+            var payload = {
+                model: 'product_setting',
+                update_list: 'updateProductSettingList',
+            }
+            this.$store.dispatch('getItems', payload)
+        },
     },
     mounted() {
+        this.getProductsettings();
         this.getProducts();
     },
     computed: {
         products() {
             return this.$store.getters.products
-        }
+        },
     },
 }
 </script>

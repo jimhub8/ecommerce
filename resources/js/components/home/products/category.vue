@@ -36,12 +36,10 @@
                             </v-expand-transition>
                         </v-img>
                         <v-card-text class="pt-6" style="position: relative;">
-                            <v-btn absolute color="orange" class="white--text" fab large right top>
-                                <v-icon>mdi-cart</v-icon>
-                            </v-btn>
-                            <div class="font-weight-light grey--text title mb-2">{{ item.product_name }}</div>
+
+                            <div class="font-weight-light grey--text title mb-2">{{ product.product_name }}</div>
                             <div class="font-weight-light title mb-2">
-                                {{ item.price }}
+                                {{ product.price }}
                             </div>
                         </v-card-text>
                     </v-card>
@@ -56,7 +54,7 @@
 export default {
     data() {
         return {
-            activeName: 'first'
+            activeName: "Television"
         };
     },
     methods: {
@@ -77,9 +75,18 @@ export default {
         },
 
         addToCart(cart) {
+            if (cart.product_variants.length > 0) {
+                eventBus.$emit('selectVariantsEvent', cart)
+                // this.select_variants()
+                return
+            }
             cart.order_qty = 1
             eventBus.$emit("addCartEvent", cart);
         },
+        // addToCart(cart) {
+        //     cart.order_qty = 1
+        //     eventBus.$emit("addCartEvent", cart);
+        // },
     },
     mounted() {
         this.getCategory();

@@ -16,8 +16,10 @@
     {{--  <link href="{{ asset('css/algolia.css') }}" rel="stylesheet"> --}}
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('css/menu.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet"> --}}
 
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
     {{--  <link rel="stylesheet" href="https://d29u17ylf1ylz9.cloudfront.net/bege-v2/css/ionicons.min.css">  --}}
     {{--  <link rel="stylesheet" href="https://d29u17ylf1ylz9.cloudfront.net/bege-v2/css/css-plugins-call.css">  --}}
@@ -33,7 +35,6 @@
             @yield('content')
         </main>
     </div>
-    <script src="{{ asset('js/jquery.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     {{-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> --}}

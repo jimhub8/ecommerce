@@ -81,6 +81,19 @@ export default {
     updateMenuList(state, payload) {
         state.menu = payload
     },
+    updateOrderList(state, payload) {
+        state.orders = payload
+    },
+    updateProductSettingList(state, payload) {
+        state.product_setting = payload
+    },
+    updateSliderList(state, payload) {
+        state.slider = payload
+    },
+
+    updateSliderSList(state, payload) {
+        state.sliderS = payload
+    },
 
 
     updateCartList(state, payload) {

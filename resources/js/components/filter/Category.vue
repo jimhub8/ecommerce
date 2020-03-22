@@ -89,7 +89,7 @@
 
                                         <div class="block2-btn-addcart w-size1 trans-0-4">
                                             <!-- Button -->
-                                            <v-btn color="success" @click="addToCart(product.id)">Add to Cart</v-btn>
+                                            <v-btn color="success" @click="addToCart(product)">Add to Cart</v-btn>
                                         </div>
                                     </div>
                                 </div>
@@ -117,7 +117,7 @@
 
                                         <div class="block2-btn-addcart w-size1 trans-0-4">
                                             <!-- Button -->
-                                            <v-btn color="primary" @click="addToCart(product.id)">Add to Cart</v-btn>
+                                            <v-btn color="primary" @click="addToCart(product)">Add to Cart</v-btn>
                                         </div>
                                     </div>
                                 </div>
@@ -141,16 +141,18 @@
             </div>
         </div>
     </section>
+    <myVariants></myVariants>
 </div>
 </template>
 
 <script>
 import headerP from "../include/Headerpartial";
 import myFilter from '../Shop/details/filter'
+import myVariants from '../home/products/variants'
 export default {
     components: {
         headerP,
-        myFilter
+        myFilter, myVariants
     },
     data() {
         return {
@@ -245,9 +247,25 @@ export default {
                     this.errors = error.response.data.errors;
                 });
         },
+
+
         addToCart(cart) {
+            if (cart.product_variants.length > 0) {
+                eventBus.$emit('selectVariantsEvent', cart)
+                // this.select_variants()
+                return
+            }
+            cart.order_qty = 1
             eventBus.$emit("addCartEvent", cart);
         },
+
+        // addToCart(cart) {
+        //     console.log(cart);
+
+        //     cart.order_qty = 1
+        //     eventBus.$emit("addCartEvent", cart);
+        // },
+
 
         next(page) {
             eventBus.$emit("progressEvent");
@@ -310,30 +328,46 @@ export default {
             eventBus.$emit("WishListEvent", item);
         },
         gotoSUbcat(data) {
-            console.log(data);
-            axios
-                .get(`/subcategory/${data}`)
-                .then(response => {
-                    eventBus.$emit("StoprogEvent");
-                    this.products = response.data;
-                })
-                .catch(error => {
-                    eventBus.$emit("StoprogEvent");
-                    this.errors = error.response.data.errors;
-                });
+
+            var payload = {
+                model: 'subcategories',
+                update: 'updateProductsList',
+                id: data,
+            }
+            this.$store.dispatch('showItem', payload)
+
+
+            // console.log(data);
+            // axios
+            //     .get(`/subcategory/${data}`)
+            //     .then(response => {
+            //         eventBus.$emit("StoprogEvent");
+            //         this.products = response.data;
+            //     })
+            //     .catch(error => {
+            //         eventBus.$emit("StoprogEvent");
+            //         this.errors = error.response.data.errors;
+            //     });
         },
         gotoCat(data) {
-            console.log(data);
-            axios
-                .get(`/category/${data}`)
-                .then(response => {
-                    eventBus.$emit("StoprogEvent");
-                    this.products = response.data;
-                })
-                .catch(error => {
-                    eventBus.$emit("StoprogEvent");
-                    this.errors = error.response.data.errors;
-                });
+            var payload = {
+                model: 'categories',
+                update: 'updateProductsList',
+                id: data,
+            }
+            this.$store.dispatch('showItem', payload)
+
+            // console.log(data);
+            // axios
+            //     .get(`/categories/${data}`)
+            //     .then(response => {
+            //         eventBus.$emit("StoprogEvent");
+            //         this.products = response.data;
+            //     })
+            //     .catch(error => {
+            //         eventBus.$emit("StoprogEvent");
+            //         this.errors = error.response.data.errors;
+            //     });
         }
     },
     mounted() {

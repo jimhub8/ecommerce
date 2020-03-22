@@ -14,48 +14,6 @@
             <router-link @click.native="progressBar" to="/" class="logo">
                 <img src="storage/logo/dellmat.png" alt="Delmat">
             </router-link>
-
-            <!--  <div class="after col-md-3" @mouseleave="menuShow = false">
-                    <v-btn text color="info" @click="catShow = !catShow">Categories</v-btn>
-                    <div class="row" style="z-index: 1000;position: absolute;background:transparant" v-show="catShow">
-                        <div class="col-2" style="min-width: 300px;max-width: 300px;margin-left: -5vw;background: #eee;">
-                            <div class="list-group" id="list-tab" role="tablist" style="text-align: right;">
-                                <li style="color: #000; padding: 5px;" id="list-home-list" data-toggle="list" role="tab" aria-controls="home" v-for="(item, index) in menus" :key="index" @mouseover="showMenu(item)">{{ item.name }} </li>
-                            </div>
-                        </div>
-                        <div class="col-md-8 col-lg-8 col-sm-8" style="overflow-y: scroll ;border: 1px solid #00000038;background: #fff;max-height: 80vh;">
-                            <div class="tab-content" id="nav-tabContent" v-show="menuShow" style="background: #fff;">
-                                <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
-                                    <div class="row wrap">
-                                        <div class="card-columns col-md-10">
-                                            <div class="card" v-for="(category, index) in categories" :key="index" style="border: none; width: 300px; margin-right: 100px;">
-                                                <div class="card-body" style="padding: 0;" id="category">
-                                                    <li class="active" @click="gotoCat(category.id)">{{ category.name }}</li>
-                                                    <li class="card-text" v-for="subcat in category.sub_categories" :key="subcat.id" @click="gotoSub(subcat.id)">{{ subcat.name }}</li>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <v-layout wrap>
-                    <v-flex sm5 class="form-group" style="margin-top: 10px">
-                        <input type="text" class="form-control" placeholder="Search..." v-model="search" @keyup.enter="productSearch">
-
-                    </v-flex>
-                    <v-flex sm2 style="margin-top: 5px">
-                        <v-tooltip bottom>
-                            <v-btn slot="activator" icon class="mx-0" @click="productSearch">
-                                <v-icon small color="primary darken-2">search</v-icon>
-                            </v-btn>
-                            <span>Search</span>
-                        </v-tooltip>
-                    </v-flex>
-                </v-layout>
-            </div>-->
             <!-- Mini Menu Start -->
             <div class="wrap_menu" id="header2">
                 <nav class="menu">
@@ -87,8 +45,8 @@
                 <a href="/vendors" class="v-btn v-btn--text theme--light primary--text" style="text-decoration: none;">Become a seller</a>
                 <Logout :user="user" v-if="user"></Logout>
 
-                <v-btn href="/login" class="v-btn v-btn--text theme--light primary--text" style="text-decoration: none;" v-else>Login</v-btn>
-
+                <!-- <v-btn href="/login" class="v-btn v-btn--text theme--light primary--text" style="text-decoration: none;" v-else>Login</v-btn> -->
+                <v-btn color="primary" href="/login" v-else>Login</v-btn>
                 <span class="linedivide1"></span>
 
                 <div class="header-wrapicon2">
@@ -115,11 +73,8 @@
             <div class="topbar2" style="margin-top: -26px;padding-bottom: 20px;">
                 <div class="topbar-social">
                     <a href="https://www.facebook.com/DellmatGroup" target="_blank" class="topbar-social-item fa fa-facebook"></a>
-                    <!-- <a href="#" class="topbar-social-item fa fa-facebook"></a>
-                    <a href="#" class="topbar-social-item fa fa-instagram"></a>
-                    <a href="#" class="topbar-social-item fa fa-pinterest-p"></a>
-                    <a href="#" class="topbar-social-item fa fa-snapchat-ghost"></a>
-                    <a href="#" class="topbar-social-item fa fa-youtube-play"></a> -->
+
+                    <span class="topbar-email" style="margin: 0 10px"><a href="mailto:info@dellmat.com" target="_blank">info@dellmat.com</a></span>
                 </div>
                 <br>
                 <hr>
@@ -130,22 +85,22 @@
                 </router-link>
 
                 <div class="topbar-child2">
-                    <span class="topbar-email"><a href="mailto:info@dellmat.com" target="_blank">info@dellmat.com</a></span>
 
-                    <div class="topbar-language rs1-select2" style="margin-left: 10px !important">
+                    <!-- <div class="topbar-language rs1-select2" style="margin-left: 10px !important">
                         <select class="selection-1" name="time">
                             <option>KSH</option>
                         </select>
-                    </div>
-
+                    </div> -->
+                    <!-- <VDivider vertical /> -->
                     <!--  -->
-                    <!-- <a href="/login" class="header-wrapicon1 dis-block m-l-30" v-if="user">
-              <img src="/storage/icons/icon-header-01.png" class="header-icon1" alt="ICON">
-            </a> -->
-                    <a href="/vendors" class="v-btn v-btn--text theme--light primary--text" style="text-decoration: none;">Become a seller</a>
+                    <!-- <a href="/vendors" class="v-btn v-btn--text theme--light primary--text" style="text-decoration: none;margin: 0 10px">Become a seller</a> -->
+                    <v-btn color="primary" href="/vendors" style="margin: 0 10px">Become a seller</v-btn>
+                    <!-- <VDivider vertical /> -->
+
                     <Logout :user="user" v-if="user"></Logout>
 
-                    <a href="/login" class="v-btn v-btn--text theme--light primary--text" style="text-decoration: none;" v-else>Login</a>
+                    <v-btn color="primary" v-else href="/login">Login</v-btn>
+                    <!-- <a href="/login" class="v-btn v-btn--text theme--light primary--text" style="text-decoration: none;" v-else>Login</a> -->
 
                     <span class="linedivide1"></span>
 
@@ -168,31 +123,6 @@
             <div class="flex-c-m size22 s-text21 pos-relative" style="background:#f0f0f0;">
 
                 <myCartmenu :menus="menus" :categories="categories"></myCartmenu>
-                <!-- <div class="after col-md-3" @mouseleave="menuShow = false">
-                    <v-btn text color="info" @click="catShow = !catShow">Categories</v-btn>
-                    <div class="row" style="z-index: 1000;position: absolute;background:transparent" v-show="catShow">
-                        <div class="col-2" style="min-width: 300px;max-width: 300px;margin-left: -5vw;background: #eee;">
-                            <div class="list-group" id="list-tab" role="tablist" style="text-align: right;">
-                                <li style="color: #000; padding: 5px;" id="list-home-list" data-toggle="list" role="tab" aria-controls="home" v-for="(item, index) in menus" :key="index" @mouseover="showMenu(item)">{{ item.name }} </li>
-                            </div>
-                        </div>
-                        <div class="col-md-8 col-lg-8 col-sm-8" style="overflow-y: scroll ;border: 1px solid #00000038;background: #fff;max-height: 80vh;">
-                            <div class="tab-content" id="nav-tabContent" v-show="menuShow" style="background: #fff;">
-                                <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
-                                    <div class="row wrap">
-                                        <div class="card-columns col-md-10">
-                                            <div class="card" v-for="(category, index) in categories" :key="index" style="border: none; width: 300px; margin-right: 100px;">
-                                                <div class="card-body" style="padding: 0;" id="category">
-                                                    <li class="active" @click="gotoCat(category.id)">{{ category.name }}</li>
-                                                    <li class="card-text" v-for="subcat in category.sub_categories" :key="subcat.id" @click="gotoSub(subcat.id)">{{ subcat.name }}</li>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
             </div>
             <v-layout wrap>
                 <v-flex sm5 class="form-group" style="margin-top: 10px">
@@ -201,11 +131,14 @@
                     <!-- <mySearch></mySearch> -->
                 </v-flex>
                 <v-flex sm2 style="margin-top: 5px">
-                    <v-tooltip bottom>
-                        <v-btn slot="activator" icon class="mx-0" @click="productSearch">
-                            <v-icon small color="primary darken-2">search</v-icon>
-                        </v-btn>
-                        <span>Search</span>
+
+                    <v-tooltip right>
+                        <template v-slot:activator="{ on }">
+                            <v-btn icon v-on="on" slot="activator" class="mx-0" @click="productSearch">
+                                <v-icon color="blue darken-2" small>search</v-icon>
+                            </v-btn>
+                        </template>
+                        <span>search</span>
                     </v-tooltip>
                 </v-flex>
             </v-layout>
@@ -267,7 +200,8 @@
                     <!-- <a href="/vendor" class="v-btn v-btn--text theme--light primary--text" style="text-decoration: none;">Become a seller</a> -->
                     <Logout :user="user" v-if="user"></Logout>
 
-                    <a href="/login" class="v-btn v-btn--text theme--light primary--text" style="text-decoration: none;" v-else>Login</a>
+                    <!-- <a href="/login" class="v-btn v-btn--text theme--light primary--text" style="text-decoration: none;" v-else>Login</a> -->
+                    <v-btn color="primary" href="/login" v-else>Login</v-btn>
 
                     <span class="linedivide2"></span>
 
@@ -307,12 +241,12 @@
                     <li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
                         <div class="topbar-child2-mobile">
                             <span class="topbar-email"><a href="mailto:info@dellmat.com" target="_blank">info@dellmat.com</a></span>
-
+                            <!--
                             <div class="topbar-language rs1-select2" style="margin-left: 10px !important">
                                 <select class="selection-1" name="time">
                                     <option>KSH</option>
                                 </select>
-                            </div>
+                            </div> -->
                         </div>
                     </li>
 
@@ -544,7 +478,7 @@ export default {
                 update_list: 'updateCartCountList',
             }
 
-            this.$store.dispatch('getItems', payload).then((res) => {})
+            this.$store.dispatch('getItems', payload)
 
             // axios.get("/cart_count").then(response => {
             //     this.cart_count = response.data;
@@ -676,7 +610,6 @@ export default {
             // eventBus.$emit("cartEvent", response.data);
         }, 60000);
 
-
         eventBus.$on('addCartVariantEvent', res_data => {
             var choices = res_data.choices
             var data = res_data.skus
@@ -719,17 +652,20 @@ export default {
             };
         },
         cart_count() {
-            this.$store.getters.cart_count
+            return this.$store.getters.cart_count
         },
+
         wish_count() {
-            this.$store.getters.wish_count
+            return this.$store.getters.wish_count
         }
 
     },
     mounted() {
         // this.progressBar();
         this.getCart();
-        this.getWish();
+        // this.getWish();
+        this.get_cart_total()
+        this.get_cart_count()
         this.getCategory()
         this.getMenu()
     },

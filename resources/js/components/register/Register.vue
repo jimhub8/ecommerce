@@ -14,7 +14,7 @@
             <Company :account="account" :errors="errors"></Company>
         </v-card>
         <v-btn color="primary" @click="goToStep3">Continue</v-btn>
-        <v-btn flat @click="e6 = 1">Back</v-btn>
+        <v-btn text @click="e6 = 1">Back</v-btn>
     </v-stepper-content>
 
     <v-stepper-step :complete="e6 > 3" step="3">Bank Details</v-stepper-step>
@@ -23,7 +23,7 @@
             <Bank :account="account" :errors="errors"></Bank>
         </v-card>
         <v-btn color="primary" @click="finish" :loading="loading">Finish</v-btn>
-        <v-btn flat @click="e6 = 2">Back</v-btn>
+        <v-btn text @click="e6 = 2">Back</v-btn>
     </v-stepper-content>
     <v-snackbar :timeout="timeout" :bottom="y === 'bottom'" :color="Scolor" :left="x === 'left'" v-model="snackbar">
         {{ message }}

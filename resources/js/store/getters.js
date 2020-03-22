@@ -68,6 +68,9 @@ export default {
     cart_total(state) {
         return state.cart_total;
     },
+    orders(state) {
+        return state.orders;
+    },
 
 
     options(state) {
@@ -75,5 +78,14 @@ export default {
     },
     option_values(state) {
         return state.option_values;
+    },
+    product_setting(state) {
+        return state.product_setting;
+    },
+    slider(state) {
+        return state.slider;
+    },
+    sliderS(state) {
+        return state.sliderS;
     },
 }

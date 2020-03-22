@@ -55,7 +55,6 @@ Route::get('couponSes', 'CartController@couponSes')->name('couponSes');
 Route::get('/', 'HomeController@ecommerce')->name('ecommerce');
 Route::resource('products', 'ProductController');
 Route::resource('wish', 'WishController');
-Route::resource('subcategories', 'SupCategoryController');
 Route::resource('reviews', 'ReviewController');
 Route::resource('attributes', 'AttributeController');
 Route::resource('product_attribute', 'ProductAttributeController');
@@ -63,6 +62,7 @@ Route::resource('attribute_value', 'AttributeValueController');
 Route::resource('address', 'AddressController');
 Route::resource('shipping', 'ShippingaddressController');
 Route::resource('billing', 'BillingaddressController');
+Route::resource('slider', 'SliderController');
 
 Route::get('/ecommerce', 'HomeController@ecommerce')->name('ecommerce')->middleware('verified');
 Route::get('/getReviews/{id}', 'ReviewController@getReviews')->name('getReviews');
@@ -111,8 +111,9 @@ Route::get('/Chattynoty', 'NotificationController@Chattynoty')->name('Chattynoty
 Route::get('/notifications', 'NotificationController@notifications')->name('notifications');
 
 Route::resource('brands', 'BrandController');
-Route::resource('categories', 'CategoryController');
-Route::resource('menus', 'MenuController');
+    Route::resource('subcategories', 'SubcategoryController');
+    Route::resource('categories', 'CategoryController');
+Route::resource('menu', 'MenuController');
 Auth::routes(['verify' => true]);
 
 Route::get('ratings/{id}', 'ReviewController@ratings')->name('ratings');
@@ -176,8 +177,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/filterProd_table', 'ProductController@filterProd_table')->name('filterProd_table');
 
 
+
+
+
+
 });
 // });
+Route::get('/product_setting', 'ProductController@product_setting')->name('product_setting');
+Route::get('/shop', 'ProductController@shop')->name('shop');
 
 Route::get('product_variant/{id}', 'VariantController@product_variant')->name('product_variant');
 Route::post('variants_values/{id}', 'SkuController@variants_values')->name('variants_values');

@@ -33,4 +33,17 @@ class Sale extends Model
     {
         return $this->belongsTo('App\models\Drawer');
     }
+
+
+    public function setPaypallAttribute($value)
+    {
+        $this->attributes['paypal'] = serialize($value);
+    }
+
+
+    public function getPaypalAttribute($value)
+    {
+        $this->attributes['paypal'] = unserialize($value);
+    }
 }
+

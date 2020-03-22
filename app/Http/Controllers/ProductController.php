@@ -2,11 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\models\Category;
+use App\models\CategoryProduct;
 use App\models\Product;
+use App\models\ProductSettings;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class ProductController extends Controller
 {
+    public function shop()
+    {
+        $products = Product::paginate(10);
+        return $this->transform_product($products);
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,10 +24,48 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(10);
-        return $this->transform_product($products);
-    }
 
+        $setting = ProductSettings::first();
+
+        $featured_id = CategoryProduct::whereIn('category_id', $setting->featured)->get('product_id');
+        $featured = [];
+        foreach ($featured_id as $key => $value) {
+            $featured[] = $value->product_id;
+        }
+
+
+        $newproduct_id = CategoryProduct::whereIn('category_id', $setting->newproduct)->get('product_id');
+        $newproduct = [];
+        foreach ($newproduct_id as $key => $value) {
+            $newproduct[] = $value->product_id;
+        }
+
+
+
+        $bestsellers_id = CategoryProduct::whereIn('category_id', $setting->bestsellers)->get('product_id');
+        $bestsellers = [];
+        foreach ($bestsellers_id as $key => $value) {
+            $bestsellers[] = $value->product_id;
+        }
+
+
+        $featured = Product::whereIn('id', $setting->featured)->paginate(10);
+        $newproduct = Product::whereIn('id', $setting->newproduct)->paginate(10);
+        $bestsellers = Product::whereIn('id', $setting->bestsellers)->paginate(10);
+
+
+        // $featured_t = $this->transform_product($featured);
+        // $newproduct_t = $this->transform_product($newproduct);
+        // $bestsellers_t = $this->transform_product($bestsellers);
+
+        $product = array(
+            'featured' => $this->transform_product($featured),
+            'bestsellers' => $this->transform_product($newproduct),
+            'newproduct' => $this->transform_product($bestsellers)
+        );
+
+        return $product;
+    }
 
     /**
      * Display the specified resource.
@@ -56,6 +104,13 @@ class ProductController extends Controller
             return $product;
         });
         return $products;
+    }
+
+    public function product_setting()
+    {
+        $setting = ProductSettings::first();
+        return $setting;
+
     }
 
 }

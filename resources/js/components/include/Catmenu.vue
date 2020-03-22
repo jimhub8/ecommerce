@@ -6,8 +6,8 @@
             Categories
         </p>
         <ul class="categori-menu-list menu-hidden" style="display: block;" v-show="show_menu">
-            <li v-for="(item, index) in menus" :key="index">
-                <a href="shop.html">{{ item.name }}<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            <li v-for="(item, index) in menus.data" :key="index">
+                <a href="#">{{ item.menu }}<i class="fa fa-angle-right" aria-hidden="true"></i></a>
                 <!-- categori Mega-Menu Start -->
                 <ul class="ht-dropdown megamenu first-megamenu" style="width: auto;">
                     <!-- Single Column Start -->
@@ -17,8 +17,8 @@
                         <ul>
                             <v-layout row wrap>
                                 <v-flex sm3>
-                                    <li style="cursor:pointer" class="menu-tile" @click="gotoCat(category.id)">{{ category.name }}</li>
-                                    <li style="cursor:pointer; color: black;" v-for="subcat in category.sub_categories" :key="subcat.id" @click="gotoSub(subcat.id)">{{ subcat.name }}</li>
+                                    <li style="cursor:pointer" class="menu-tile" @click="gotoCat(category.id)">{{ category.category }}</li>
+                                    <li style="cursor:pointer; color: black;" v-for="subcat in category.subcategories" :key="subcat.id" @click="gotoSub(subcat.id)">{{ subcat.subcategory }}</li>
                                 </v-flex>
                             </v-layout>
                         </ul>
@@ -34,7 +34,6 @@
 
 <script>
 export default {
-    props: ['menus', 'categories'],
     data() {
         return {
             show_menu: false,
@@ -69,6 +68,35 @@ export default {
                 }
             });
             // eventBus.$emit("gotoCatEvent", item);
+        },
+
+
+
+        getCategory() {
+            var payload = {
+                model: 'categories',
+                update_list: 'updateCategoryList',
+            }
+            this.$store.dispatch('getItems', payload)
+        },
+
+
+        getMenu() {
+
+            var payload = {
+                model: 'menu',
+                update_list: 'updateMenuList',
+            }
+
+            this.$store.dispatch('getItems', payload)
+        },
+    },
+    computed: {
+        menus() {
+            return this.$store.getters.menu
+        },
+        categories() {
+            return this.$store.getters.categories
         },
     },
 }

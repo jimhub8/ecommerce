@@ -1,6 +1,6 @@
 <template>
 <div>
-    <v-data-iterator :items="products.data" :items-per-page.sync="itemsPerPage" :page="page" :search="search" :sort-by="sortBy.toLowerCase()" :sort-desc="sortDesc" hide-default-footer>
+    <v-data-iterator :items="products.bestsellers.data" :items-per-page.sync="itemsPerPage" :page="page" :search="search" :sort-by="sortBy.toLowerCase()" :sort-desc="sortDesc" hide-default-footer>
         <template v-slot:header>
             <v-toolbar dark color="blue darken-3" class="mb-1">
                 <!-- <v-text-field v-model="search" clearable flat solo-inverted hide-details prepend-inner-icon="search" label="Search"></v-text-field>
@@ -104,15 +104,12 @@
             </v-row>
         </template>
     </v-data-iterator>
-    <myVariants></myVariants>
 </div>
 </template>
 
 <script>
-import myVariants from './variants'
 export default {
     components: {
-        myVariants,
     },
     data() {
         return {
@@ -131,7 +128,7 @@ export default {
     },
     computed: {
         numberOfPages() {
-            return Math.ceil(this.products.data.length / this.itemsPerPage)
+            return Math.ceil(this.products.bestsellers.data.length / this.itemsPerPage)
         },
         filteredKeys() {
             return this.keys.filter(key => key !== `Name`)
@@ -139,7 +136,7 @@ export default {
 
         products() {
             return this.$store.getters.products
-        }
+        },
     },
     methods: {
         nextPage() {

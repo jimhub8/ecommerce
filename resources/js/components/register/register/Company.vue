@@ -50,7 +50,7 @@
                             <v-btn color="red" darken-1 raised @click="onPickFile" style="color: #fff;">Choose Logo</v-btn>
                             <input type="file" @change="Getimage" accept="image/*" style="display: none" ref="fileInput">
                             <img v-show="imagePlaced" :src="avatar" style="width: 200px; height: 200px;">
-                            <!-- <v-btn @click="upload" flat v-show="imagePlaced" :loading="loading" :disabled="loading">Upload</v-btn> -->
+                            <!-- <v-btn @click="upload" text v-show="imagePlaced" :loading="loading" :disabled="loading">Upload</v-btn> -->
                         </v-card>
                     </v-container>
                 </v-form>

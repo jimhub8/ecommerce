@@ -7,8 +7,8 @@
             </div>
             <div class="widget-content">
                 <ul class="product-categories">
-                    <li class="cat-item" v-for="cat in category" :key="cat.id">
-                        <p style="cursor: pointer" @click="FilterShop(cat.id)">{{ cat.name }}</p>
+                    <li class="cat-item" v-for="category in categories.data" :key="category.id">
+                        <p style="cursor: pointer" @click="FilterShop(category.id)">{{ category.category }}</p>
                         <!-- <span class="count">(5)</span> -->
                     </li>
                 </ul>
@@ -59,15 +59,15 @@ export default {
                 data: this.filter_data,
 
             }
-            this.$store.dispatch('filterData', payload)
-                .then((res) => {
-                    eventBus.$emit("StoprogEvent");
-                })
+            this.$store.dispatch('filterItems', payload)
+                // .then((res) => {
+                //     eventBus.$emit("StoprogEvent");
+                // })
         },
         getCategory() {
             var payload = {
                 model: 'categories',
-                update: 'updateCategoryList',
+                update_list: 'updateCategoryList',
             }
             this.$store.dispatch('getItems', payload)
         }
@@ -76,8 +76,8 @@ export default {
         this.getCategory();
     },
     computed: {
-        category() {
-            return this.$store.getters.category
+        categories() {
+            return this.$store.getters.categories
         }
     },
 

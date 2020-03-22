@@ -28,5 +28,5 @@
 </transition>
 </v-app>
 @endif
-<my-footer></my-footer>
+{{-- <my-footer></my-footer> --}}
 @endsection

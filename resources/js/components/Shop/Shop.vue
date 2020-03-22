@@ -1,10 +1,10 @@
 <template>
 <div>
     <headerP></headerP>
-    <div v-show="loading" style="text-align: center; width: 100%; margin-top: 200px;">
+    <!-- <div v-show="loading" style="text-align: center; width: 100%; margin-top: 200px;">
         <v-progress-circular :width="3" indeterminate color="red" style="margin: 1rem"></v-progress-circular>
-    </div>
-    <section class="bgwhite p-t-55 p-b-65" v-show="!loading">
+    </div> -->
+    <section class="bgwhite p-t-55 p-b-65">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6 col-md-4 col-lg-3 p-b-50">
@@ -196,7 +196,6 @@
                                             <span>Wish list</span>
                                         </v-tooltip>
 
-
                                         <div class="block2-btn-addcart w-size1 trans-0-4">
                                             <!-- Button -->
                                             <v-btn color="primary" @click="addToCart(product)">Add to Cart</v-btn>
@@ -232,19 +231,23 @@
             </div>
         </div>
     </section>
+    <myVariants></myVariants>
 </div>
 </template>
 
 <script>
 import headerP from "../include/Headerpartial";
 import myFilter from './details/filter'
+
+import myVariants from '../home/products/variants'
+
 export default {
     components: {
-        headerP, myFilter
+        headerP,
+        myFilter, myVariants
     },
     data() {
         return {
-            menus: [],
             form: {
                 search: ""
             },
@@ -273,7 +276,6 @@ export default {
                 state: "All"
             },
             loader: false,
-            wish: [],
             cat_id: null,
 
             filter_data: {
@@ -285,16 +287,6 @@ export default {
     methods: {
         searchItems() {
             eventBus.$emit("progressEvent");
-            // axios
-            //     .post("/search", this.form)
-            //     .then(response => {
-            //         eventBus.$emit("StoprogEvent");
-            //         this.products = response.data;
-            //     })
-            //     .catch(error => {
-            //         eventBus.$emit("StoprogEvent");
-            //         this.errors = error.response.data.errors;
-            //     });
         },
         redirect(proId) {
             // alert('oooo')
@@ -315,42 +307,43 @@ export default {
         },
         getProducts() {
             var payload = {
-                model: 'products',
+                model: 'shop',
                 update_list: 'updateProductsList',
             }
             this.$store.dispatch('getItems', payload)
         },
+        // addToCart(cart) {
+        //     console.log(cart);
+
+        //     cart.order_qty = 1
+        //     eventBus.$emit("addCartEvent", cart);
+        // },
+
+
         addToCart(cart) {
+            if (cart.product_variants.length > 0) {
+                eventBus.$emit('selectVariantsEvent', cart)
+                // this.select_variants()
+                return
+            }
             cart.order_qty = 1
             eventBus.$emit("addCartEvent", cart);
         },
 
         next(page) {
-            eventBus.$emit("progressEvent");
-            axios
-                .post(this.products.path + `?page=` + this.products.current_page, {
-                    item: this.cat_id,
-                    price: this.priceSelect,
-                    itemSelect: this.itemSelect
-                })
-                .then(response => {
-                    eventBus.$emit("StoprogEvent");
-                    this.products = response.data;
-                })
-                .catch(error => {
-                    eventBus.$emit("StoprogEvent");
-                    this.errors = error.response.data.errors;
-                });
+            var payload = {
+                path: this.products.path,
+                page: this.products.current_page,
+                update_list: 'updateProductsList',
+            }
+            this.$store.dispatch('nextPage', payload)
         },
         getMenus() {
-            axios
-                .get("/menus")
-                .then(response => {
-                    this.menus = response.data;
-                })
-                .catch(error => {
-                    this.errors = error.response.data.errors;
-                });
+            var payload = {
+                model: 'menus',
+                update_list: 'updateMenuList',
+            }
+            this.$store.dispatch('getItems', payload)
         },
         FilterShop(id) {
             eventBus.$emit("progressEvent");
@@ -363,53 +356,20 @@ export default {
 
             }
             this.$store.dispatch('filterData', payload)
-            // axios
-            //     .post("/FilterShop", {
-            //         item: this.cat_id,
-            //         price: this.price,
-            //         itemSelect: this.itemSelect
-            //     })
-            //     .then(response => {
-            //         eventBus.$emit("StoprogEvent");
-            //         this.loader = false;
-            //         this.products = response.data;
-            //     })
-            //     .catch(error => {
-            //         eventBus.$emit("StoprogEvent");
-            //         this.loader = false;
-            //         this.errors = error.response.data.errors;
-            //     });
         },
         getWish() {
-            eventBus.$emit("progressEvent");
-            axios
-                .get("/wish")
-                .then(response => {
-                    eventBus.$emit("StoprogEvent");
-                    this.wish = response.data;
-                })
-                .catch(error => {
-                    eventBus.$emit("StoprogEvent");
-                    this.errors = error.response.data.errors;
-                });
+
+
+            var payload = {
+                model: 'wish',
+                update_list: 'updateWishList',
+            }
+            this.$store.dispatch('getItems', payload)
+
+
         },
         addToWish(item) {
             eventBus.$emit("WishListEvent", item);
-            // eventBus.$emit("progressEvent");
-            // // eventBus.$emit("loadingRequest");
-            // axios
-            //   .patch(`/wish/${item}`)
-            //   .then(response => {
-            //     eventBus.$emit("alertRequest", 'Added To Wishlist');
-            //     eventBus.$emit("StoprogEvent");
-            //     this.FilterShop()
-            //     // this.message = "added";
-            //     // this.snackbar = true;
-            //   })
-            //   .catch(error => {
-            //     eventBus.$emit("StoprogEvent");
-            //     this.errors = error.response.data.errors;
-            //   });
         }
     },
     mounted() {
@@ -433,8 +393,14 @@ export default {
         products() {
             return this.$store.getters.products
         },
+        menus() {
+            return this.$store.getters.menu
+        },
         loading() {
             return this.$store.getters.loading
+        },
+        wish() {
+            return this.$store.getters.wish
         }
     },
 };
