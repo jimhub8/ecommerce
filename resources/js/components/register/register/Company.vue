@@ -7,7 +7,7 @@
                     <v-container grid-list-xl fluid>
                         <v-layout wrap>
                             <v-flex xs12 sm6>
-                                <v-text-field v-model="account.company_name" color="blue darken-2" label="Legal Name / Company Name*" required></v-text-field>
+                                <v-text-field v-model="account.company_name" color="blue darken-2" label="Store Name / Company Name*" required></v-text-field>
                                 <small class="has-text-danger" v-if="errors.company_name">{{ errors.company_name[0] }}</small>
                             </v-flex>
                             <v-flex xs12 sm6>
@@ -35,23 +35,25 @@
                                 <small class="has-text-danger" v-if="errors.postal_code">{{ errors.postal_code[0] }}</small>
                             </v-flex>
                             <v-flex xs12 sm6>
-                                <v-text-field v-model="account.company_businessno" color="blue darken-2" label="Business Registration No." required></v-text-field>
-                                <small class="has-text-danger" v-if="errors.company_businessno">{{ errors.company_businessno[0] }}</small>
+                                <v-text-field v-model="account.business_no" color="blue darken-2" label="Business Registration No." required></v-text-field>
+                                <small class="has-text-danger" v-if="errors.business_no">{{ errors.business_no[0] }}</small>
                             </v-flex>
                             <v-flex xs12 sm6>
-                                <v-text-field v-model="account.location" color="blue darken-2" label="Plaza/Mall" required></v-text-field>
-                                <small class="has-text-danger" v-if="errors.location">{{ errors.location[0] }}</small>
+                                <v-text-field v-model="account.building" color="blue darken-2" label="Building" required></v-text-field>
+                                <small class="has-text-danger" v-if="errors.building">{{ errors.building[0] }}</small>
+                            </v-flex>
+                            <v-flex xs12 sm6>
+                                <v-text-field v-model="account.floor" color="blue darken-2" label="Floor" required></v-text-field>
+                                <small class="has-text-danger" v-if="errors.floor">{{ errors.floor[0] }}</small>
                             </v-flex>
                         </v-layout>
 
-                        <v-card>
+                        <!-- <v-card>
                             <v-divider></v-divider>
-                            <!-- <h6 class="text-center" color="green">Admin</h6> -->
                             <v-btn color="red" darken-1 raised @click="onPickFile" style="color: #fff;">Choose Logo</v-btn>
                             <input type="file" @change="Getimage" accept="image/*" style="display: none" ref="fileInput">
                             <img v-show="imagePlaced" :src="avatar" style="width: 200px; height: 200px;">
-                            <!-- <v-btn @click="upload" text v-show="imagePlaced" :loading="loading" :disabled="loading">Upload</v-btn> -->
-                        </v-card>
+                        </v-card> -->
                     </v-container>
                 </v-form>
             </v-layout>

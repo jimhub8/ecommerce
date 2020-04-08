@@ -1,18 +1,14 @@
 <template>
-<v-app>
-    <v-container fluid>
-        <VBtn color="success" @click="getProducts">text</VBtn>
-        <div style="width:100%;auto;height:600px">
-            <myCategory></myCategory>
-            <myVariants></myVariants>
+<!-- <VBtn color="success" @click="getProducts">text</VBtn> -->
+<div class="container">
+    <myCategory></myCategory>
+    <myVariants></myVariants>
 
-            <myFeatured></myFeatured>
-            <myNew></myNew>
-            <myBest></myBest>
+    <myFeatured></myFeatured>
+    <myNew></myNew>
+    <myBest></myBest>
 
-        </div>
-    </v-container>
-</v-app>
+</div>
 </template>
 
 <script>
@@ -33,7 +29,10 @@ export default {
         slider,
         slideritem,
         myBest,
-        myCategory, myVariants, myNew, myFeatured
+        myCategory,
+        myVariants,
+        myNew,
+        myFeatured
     },
     data() {
         return {

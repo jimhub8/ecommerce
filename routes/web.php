@@ -50,9 +50,10 @@ Route::any('/mpesapay', 'SafmpesaController@mpesapay')->name('mpesapay');
 Route::post('couponApply', 'CouponController@couponApply')->name('couponApply');
 
 Route::get('couponSes', 'CartController@couponSes')->name('couponSes');
+Route::resource('order_address', 'OrdershippingController');
 
 // Route::get('/', 'Client\HomeController@index')->name('client.dashboard');
-Route::get('/', 'HomeController@ecommerce')->name('ecommerce');
+Route::get('/', 'HomeController@index');
 Route::resource('products', 'ProductController');
 Route::resource('wish', 'WishController');
 Route::resource('reviews', 'ReviewController');
@@ -94,9 +95,11 @@ Route::post('/proImg/{id}', 'ProductController@proImg')->name('proImg');
 Route::get('/featured', 'ProductController@featured')->name('featured');
 Route::get('/bestSell', 'ProductController@bestSell')->name('bestSell');
 Route::get('/newProduct', 'ProductController@newProduct')->name('newProduct');
-Route::get('/related/{id}', 'ProductController@related')->name('related');
 Route::post('/search', 'ProductController@search')->name('search');
 Route::post('/searchProduct', 'ProductController@searchProduct')->name('searchProduct');
+
+Route::get('/related/{id}', 'ProductController@related')->name('related');
+
 
 Route::post('/searchItems/{search}', 'ProductController@searchItems')->name('searchItems');
 

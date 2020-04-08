@@ -21,15 +21,12 @@
                         <li>
                             <router-link @click.native="progressBar" to="/">Home</router-link>
                         </li>
-
                         <li>
                             <router-link @click.native="progressBar" to="/shop">Shop</router-link>
                         </li>
-
                         <li>
                             <router-link @click.native="progressBar" to="/cartHome">Cart</router-link>
                         </li>
-
                         <!-- <li>
                                 <router-link @click.native="progressBar" to="/about">About Us</router-link>
                             </li> -->
@@ -37,12 +34,11 @@
                     </ul>
                 </nav>
             </div>
-
             <div class="header-icons">
                 <!-- <a href="/login" class="header-wrapicon1 dis-block" v-if="user">
             <img src="/storage/icons/icon-header-01.png" class="header-icon1" alt="ICON">
           </a> -->
-                <a href="/vendors" class="v-btn v-btn--text theme--light primary--text" style="text-decoration: none;">Become a seller</a>
+                <a href="/seller/register" class="v-btn v-btn--text theme--light primary--text" style="text-decoration: none;">Become a seller</a>
                 <Logout :user="user" v-if="user"></Logout>
 
                 <!-- <v-btn href="/login" class="v-btn v-btn--text theme--light primary--text" style="text-decoration: none;" v-else>Login</v-btn> -->
@@ -93,8 +89,8 @@
                     </div> -->
                     <!-- <VDivider vertical /> -->
                     <!--  -->
-                    <!-- <a href="/vendors" class="v-btn v-btn--text theme--light primary--text" style="text-decoration: none;margin: 0 10px">Become a seller</a> -->
-                    <v-btn color="primary" href="/vendors" style="margin: 0 10px">Become a seller</v-btn>
+                    <!-- <a href="/seller/register" class="v-btn v-btn--text theme--light primary--text" style="text-decoration: none;margin: 0 10px">Become a seller</a> -->
+                    <v-btn color="primary" href="/seller/register" style="margin: 0 10px">Become a seller</v-btn>
                     <!-- <VDivider vertical /> -->
 
                     <Logout :user="user" v-if="user"></Logout>
@@ -563,7 +559,18 @@ export default {
                     search: this.search
                 }
             });
-        }
+        },
+
+
+        redirect(id) {
+            // alert('oooo')
+            this.$router.push({
+                name: "details",
+                params: {
+                    id: id
+                }
+            });
+        },
     },
 
     created() {
@@ -605,6 +612,13 @@ export default {
         eventBus.$on("errorEvent", data => {
             this.showerror(data);
         });
+
+
+        eventBus.$on("Productdetails", data => {
+            this.redirect(data);
+        });
+
+
         this.timer = window.setInterval(() => {
             this.getCart();
             // eventBus.$emit("cartEvent", response.data);
@@ -673,6 +687,8 @@ export default {
 </script>
 
 <style scoped>
+
+
 #header1 .main_menu>li>a:hover {
     color: #f0aca1;
 }

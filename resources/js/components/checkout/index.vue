@@ -1,33 +1,47 @@
 <template>
-<VCard style="padding: 20px;width: 80%; margin: auto;box-shadow: 7px 7px 8px -4px rgb(210, 225, 246),0 12px 17px 2px rgb(210, 225, 246),0 5px 22px 4px rgb(210, 225, 246) !important;">
-    <v-stepper v-model="e6" vertical>
-        <v-stepper-step :complete="e6 > 1" step="1">User information</v-stepper-step>
-        <v-stepper-content step="1" style="background: #fff;">
-            <v-card color="white lighten-1" class="mb-5">
-                <myAddress :user="user" :form="form"></myAddress>
-            </v-card>
-            <v-btn color="primary" @click="goToStep2">Continue</v-btn>
-        </v-stepper-content>
+<div>
+    <VCard style="padding: 20px;width: 80%; margin: auto;box-shadow: 7px 7px 8px -4px rgb(210, 225, 246),0 12px 17px 2px rgb(210, 225, 246),0 5px 22px 4px rgb(210, 225, 246) !important;" v-if="user">
+        <v-stepper v-model="e6" vertical>
+            <v-stepper-step :complete="e6 > 1" step="1">User information</v-stepper-step>
+            <v-stepper-content step="1" style="background: #fff;">
+                <v-card color="white lighten-1" class="mb-5">
+                    <myAddress :user="user" :form="form"></myAddress>
+                </v-card>
+                <v-btn color="primary" @click="goToStep2">Continue</v-btn>
+            </v-stepper-content>
 
-        <v-stepper-step :complete="e6 > 2" step="2">Payment</v-stepper-step>
-        <v-stepper-content step="2" style="background: #fff;">
-            <v-card color="white lighten-1" class="mb-5">
-                <myPayment :account="account"></myPayment>
-            </v-card>
-            <v-btn color="primary" @click="goToStep3">Continue</v-btn>
-            <v-btn flat @click="e6 = 1">Back</v-btn>
-        </v-stepper-content>
+            <v-stepper-step :complete="e6 > 2" step="2">Payment</v-stepper-step>
+            <v-stepper-content step="2" style="background: #fff;">
+                <v-card color="white lighten-1" class="mb-5">
+                    <myPayment :account="account"></myPayment>
+                </v-card>
+                <v-btn color="primary" @click="goToStep3">Continue</v-btn>
+                <v-btn flat @click="e6 = 1">Back</v-btn>
+            </v-stepper-content>
 
-        <v-stepper-step :complete="e6 > 3" step="3">Complete</v-stepper-step>
-        <v-stepper-content step="3" style="background: #fff;">
-            <v-card color="white lighten-1" class="mb-5">
-                <myComplete :account="account"></myComplete>
-            </v-card>
-            <!-- <v-btn color="primary" @click="finish">Place order</v-btn> -->
-            <v-btn flat @click="e6 = 2">Back</v-btn>
-        </v-stepper-content>
-    </v-stepper>
-</VCard>
+            <v-stepper-step :complete="e6 > 3" step="3">Complete</v-stepper-step>
+            <v-stepper-content step="3" style="background: #fff;">
+                <v-card color="white lighten-1" class="mb-5">
+                    <myComplete :account="account"></myComplete>
+                </v-card>
+                <!-- <v-btn color="primary" @click="finish">Place order</v-btn> -->
+                <v-btn flat @click="e6 = 2">Back</v-btn>
+            </v-stepper-content>
+        </v-stepper>
+    </VCard>
+    <div v-else style="padding: 20px 0;">
+        <VCard style="padding: 20px;width: 80%; margin: auto;box-shadow: 7px 7px 8px -4px rgb(210, 225, 246),0 12px 17px 2px rgb(210, 225, 246),0 5px 22px 4px rgb(210, 225, 246) !important;" class="text-center">
+            <VCardText>
+                You are not loged in! Please login to proceed.
+            </VCardText>
+            <v-card-actions style="width: 15%;margin: auto;">
+
+                <v-btn text href="/login" color="primary">Login</v-btn>
+                <v-btn text href="/register" color="primary">Sign up</v-btn>
+            </v-card-actions>
+        </VCard>
+    </div>
+</div>
 </template>
 
 <script>

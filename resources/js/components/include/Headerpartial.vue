@@ -4,7 +4,7 @@
         Dell<span style="color: rgba(2, 234, 0, 0.58);">Mat</span>
     </h2>
     <p class="m-text13 t-center">
-        Living in the future 
+        Living in the future
     </p>
 </section>
 </template>
@@ -16,8 +16,8 @@ export default {
 </script>
 
 <style scoped>
-.bg-title-page{ 
-    background-image: url(/storage/img/8.jpg) !important;
+.bg-title-page{
+    background-image: url(/storage/8.jpg) !important;
     background-attachment: fixed !important;
 }
 </style>

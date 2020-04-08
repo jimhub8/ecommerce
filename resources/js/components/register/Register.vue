@@ -34,30 +34,31 @@
 </template>
 
 <script>
-import Register from './register/Register.vue';
+// import Register from './register/Register.vue';
 import Company from './register/Company.vue';
 import Bank from './register/Bank';
 import Seller from './register/Seller';
 import myTips from './tips'
 export default {
     components: {
-        Register,
+        // Register,
         Company,
         Seller,
-        Bank, myTips
+        Bank,
+        myTips
     },
     data() {
         return {
             account: {
-                user_name: '',
-                user_email: '',
-                user_phone: '',
-                user_address: '',
+                name: '',
+                email: '',
+                phone: '',
+                address: '',
                 company_name: '',
                 company_email: '',
                 company_phone: '',
                 company_address: '',
-                company_businessno: '',
+                business_no: '',
                 company_website: '',
                 account_no: '',
                 account_name: '',
@@ -96,10 +97,10 @@ export default {
         finish() {
             //   eventBus.$emit("userEvent", this.company_id);
             this.loading = true
-            axios.post('/vendor_user', this.$data.account).
+            axios.post('/seller/seller', this.$data.account).
             then((response) => {
                     this.loading = false
-                    window.location.replace('/thankyou')
+                    // window.location.replace('/thankyou')
                     this.$emit('alertRequest', 'Account Created');
                     eventBus.$emit("userResponse");
                 })

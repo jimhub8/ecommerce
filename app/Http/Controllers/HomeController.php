@@ -10,6 +10,15 @@ use Illuminate\Support\Arr;
 
 class HomeController extends Controller
 {
+    public function index()
+    {
+        if (Auth::check()) {
+            $auth_user = Auth::user();
+            // dd($auth_user);
+            return view('welcome', compact('auth_user'));
+        }
+        return view('welcome');
+    }
     /**
      * Create a new controller instance.
      *
@@ -75,15 +84,5 @@ class HomeController extends Controller
         $auth_user = array_prepend($user->toArray(), $permissions, 'can');
         return view('admin.admin', compact('auth_user', 'company'));
         // return redirect('/')->where('name', '[A-Za-z]+');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return redirect('/');
     }
 }

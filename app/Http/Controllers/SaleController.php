@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\models\AutoGenerate;
 use App\models\Drawer;
+use App\models\Ordershipping;
 use App\models\ProductSale;
 use App\models\Sale;
+use App\models\Shippingaddress;
 use App\models\Sku;
 use Illuminate\Http\Request;
 use Cart;
@@ -43,7 +45,7 @@ class SaleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function sale($carts, $method, $payment)
+    public function sale($carts, $method, $payment, $data)
     {
         $client_id = Auth::id();
         $total_price = $this->cart_total();
@@ -63,13 +65,13 @@ class SaleController extends Controller
         }
         $sale->save();
         foreach ($carts as $cart) {
-            // dd($cart);
+            // dd($cart->name['vendor_id']);
             $sku_id = Sku::where('sku_no', $cart->name['sku_no'])->first('id');
             $sku_id = $sku_id->id;
             $product_sale = new ProductSale;
             $product_sale->sale_id = $sale->id;
             $product_sale->product_id = $cart->name['id'];
-            $product_sale->vendor_id = 1;
+            $product_sale->seller_id = $cart->name['vendor_id'];
             $product_sale->sku_id = $sku_id;
             $product_sale->sku_no =  $cart->name['sku_no'];
             $product_sale->price = $cart->name['price'];
@@ -77,7 +79,48 @@ class SaleController extends Controller
             $product_sale->total_price = $cart->name['price'] * $cart->quantity;
             $product_sale->save();
         }
+
+        if (Auth::check()) {
+            if (Auth::user()->shipping) {
+                $address = Auth::user()->shipping;
+            } else {
+                $address = $data;
+                foreach ($address as  $value) {
+                    unset($address['payment']);
+                    unset($address['billing']);
+                    unset($address['shipping']);
+                }
+            }
+            $shipping_id = $this->shipping($address);
+
+            Ordershipping::firstOrCreate(
+                ['sale_id' => $sale->id],
+                [
+                    'shippingaddress_id' => $shipping_id,
+                ]
+            );
+        }
+
         return $sale;
+    }
+
+    public function shipping($address)
+    {
+        // dd($address);
+        $shippingaddress = Shippingaddress::firstOrCreate(
+            ['user_id' => Auth::id()],
+            [
+                'name' => (array_key_exists('name', $address)) ?$address['name'] : null,
+                'street_address' => (array_key_exists('street_address', $address)) ?$address['street_address'] : null,
+                'town' => (array_key_exists('town', $address)) ? $address['town'] : $address['county'] ,
+                'country' => (array_key_exists('country', $address)) ?$address['country'] : null,
+                'county' => (array_key_exists('county', $address)) ?$address['county'] : null,
+                'postal_code' => (array_key_exists('postal_code', $address)) ?$address['postal_code'] : null,
+                'phone' => (array_key_exists('phone', $address)) ?$address['phone'] : null,
+                'email' => (array_key_exists('email', $address)) ?$address['email'] : null,
+            ]
+        );
+        return $shippingaddress->id;
     }
 
     /**

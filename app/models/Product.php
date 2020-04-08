@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Product extends Model
 {
     use SoftDeletes;
-    public $with = ['product_variants', 'skus', 'categories'];
+    public $with = ['skus', 'categories'];
     public function sales()
     {
         return $this->belongsToMany(Sale::class);

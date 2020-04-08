@@ -12,56 +12,17 @@
                         <!--  -->
                         <!-- <h4 class="m-text14 p-b-7">Categories</h4> -->
                         <myFilter></myFilter>
-
-                        <!-- <ul class="p-b-54">
-                            <li class="p-t-4">
-                                <v-btn raised color="success" @click="catAll" v-if="cat_id === null">All</v-btn>
-                                <v-btn flat color="primary" @click="catAll" v-else>All</v-btn>
-                            </li>
-
-                            <li class="p-t-4" v-for="category in categories" :key="category.id">
-                                <v-btn raised color="success" @click="catId(category.id)" v-if="category.id === cat_id">{{ category.name }}</v-btn>
-                                <v-btn flat color="primary" @click="catId(category.id)" v-else>{{ category.name }}</v-btn>
-                            </li>
-                        </ul> -->
-
-                        <!-- <div class="search-product pos-relative bo4 of-hidden">
-                            <input
-                                class="s-text7 size6 p-l-23 p-r-50"
-                                type="text"
-                                name="search-product"
-                                placeholder="Search Products..."
-                                v-model="form.search"
-                                @keyup.enter="searchItems">
-
-                            <button class="flex-c-m size5 ab-r-m color2 color0-hov trans-0-4">
-                  <i class="fs-12 fa fa-search" aria-hidden="true"></i>
-                </button>
-                        </div> -->
                     </div>
                 </div>
 
                 <div class="col-sm-6 col-md-8 col-lg-9 p-b-50">
                     <!--  -->
                     <div class="flex-sb-m flex-w p-b-35">
-                        <!-- <div class="flex-w">
-                            <div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
-                                <v-flex xs12 sm12>
-                                    <v-select :items="items" v-model="itemSelect" label="Filter By" single-line item-text="state" item-value="abbr" return-object persistent-hint @change="FilterShop"></v-select>
-                                </v-flex>
-                            </div>
-                            <div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
-                                <v-flex xs12 sm12>
-                                    <v-select :items="price" v-model="priceSelect" label="Filter By Price" single-line item-text="state" item-value="state" return-object persistent-hint @change="FilterShop"></v-select>
-                                </v-flex>
-                            </div>
-                        </div> -->
-
                         <span class="s-text8 p-t-5 p-b-5">Showing page {{ products.current_page }} of {{ products.last_page }} pages</span>
                     </div>
 
                     <!-- Product -->
-                    <div class="row">
+                    <div class="row" v-if="products.data.length > 0">
                         <div class="col-sm-12 col-md-6 col-lg-4 p-b-50" v-for="product in products.data" :key="product.id">
                             <!-- Block2 -->
                             <div class="block2">
@@ -69,10 +30,6 @@
                                     <img :src="product.image" alt="IMG-PRODUCT">
 
                                     <div class="block2-overlay trans-0-4">
-                                        <!-- <span class="block2-btn-addwishlist hov-pointer trans-0-4">
-                        <i class="icon-wishlist icon_heart_alt" aria-hidden="true" @click.native="addToWish(product.id)"></i>
-                        <i class="icon-wishlist icon_heart dis-none" aria-hidden="true" @click.native="addToWish(product.id)"></i>
-                      </span> -->
                                         <v-tooltip bottom style="margin-left: 90%;" v-if="product.wish_list === 1">
                                             <v-btn icon class="mx-0 block2-btn-addwishlist hov-pointer trans-0-4" slot="activator" @click="addToWish(product.id)" style="margin-top: -20px;">
                                                 <v-icon color="pink darken-2" large>favorite</v-icon>
@@ -98,10 +55,6 @@
                                     <img :src="product.image" alt="IMG-PRODUCT">
 
                                     <div class="block2-overlay trans-0-4">
-                                        <!-- <a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
-                        <i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-                        <i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
-                      </a> -->
                                         <v-tooltip bottom style="margin-left: 90%;" v-if="product.wish_list === 1">
                                             <v-btn icon class="mx-0 block2-btn-addwishlist hov-pointer trans-0-4" slot="activator" @click="addToWish(product.id)" style="margin-top: -20px;">
                                                 <v-icon color="pink darken-2" large>favorite</v-icon>
@@ -129,12 +82,12 @@
                             </div>
                         </div>
                     </div>
+
+
+                    <div v-else>
+                        <p class="text-center" style="background: #f2dede; font-size: 13px; color: #a94442 !important;">No products available</p>
+                    </div>
                 </div>
-                <!-- Pagination -->
-                <!-- <div class="pagination flex-m flex-w p-t-26">
-            <a href="#" class="item-pagination flex-c-m trans-0-4 active-pagination">1</a>
-            <a href="#" class="item-pagination flex-c-m trans-0-4">2</a>
-          </div>-->
                 <div class="text-xs-center" style="margin: auto; width: 100%;" v-if="products.last_page > 1">
                     <v-pagination v-model="products.current_page" :length="products.last_page" total-visible="6" @input="next(products.path, products.current_page, 'products')" circle></v-pagination>
                 </div>

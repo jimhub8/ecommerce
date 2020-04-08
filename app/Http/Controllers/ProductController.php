@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\models\Category;
 use App\models\CategoryProduct;
 use App\models\Product;
 use App\models\ProductSettings;
-use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 
 class ProductController extends Controller
 {
@@ -24,6 +21,10 @@ class ProductController extends Controller
      */
     public function index()
     {
+        // dd(env('APP_NAME', 'http://admin.jim'));
+        $setting = ProductSettings::first();
+        // $featured = $setting->featured;
+        // $newproduct = $setting->newproduct;
 
         $setting = ProductSettings::first();
 
@@ -76,8 +77,8 @@ class ProductController extends Controller
     public function show($id)
     {
         $products = Product::where('id', $id)->get();
-        $$products = $this->transform_product($products);
-        return $$products[0];
+        $products = $this->transform_product($products);
+        return $products[0];
     }
 
     public function transform_product($products)
@@ -98,8 +99,8 @@ class ProductController extends Controller
             }
             foreach ($product->images as  $pro_image) {
                 if ($pro_image->display) {
-                    $product->image = $pro_image->image;
-                }
+            $product->image =  $pro_image->image;
+        }
             }
             return $product;
         });
@@ -111,6 +112,28 @@ class ProductController extends Controller
         $setting = ProductSettings::first();
         return $setting;
 
+    }
+
+    public function related($id)
+    {
+        $product = Product::with('categories')->find($id);
+
+
+        foreach ($product->categories as  $value) {
+            // return $value;
+            $categories[] = $value['pivot']['category_id'];
+        }
+        // return $categories;
+
+        $product_id = CategoryProduct::whereIn('category_id', $categories)->get('product_id');
+        $product = [];
+        foreach ($product_id as $key => $value) {
+            $product[] = $value->product_id;
+        }
+        $products = Product::whereIn('id', $product)->paginate(10);
+
+        $products = $this->transform_product($products);
+        return $products;
     }
 
 }

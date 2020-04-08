@@ -1,24 +1,10 @@
 <template>
 <div>
-    <div v-show="loader" style="text-align: center; width: 100%; margin-top: 200px;">
-        <v-progress-circular :width="3" indeterminate color="red" style="margin: 1rem"></v-progress-circular>
-    </div>
-    <div v-show="!loader" id="container">
-        <section class="bgwhite p-t-55 p-b-65">
-            <div id="backImage">
-                <v-layout wrap>
-                    <v-flex sm12 md12>
-                        <myCarousel></myCarousel>
-                    </v-flex>
-                </v-layout>
-            </div>
-        </section>
-        <div>
-            <myProduct></myProduct>
-            <!-- <myFilter v-show="filter"></myFilter> -->
-            <Show></Show>
-        </div>
-    </div>
+    <section class="bgwhite p-t-55 p-b-65">
+        <myCarousel></myCarousel>
+        <myProduct></myProduct>
+                <Show></Show>
+    </section>
 </div>
 </template>
 
@@ -28,13 +14,15 @@ import myFilter from "../filter/Filter";
 import myProduct from "./products";
 import Show from "../home/Show";
 import Menu from "./Menu";
+import myFooter from '../include/Footer'
 export default {
     components: {
         myCarousel,
         Menu,
         Show,
         myProduct,
-        myFilter
+        myFilter,
+        myFooter
     },
     data() {
         return {
@@ -138,67 +126,5 @@ export default {
 </script>
 
 <style scoped>
-#container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
 
-#container.after {
-    position: absolute;
-    color: #000;
-    display: block;
-}
-
-#container:hover.after {
-    display: block;
-    background: rgba(0, 0, 0, 6);
-}
-
-.image-container {
-    position: relative;
-    height: 60vh;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.45);
-}
-
-.image-container .after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 60vh;
-    width: 100%;
-    display: block;
-    color: #fff;
-    background: rgba(0, 0, 0, 0.45);
-}
-
-.image-container:hover .after {
-    display: block;
-    background: rgba(0, 0, 0, 0.45);
-}
-
-#backImage {
-    /* background: url(/storage/cover/pixel.jpeg); */
-    background-position: center;
-    /* background-repeat: no-repeat;  */
-}
-
-#category .active {
-    color: #e65540;
-    padding: 5px 0;
-    cursor: pointer;
-    /* font-size: 17px; */
-    font-style: italic;
-    font-weight: bold;
-}
-
-#category .card-text {
-    cursor: pointer;
-    padding: 5px 0;
-}
-
-#category .card-text:hover {
-    color: #f00;
-}
 </style>

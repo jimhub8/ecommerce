@@ -8,25 +8,25 @@
                     <v-container grid-list-xl fluid>
                         <v-layout wrap>
                             <v-flex xs12 sm6>
-                                <v-text-field v-model="account.user_name" color="purple darken-2" label="Full name" required></v-text-field>
-                                <small class="has-text-danger" v-if="errors.user_name">{{ errors.user_name[0] }}</small>
+                                <v-text-field v-model="account.name" color="purple darken-2" label="Full name" required></v-text-field>
+                                <small class="has-text-danger" v-if="errors.name">{{ errors.name[0] }}</small>
                             </v-flex>
                             <v-flex xs12 sm6>
-                                <v-text-field v-model="account.user_email" color="blue darken-2" label="Email" required></v-text-field>
-                                <small class="has-text-danger" v-if="errors.email">{{ errors.user_email[0] }}</small>
+                                <v-text-field v-model="account.email" color="blue darken-2" label="Email" required></v-text-field>
+                                <small class="has-text-danger" v-if="errors.email">{{ errors.email[0] }}</small>
                             </v-flex>
                             <!-- <v-flex xs12 sm6>
                                         <v-text-field :append-icon="e1 ? 'visibility_off' : 'visibility'" :type="e1 ? 'password' : 'text'" v-model="account.password" name="input-10-2" label="Enter your password" hint="At least 6 characters" min="8" value="" class="input-group--focused"></v-text-field>
                                         <small class="has-text-danger" v-if="errors.password">{{ errors.password[0] }}</small>
                                     </v-flex> -->
                             <v-flex xs12 sm6>
-                                <v-text-field v-model="account.user_address" color="blue darken-2" label="Address" required></v-text-field>
-                                <small class="has-text-danger" v-if="errors.user_address">{{ errors.user_address[0] }}</small>
+                                <v-text-field v-model="account.address" color="blue darken-2" label="Address" required></v-text-field>
+                                <small class="has-text-danger" v-if="errors.address">{{ errors.address[0] }}</small>
                             </v-flex>
-                            <v-flex xs12 sm6>
+                            <!-- <v-flex xs12 sm6>
                                 <v-text-field v-model="account.city" color="blue darken-2" label="City" required></v-text-field>
                                 <small class="has-text-danger" v-if="errors.user_city">{{ errors.user_city[0] }}</small>
-                            </v-flex>
+                            </v-flex> -->
                             <!-- <v-flex xs12 sm6>
                                         <v-text-field v-model="account.country" color="blue darken-2" label="Country" required></v-text-field>
                                         <small class="has-text-danger" v-if="errors.country">{{ errors.country[0] }}</small>
@@ -60,13 +60,11 @@ export default {
     data() {
         const defaultForm = Object.freeze({
             name: '',
-            // password: '',
             email: '',
             phone: '',
             branch: '',
             address: '',
             company: '',
-            // country: '',
         })
         return {
             loading: false,

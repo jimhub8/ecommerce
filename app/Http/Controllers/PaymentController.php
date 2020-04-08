@@ -24,10 +24,30 @@ use App\models\Sale;
 use App\models\AutoGenerate;
 use App\models\Currency;
 use App\models\Sale_update;
+use App\models\Shippingaddress;
 use Illuminate\Support\Facades\Mail;
 
 class PaymentController extends Controller
 {
+    public function shipping($address)
+    {
+        // dd($address);
+        $shippingaddress = Shippingaddress::firstOrCreate(
+            ['user_id' => Auth::id()],
+            [
+                'name' => (array_key_exists('name', $address)) ?$address['name'] : null,
+                'street_address' => (array_key_exists('street_address', $address)) ?$address['street_address'] : null,
+                'town' => (array_key_exists('town', $address)) ? $address['town'] : $address['county'] ,
+                'country' => (array_key_exists('country', $address)) ?$address['country'] : null,
+                'county' => (array_key_exists('county', $address)) ?$address['county'] : null,
+                'postal_code' => (array_key_exists('postal_code', $address)) ?$address['postal_code'] : null,
+                'phone' => (array_key_exists('phone', $address)) ?$address['phone'] : null,
+                'email' => (array_key_exists('email', $address)) ?$address['email'] : null,
+            ]
+        );
+        return $shippingaddress->id;
+    }
+
     public function __construct()
     {
     }
@@ -212,7 +232,7 @@ class PaymentController extends Controller
         $cart = $this->getCart();
         // return $cart;
 
-        $res = $cart_same->sale($cart, 'Paypal', $payment);
+        $res = $cart_same->sale($cart, 'Paypal', $payment, null);
         return $res;
     }
 
@@ -225,7 +245,7 @@ class PaymentController extends Controller
         $cart = $this->getCart();
         // return $cart;
 
-        $res = $cart_same->sale($cart, 'Cash on delivery', null);
+        $res = $cart_same->sale($cart, 'Cash on delivery', null, $request->shipping);
         return $res;
 
 

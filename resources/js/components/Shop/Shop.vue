@@ -13,124 +13,6 @@
                         <!-- <h4 class="m-text14 p-b-7">Categories</h4> -->
                         <myFilter></myFilter>
 
-                        <!-- <ul class="p-b-54">
-                            <li class="p-t-4">
-                                <v-btn raised color="success" @click="catAll" v-if="cat_id === null">All</v-btn>
-                                <v-btn text color="primary" @click="catAll" v-else>All</v-btn>
-                            </li>
-
-                            <li class="p-t-4" v-for="menu in menus" :key="menu.id">
-                                <v-btn raised color="success" @click="catId(menu.id)" v-if="menu.id === cat_id">{{ menu.name }}</v-btn>
-                                <v-btn text color="primary" @click="catId(menu.id)" v-else>{{ menu.name }}</v-btn>
-                            </li>
-                        </ul> -->
-
-                        <!-- <v-flex xs12 sm12>
-                                    <v-select :items="price" v-model="priceSelect" label="Filter By Price" single-line item-text="state" item-value="state" return-object persistent-hint @change="FilterShop"></v-select>
-                                </v-flex> -->
-                        <!-- <v-layout row wrap>
-                            <v-flex sm5  @change="FilterShop">
-                                <el-input placeholder="Please input" v-model="price[0]"></el-input>
-                            </v-flex>
-                            <v-flex sm5  @change="FilterShop" offset-sm1>
-                                <el-input placeholder="Please input" v-model="price[1]"></el-input>
-                            </v-flex>
-                        </v-layout>
-
-                        <label for="">Price Range </label>
-                        <el-slider v-model="price" range :max="500000" @change="FilterShop"></el-slider> -->
-
-                        <!--  -->
-                        <!-- <h4 class="m-text14 p-b-32">Filters</h4>
-                        <div class="filter-color p-t-22 p-b-50 bo3">
-                            <div class="m-text15 p-b-12">Color</div>
-
-                            <ul class="flex-w">
-                                <li class="m-r-10">
-                                    <input
-                      class="checkbox-color-filter"
-                      id="color-filter1"
-                      type="checkbox"
-                      name="color-filter1"
-                    >
-                                    <label class="color-filter color-filter1" for="color-filter1"></label>
-                                </li>
-
-                                <li class="m-r-10">
-                                    <input
-                      class="checkbox-color-filter"
-                      id="color-filter2"
-                      type="checkbox"
-                      name="color-filter2"
-                    >
-                                    <label class="color-filter color-filter2" for="color-filter2"></label>
-                                </li>
-
-                                <li class="m-r-10">
-                                    <input
-                      class="checkbox-color-filter"
-                      id="color-filter3"
-                      type="checkbox"
-                      name="color-filter3"
-                    >
-                                    <label class="color-filter color-filter3" for="color-filter3"></label>
-                                </li>
-
-                                <li class="m-r-10">
-                                    <input
-                      class="checkbox-color-filter"
-                      id="color-filter4"
-                      type="checkbox"
-                      name="color-filter4"
-                    >
-                                    <label class="color-filter color-filter4" for="color-filter4"></label>
-                                </li>
-
-                                <li class="m-r-10">
-                                    <input
-                      class="checkbox-color-filter"
-                      id="color-filter5"
-                      type="checkbox"
-                      name="color-filter5"
-                    >
-                                    <label class="color-filter color-filter5" for="color-filter5"></label>
-                                </li>
-
-                                <li class="m-r-10">
-                                    <input
-                      class="checkbox-color-filter"
-                      id="color-filter6"
-                      type="checkbox"
-                      name="color-filter6"
-                    >
-                                    <label class="color-filter color-filter6" for="color-filter6"></label>
-                                </li>
-
-                                <li class="m-r-10">
-                                    <input
-                      class="checkbox-color-filter"
-                      id="color-filter7"
-                      type="checkbox"
-                      name="color-filter7"
-                    >
-                                    <label class="color-filter color-filter7" for="color-filter7"></label>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="search-product pos-relative bo4 of-hidden">
-                            <input
-                                class="s-text7 size6 p-l-23 p-r-50"
-                                type="text"
-                                name="search-product"
-                                placeholder="Search Products..."
-                                v-model="form.search"
-                                @keyup.enter="searchItems">
-
-                            <button class="flex-c-m size5 ab-r-m color2 color0-hov trans-0-4">
-                  <i class="fs-12 fa fa-search" aria-hidden="true"></i>
-                </button>
-                        </div> -->
                     </div>
                 </div>
 
@@ -150,7 +32,7 @@
                     </div>
 
                     <!-- Product -->
-                    <div class="row">
+                    <div class="row" v-if="products.data.length > 0">
                         <div class="col-sm-12 col-md-6 col-lg-4 p-b-50" v-for="product in products.data" :key="product.id">
                             <!-- Block2 -->
                             <div class="block2">
@@ -219,12 +101,10 @@
                             </div>
                         </div>
                     </div>
+                    <div v-else>
+                        <p class="text-center" style="background: #f2dede; font-size: 13px; color: #a94442 !important;">No products available</p>
+                    </div>
                 </div>
-                <!-- Pagination -->
-                <!-- <div class="pagination flex-m flex-w p-t-26">
-            <a href="#" class="item-pagination flex-c-m trans-0-4 active-pagination">1</a>
-            <a href="#" class="item-pagination flex-c-m trans-0-4">2</a>
-          </div>-->
                 <div class="text-xs-center" style="margin: auto; width: 100%;" v-if="products.last_page > 1">
                     <v-pagination v-model="products.current_page" :length="products.last_page" total-visible="6" @input="next(products.path, products.current_page, 'products')" circle></v-pagination>
                 </div>
@@ -244,7 +124,8 @@ import myVariants from '../home/products/variants'
 export default {
     components: {
         headerP,
-        myFilter, myVariants
+        myFilter,
+        myVariants
     },
     data() {
         return {
@@ -319,7 +200,6 @@ export default {
         //     eventBus.$emit("addCartEvent", cart);
         // },
 
-
         addToCart(cart) {
             if (cart.product_variants.length > 0) {
                 eventBus.$emit('selectVariantsEvent', cart)
@@ -359,13 +239,11 @@ export default {
         },
         getWish() {
 
-
             var payload = {
                 model: 'wish',
                 update_list: 'updateWishList',
             }
             this.$store.dispatch('getItems', payload)
-
 
         },
         addToWish(item) {
@@ -388,6 +266,8 @@ export default {
         eventBus.$on("RefWishEvent", data => {
             this.FilterShop();
         });
+
+
     },
     computed: {
         products() {

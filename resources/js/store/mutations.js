@@ -96,6 +96,16 @@ export default {
     },
 
 
+    updateRelatedList(state, payload) {
+        state.related = payload
+    },
+
+
+    updateOrderAddressList(state, payload) {
+        state.order_address = payload
+    },
+
+
     updateCartList(state, payload) {
         state.cart = payload
 

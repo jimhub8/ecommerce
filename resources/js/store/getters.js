@@ -27,8 +27,11 @@ export default {
     clients(state) {
         return state.clients
     },
-    suppliers(state) {
-        return state.suppliers
+    order_address(state) {
+        return state.order_address;
+    },
+    related(state) {
+        return state.related
     },
     customers(state) {
         return state.customers

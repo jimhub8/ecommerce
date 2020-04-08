@@ -60,7 +60,7 @@
                                 <!-- <v-btn absolute color="orange" class="white--text" fab large right top  @click="addToCart(item)">
                                 <v-icon>mdi-cart</v-icon>
                             </v-btn> -->
-                                <div class="font-weight-light grey--text title mb-2">{{ item.product_name }}</div>
+                                <div style="cursor: pointer" class="font-weight-light grey--text title mb-2" @click="Productdetails(item.id)">{{ item.product_name }}</div>
                                 <div class="font-weight-light title mb-2">
                                     {{ item.price }}
                                 </div>
@@ -164,6 +164,9 @@ export default {
         },
         wishList(item) {
             eventBus.$emit("WishListEvent", item);
+        },
+        Productdetails(id) {
+            eventBus.$emit('Productdetails', id)
         }
     },
 }

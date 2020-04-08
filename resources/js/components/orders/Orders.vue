@@ -1,27 +1,29 @@
 <template>
-<div>
-<v-data-table :headers="headers" :items="orders.data" sort-by="calories" class="elevation-1">
-    <template v-slot:item.actions="{ item }">
-        <!-- <v-icon small class="mr-2">
-            mdi-visibility
-        </v-icon>
-        <v-icon small>
-            mdi-delete
-        </v-icon> -->
-
+<v-app>
+    <div>
         <v-tooltip right>
             <template v-slot:activator="{ on }">
-                <v-btn icon v-on="on" slot="activator" class="mx-0" @click="view(item)">
-                    <v-icon color="blue darken-2" small>visibility</v-icon>
+                <v-btn icon v-on="on" slot="activator" class="mx-0" @click="getOrders">
+                    <v-icon color="blue darken-2" small>refresh</v-icon>
                 </v-btn>
             </template>
-            <span>view order</span>
+            <span>Refresh</span>
         </v-tooltip>
-
-    </template>
-</v-data-table>
-<myView></myView>
-</div>
+        <v-data-table :headers="headers" :items="sales.data" sort-by="calories" class="elevation-1">
+            <template v-slot:item.actions="{ item }">
+                <v-tooltip right>
+                    <template v-slot:activator="{ on }">
+                        <v-btn icon v-on="on" slot="activator" class="mx-0" @click="view(item)">
+                            <v-icon color="blue darken-2" small>visibility</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>view order</span>
+                </v-tooltip>
+            </template>
+        </v-data-table>
+        <myView></myView>
+    </div>
+</v-app>
 </template>
 
 <script>
@@ -84,7 +86,7 @@ export default {
         getOrders() {
             var payload = {
                 model: 'sales',
-                update_list: 'updateOrderList',
+                update_list: 'updateSaleList',
             }
             this.$store.dispatch('getItems', payload)
         },
@@ -92,8 +94,8 @@ export default {
     },
 
     computed: {
-        orders() {
-            return this.$store.getters.orders
+        sales() {
+            return this.$store.getters.sales
         },
         loading() {
             return this.$store.getters.loading

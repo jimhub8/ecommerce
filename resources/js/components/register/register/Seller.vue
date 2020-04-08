@@ -7,20 +7,20 @@
                     <v-container grid-list-xl fluid>
                         <v-layout wrap>
                             <v-flex xs12 sm6>
-                                <v-text-field v-model="account.user_name" color="blue darken-2" label="Full Name*" required></v-text-field>
-                                <small class="has-text-danger" v-if="errors.user_name">{{ errors.user_name[0] }}</small>
+                                <v-text-field v-model="account.name" color="blue darken-2" label="Full Name*" required></v-text-field>
+                                <small class="has-text-danger" v-if="errors.name">{{ errors.name[0] }}</small>
                             </v-flex>
                             <v-flex xs12 sm6>
-                                <v-text-field v-model="account.user_email" color="blue darken-2" label="Email*" required></v-text-field>
-                                <small class="has-text-danger" v-if="errors.user_email">{{ errors.user_email[0] }}</small>
+                                <v-text-field v-model="account.email" color="blue darken-2" label="Email*" required></v-text-field>
+                                <small class="has-text-danger" v-if="errors.email">{{ errors.email[0] }}</small>
                             </v-flex>
                             <v-flex xs12 sm6>
-                                <v-text-field v-model="account.user_address" color="blue darken-2" label="Address*" required></v-text-field>
-                                <small class="has-text-danger" v-if="errors.user_address">{{ errors.user_address[0] }}</small>
+                                <v-text-field v-model="account.address" color="blue darken-2" label="Address*" required></v-text-field>
+                                <small class="has-text-danger" v-if="errors.address">{{ errors.address[0] }}</small>
                             </v-flex>
                             <v-flex xs12 sm6>
-                                <v-text-field v-model="account.user_phone" color="blue darken-2" label="Phone Number*" required></v-text-field>
-                                <small class="has-text-danger" v-if="errors.user_phone">{{ errors.user_phone[0] }}</small>
+                                <v-text-field v-model="account.phone" color="blue darken-2" label="Phone Number*" required></v-text-field>
+                                <small class="has-text-danger" v-if="errors.phone">{{ errors.phone[0] }}</small>
                             </v-flex>
                         </v-layout>
                     </v-container>

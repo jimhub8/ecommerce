@@ -17,8 +17,10 @@ export default {
             axios.get('users').then((response) => {
                 context.commit('loading', false)
                 context.commit('updateUsersList', response.data)
+                eventBus.$emit("StoprogEvent");
                 resolve(response)
             }).catch((error) => {
+                eventBus.$emit("StoprogEvent");
                 reject(error);
                 context.commit('loading', false)
                 if (error.response.status === 500) {
@@ -42,8 +44,10 @@ export default {
             axios.get('roles').then((response) => {
                 context.commit('loading', false)
                 context.commit('updateRoleList', response.data)
+                eventBus.$emit("StoprogEvent");
                 resolve(response)
             }).catch((error) => {
+                eventBus.$emit("StoprogEvent");
                 reject(error);
                 if (error.response.status === 500) {
                     eventBus.$emit('errorEvent', error.response.statusText)
@@ -71,8 +75,10 @@ export default {
             axios.get(model).then((response) => {
                 context.commit('loading', false)
                 context.commit(update_, response.data)
+                eventBus.$emit("StoprogEvent");
                 resolve(response)
             }).catch((error) => {
+                eventBus.$emit("StoprogEvent");
                 reject(error);
                 context.commit('loading', false)
                 if (error.response.status === 500) {
@@ -102,9 +108,11 @@ export default {
         return new Promise((resolve, reject) => {
             axios.get(model + '/' + id).then((response) => {
                 context.commit(update, response.data)
+                eventBus.$emit("StoprogEvent");
                 context.commit('loading', false)
                 resolve(response)
             }).catch((error) => {
+                eventBus.$emit("StoprogEvent");
                 reject(error);
                 context.commit('loading', false)
                 if (error.response.status === 500 || error.response.status === 405) {
@@ -135,9 +143,11 @@ export default {
                     console.log(response.data);
                     context.commit('loading', false)
                     context.commit(update_, response.data)
+                    eventBus.$emit("StoprogEvent");
                     resolve(response)
                 }).catch((error) => {
                     console.log(error);
+                    eventBus.$emit("StoprogEvent");
                     reject(error);
 
                     context.commit('loading', false)
@@ -166,8 +176,10 @@ export default {
         return new Promise((resolve, reject) => {
             axios.delete(payload).then((response) => {
                 context.commit('loading', false)
+                eventBus.$emit("StoprogEvent");
                 resolve(response)
             }).catch((error) => {
+                eventBus.$emit("StoprogEvent");
                 reject(error);
                 context.commit('loading', false)
                 if (error.response.status === 500) {
@@ -227,9 +239,11 @@ export default {
                 eventBus.$emit('alertRequest', 'Created')
                 // console.log(response.data);
                 // context.commit(update_, response.data)
+                eventBus.$emit("StoprogEvent");
                 resolve(response)
             }).catch((error) => {
                 // console.log(error.response.data.errors);
+                eventBus.$emit("StoprogEvent");
                 reject(error);
 
                 context.commit('loading', false)
@@ -271,9 +285,11 @@ export default {
                 eventBus.$emit('alertRequest', 'Created')
                 // console.log(response.data);
                 // context.commit(update_, response.data)
+                eventBus.$emit("StoprogEvent");
                 resolve(response)
             }).catch((error) => {
                 // console.log(error.response.data.errors);
+                eventBus.$emit("StoprogEvent");
                 reject(error);
 
                 context.commit('loading', false)
@@ -307,8 +323,10 @@ export default {
             axios.patch(model + '/' + id, data).then((response) => {
                 eventBus.$emit('alertRequest', 'Updated')
                 context.commit('loading', false)
+                eventBus.$emit("StoprogEvent");
                 resolve(response)
             }).catch((error) => {
+                eventBus.$emit("StoprogEvent");
                 reject(error);
                 context.commit('loading', false)
                 if (error.response.status === 500 || error.response.status === 405) {
@@ -340,9 +358,11 @@ export default {
                 context.commit('loading', false)
 
                 context.commit(update_, response.data)
+                eventBus.$emit("StoprogEvent");
                 resolve(response)
             }).catch((error) => {
                 console.log(error);
+                eventBus.$emit("StoprogEvent");
                 reject(error);
 
                 context.commit('loading', false)
@@ -375,9 +395,11 @@ export default {
                 context.commit('loading', false)
 
                 context.commit(update, response.data)
+                eventBus.$emit("StoprogEvent");
                 resolve(response)
             }).catch((error) => {
                 console.log(error);
+                eventBus.$emit("StoprogEvent");
                 reject(error);
 
                 context.commit('loading', false)

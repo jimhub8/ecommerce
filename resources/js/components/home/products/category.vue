@@ -37,7 +37,7 @@
                         </v-img>
                         <v-card-text class="pt-6" style="position: relative;">
 
-                            <div class="font-weight-light grey--text title mb-2">{{ product.product_name }}</div>
+                            <div style="cursor: pointer" class="font-weight-light grey--text title mb-2" @click="Productdetails(product.id)">{{ product.product_name }}</div>
                             <div class="font-weight-light title mb-2">
                                 {{ product.price }}
                             </div>
@@ -83,6 +83,9 @@ export default {
             cart.order_qty = 1
             eventBus.$emit("addCartEvent", cart);
         },
+        Productdetails(id) {
+            eventBus.$emit('Productdetails', id)
+        }
         // addToCart(cart) {
         //     cart.order_qty = 1
         //     eventBus.$emit("addCartEvent", cart);

@@ -1,50 +1,98 @@
 <template>
 <v-layout row justify-center>
-    <v-dialog v-model="dialog" persistent max-width="1400px">
-        <v-card v-if="dialog">
-            <v-card-title fixed>
-                <v-spacer></v-spacer>
-                <v-btn icon dark @click="close">
-                    <v-icon color="black">close</v-icon>
-                </v-btn>
+    <v-dialog v-model="dialog" persistent max-width="1200px">
+        <v-card>
+            <v-card-title>
+                <span class="headline text-center" style="margin: auto;">Order Details</span>
+                <VSpacer />
+
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                        <v-btn v-on="on" icon class="mx-0" @click="close" slot="activator">
+                            <v-icon small color="blue darken-2">close</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>close</span>
+                </v-tooltip>
             </v-card-title>
+            <v-divider></v-divider>
+            <v-card-text>
+                <v-container grid-list-md>
+                    <v-layout row wrap>
+                        <v-flex sm12>
+                            <!-- <ul class="list-group">
+                                <li class="list-group-item"><b>Leave type</b> <span style="float: right">{{ form.leave_type }}</span></li>
+                                <li class="list-group-item"><b>From</b> <span style="float: right">{{ form.date_from }}</span></li>
+                                <li class="list-group-item"><b>To</b> <span style="float: right">{{ form.date_to }}</span></li>
+                                <li class="list-group-item"><b>Days</b> <span style="float: right">{{ form.days }}</span></li>
+                                <li class="list-group-item"><b>Reason</b> <span style="float: right">{{ form.reason }}</span></li>
+                                <li class="list-group-item"><b>Remark</b> <span style="float: right">{{ form.remark }}</span></li>
+                                <li class="list-group-item"><b>Status</b> <span style="float: right">{{ form.status }}</span></li>
+                            </ul> -->
 
-            <div class="card">
-                <div class="card-header">
-                    <ul class="list-group text-center">
-                        <!-- <li class="list-group-item active">{{ order.buyer_name }}'s' Orders</li> -->
-                    </ul>
-                </div>
-                <div class="card-body">
-                    <table class="table table-hover table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Product</th>
-                                <!-- <th scope="col">Payment Id</th> -->
-                                <th scope="col">Price</th>
-                                <th scope="col">List Price</th>
-                                <th scope="col">Order Date</th>
-                                <!-- <th scope="col">Status</th> -->
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="product in order.products" :key="product.id" >
-                                <th scope="row">1.</th>
-                                <td>{{ product.product_name }}</td>
-                                <td class="badge" style="color: #fff; background: #f00;">{{ product.price }}</td>
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Product Name</th>
+                                        <th scope="col">Product Sku no.</th>
+                                        <th scope="col">Product Description</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(product, index) in form.products" :key="index">
+                                        <th scope="row">{{ index+1 }}</th>
+                                        <td>{{ product.product_name }}</td>
+                                        <td>{{ product.sku_no }}</td>
+                                        <td>{{ product.description }}</td>
+                                        <td>
+                                            <el-tag type="danger">{{ product.pivot.quantity }}</el-tag>
+                                        </td>
+                                        <td>
+                                            <el-tag>{{ product.pivot.price }}</el-tag>
+                                        </td>
+                                        <td>
+                                            <el-tag type="success">{{ product.pivot.quantity * product.pivot.price }}</el-tag>
+                                        </td>
+                                    </tr>
 
-                                <td>{{ carts.list_price }}</td>
-                                <td>{{ carts.created_at }}</td>
-                                <!-- <td>{{ cart.status }}</td> -->
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <v-card-actions>
-                <v-btn text @click="close">Close</v-btn>
-            </v-card-actions>
+                                </tbody>
+                                <tfoot>
+                                    <td>Total</td>
+                                    <td colspan="5">{{ total }}</td>
+                                </tfoot>
+                            </table>
+                            <VDivider />
+                            <span class="headline text-center" style="margin: auto;">Shipping Details</span>
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Client Name</th>
+                                        <th scope="col">Client Email</th>
+                                        <th scope="col">Client Address</th>
+                                        <th scope="col">Client Phone</th>
+                                        <th scope="col">County</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ order_address.name }}</td>
+                                        <td>{{ order_address.email }}</td>
+                                        <td>{{ order_address.street_address }}</td>
+                                        <td>{{ order_address.phone }}</td>
+                                        <td>{{ order_address.county }}</td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </v-flex>
+                    </v-layout>
+                </v-container>
+            </v-card-text>
         </v-card>
     </v-dialog>
 </v-layout>
@@ -52,59 +100,48 @@
 
 <script>
 export default {
-    data() {
-        return {
-            dialog: false,
-            carts: [],
-            order: [],
-            totalPrice: '',
-            discount: 0,
-        };
-    },
-    methods: {
-        close() {
-            // eventBus.$emit("closeRequest", product);
-            this.dialog = false;
-        }
-    },
+    data: () => ({
+        dialog: false,
+        loading: false,
+        form: {},
+        payload: {
+            model: '/leaves',
+        },
+    }),
     created() {
         eventBus.$on("viewOrdEvent", data => {
-            this.order = data;
-            this.carts = data;
             this.dialog = true;
+            this.form = data;
+            this.getOrderAddress()
         });
     },
 
-    computed: {
-        getSubTotal() {
-            // if (this.carts.length > 0) {
-            //     this.totalPrice = 0;
-            //     for (let index = 0; index < this.carts.length; index++) {
-            //         const element = this.carts[index];
-            //         this.totalPrice = parseInt(element.price) + this.totalPrice;
-            //     }
-            // }
-            return this.totalPrice;
+    methods: {
+        close() {
+            this.dialog = false;
         },
-        getTotal() {
-            // if (this.carts.length > 0) {
-            //     return parseInt(this.getSubTotal) - this.discount;
-            // }
+
+        getOrderAddress() {
+            var payload = {
+                model: '/order_address',
+                update: 'updateOrderAddressList',
+                id: this.form.ordershipping.id,
+            }
+            this.$store.dispatch("showItem", payload);
+        },
+    },
+
+    computed: {
+        total() {
+            var price = 0
+            this.form.products.forEach(element => {
+                price += parseFloat(element.pivot.price) * parseFloat(element.pivot.quantity)
+            });
+            return price
+        },
+        order_address() {
+            return this.$store.getters.order_address
         }
     },
 };
 </script>
-
-<style scoped>
-.badge,
-.badge-danger,
-.badge-dark,
-.badge-default,
-.badge-info,
-.badge-primary,
-.badge-secondary,
-.badge-success,
-.badge-warning {
-    font-size: 12px !important;
-}
-</style>

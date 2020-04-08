@@ -10,4 +10,10 @@ class Image extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function getImageAttribute($value)
+    {
+        return $this->attributes['image'] = env('ADMIN_URL', 'http://admin.jim') . $value;
+    }
+
 }

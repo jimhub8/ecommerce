@@ -1,20 +1,19 @@
 <template>
 <div>
     <headerP></headerP>
-    <div v-show="loader" style="text-align: center; width: 100%; margin-top: 200px;">
+    <!-- <div v-show="loader" style="text-align: center; width: 100%; margin-top: 200px;">
         <v-progress-circular :width="3" indeterminate color="red" style="margin: 1rem"></v-progress-circular>
-    </div>
+    </div> -->
     <div class="container bgwhite p-t-35 p-b-80">
         <div class="flex-w flex-sb">
             <div class="w-size13 p-t-30 respon5">
                 <div class="wrap-slick3 flex-sb flex-w">
-                    <div class="wrap-slick3-dots" v-if="products.images.length > 0">
+                    <div class="wrap-slick3-dots">
                         <div class="wrap-pic-w" v-for="image in products.images" :key="image.id">
                             <img :src="image.image" :alt="image.mimetype" style="height: 100px; margin-bottom: 10px;" @click="products.image = image.image">
                         </div>
                         <img :src="originalImage" style="height: 100px; margin-bottom: 10px;" @click="products.image = originalImage">
                     </div>
-
                     <div class="slick3">
                         <div class="item-slick3">
                             <div class="wrap-pic-w">
@@ -27,6 +26,8 @@
                     </div>
                 </div>
             </div>
+
+            <!-- <v-btn color="success" @click="getRelated">getRelated</v-btn> -->
 
             <div class="w-size14 p-t-30 respon5">
                 <h4 class="product-detail-name m-text16 p-b-13">
@@ -41,32 +42,9 @@
 
                 <!--  -->
                 <div class="p-t-33 p-b-60">
-
-                    <!-- <div class="flex-m flex-w" v-if="sizes.length > 0">
-                        <div class="s-text15 w-size15 t-center">
-                            Size
-                        </div>
-
-                        <div class="rs2-select2 rs3-select2 bo4 of-hidden w-size16">
-                            <select class="selection-2" name="color">
-                              <option>Choose an option</option>
-                              <option v-for="size in sizes" :key="size.id">{{ size.name }}</option>
-                            </select>
-                        </div>
-                    </div> -->
-
                     <div class="flex-r-m flex-w p-t-10">
                         <div class="w-size16 flex-m flex-w">
-
-                            <div class="flex-w bo5 of-hidden m-r-22 m-t-10 m-b-10" v-if="products.attributes.length > 0">
-                                <el-select v-model="form.attribute" clearable placeholder="Select size" @change="priceChange">
-                                    <el-option v-for="item in products.attributes" :key="item.id" :label="item.value" :value="item.id">
-                                    </el-option>
-                                </el-select>
-                            </div>
-
                             <div class="flex-w bo5 of-hidden m-r-22 m-t-10 m-b-10">
-
                                 <input v-model="form.quantity" class="size8 m-text18 t-center num-product" type="number" min="1" name="num-product" value="1">
                             </div>
 
@@ -110,80 +88,13 @@
     <!-- RELATED PRODUCTS -->
     <section class="relateproduct bgwhite p-t-45 p-b-138">
         <div class="container">
-            <!-- <div class="sec-title p-b-60">
-                    <h3 class="m-text5 t-center">
-                        Related Products
-                    </h3>
-                </div> -->
-            <v-data-iterator :items="relatedProducts" :rows-per-page-items="rowsPerPageItems" :pagination.sync="pagination" content-tag="v-layout" row wrap>
-                <v-toolbar slot="header" class="mb-2" color="white darken-5" dark text>
-                    <v-toolbar-title style="color: #000; margin: auto;">Related Products</v-toolbar-title>
-                </v-toolbar>
-                <v-flex slot="item" slot-scope="props" xs12 sm6 md4 lg3>
-                    <v-card>
-                        <!-- <v-divider></v-divider> -->
-                        <v-card-text>
-                            <v-content>
-                                <div class="image-container">
-                                    <v-img class="white--text" height="230px" :src="props.item.image">
-                                        <v-container fill-height fluid>
-                                            <v-layout fill-height>
-                                                <v-flex xs12 align-end flexbox>
-                                                    <span class="headline">{{ props.item.name }}</span>
-                                                </v-flex>
-                                            </v-layout>
-                                        </v-container>
-                                    </v-img>
-
-                                    <!-- <div class="after">This is some content</div> -->
-                                    <div class="caption after text-center" :class="{'selected': isSelected(props.item.id)}">
-                                        <!-- <v-btn color="primary" text style="margin: auto;" @click="view(prod)">view prod</v-btn>  -->
-                                        <div id="tooltip">
-                                            <v-tooltip bottom class="" data-wow-delay="0.4s">
-                                                <v-btn icon class="mx-0" slot="activator" @click="view(props.item)" style="margin-top: 100px;">
-                                                    <v-icon color="info darken-2" small>visibility</v-icon>
-                                                </v-btn>
-                                                <span>view product</span>
-                                            </v-tooltip>
-                                            <v-tooltip bottom class="" data-wow-delay="0.8s">
-                                                <v-btn icon class="mx-0" slot="activator" @click="wishList(props.item.id)" style="margin-top: 100px;">
-                                                    <v-icon color="success darken-2" small>favorite</v-icon>
-                                                </v-btn>
-                                                <span>Wish list</span>
-                                            </v-tooltip>
-                                            <v-tooltip bottom class="" data-wow-delay="1.2s">
-                                                <v-btn icon class="mx-0" slot="activator" @click="addToCart(props.item.id)" style="margin-top: 100px;">
-                                                    <v-icon color="orange darken-2" small>shopping_cart</v-icon>
-                                                </v-btn>
-                                                <span>Add To Cart</span>
-                                            </v-tooltip>
-                                        </div>
-                                    </div>
-                                </div>
-                            </v-content>
-                        </v-card-text>
-                        <v-divider></v-divider>
-                        <div class="text-center" style="background: #f0f0f0;">
-                            <v-btn text color="orange" @click="redirect(props.item.id)">{{ props.item.product_name }}</v-btn>
-                            <br>
-                            <div class="row">
-                                <div class="col-6">
-                                    <small class="text-danger">List price: <s>{{ props.item.list_price }}</s></small>
-                                </div>
-                                <div class="col-6">
-                                    <p class="price">Our price: {{ props.item.price }}</p>
-                                </div>
-                            </div>
-                            <!-- <v-divider></v-divider> -->
-                        </div>
-                    </v-card>
-                </v-flex>
-            </v-data-iterator>
+            <relatedProducts></relatedProducts>
             <!-- Slide2 -->
         </div>
     </section>
     <!-- RELATED PRODUCTS -->
     <Show></Show>
+    <myVariants></myVariants>
 </div>
 </template>
 
@@ -191,24 +102,22 @@
 import headerP from "../include/Headerpartial";
 import Review from "../reviews/Review";
 import Show from "../home/Show";
+import relatedProducts from './details/related'
+import myVariants from '../home/products/variants'
 export default {
     components: {
         headerP,
         Show,
-        Review
+        Review, relatedProducts, myVariants
     },
     data() {
         return {
             form: {
                 quantity: 1
             },
-            loader: false,
-            products: [],
-            categories: [],
             proId: this.$route.params.id,
             showError: false,
             error_msg: "",
-            relatedProducts: [],
             rowsPerPageItems: [4, 8, 12],
             pagination: {
                 rowsPerPage: 4
@@ -231,40 +140,44 @@ export default {
             });
             this.getProduct();
         },
-        addToCart() {
-            // alert('cart')
-            // if (this.form.quantity > this.products.quantity) {
-            //       eventBus.$emit("errorRequest", response.data.errors);
-            //   this.error_msg = "Amount entered is more than available";
-            // } else if (this.form.quantity < 1) {
-            //       eventBus.$emit("errorRequest", response.data.errors);
-            //   this.error_msg = "Quantity must be greater than 1";
-            // } else {
-            eventBus.$emit("progressEvent");
-            axios
-                .post(`/cartAdd/${this.proId}`, this.$data.form)
-                .then(response => {
-                    this.loading = false;
-                    eventBus.$emit("StoprogEvent");
-                    if (response.data.errors) {
-                        eventBus.$emit("errorRequest", response.data.errors);
 
-                        return (this.err_ms = response.data.errors);
-                    } else {
-                        eventBus.$emit("StoprogEvent");
-                        eventBus.$emit("alertRequest", "Cart Added");
-                        eventBus.$emit("cartEvent", response.data);
-                    }
-                    // this.close();
-                    // this.resetForm();
-                    // this.$parent.brands.push(response.data)
-                })
-                .catch(error => {
-                    this.loading = false;
-                    this.errors = error.response.data.errors;
-                });
-            // }
+        addToCart() {
+            var cart = this.products
+            if (cart.product_variants.length > 0) {
+                eventBus.$emit('selectVariantsEvent', cart)
+                // this.select_variants()
+                return
+            }
+            cart.order_qty = this.form.quantity
+            eventBus.$emit("addCartEvent", cart);
         },
+
+        // addToCart() {
+        //     eventBus.$emit("progressEvent");
+        //     axios
+        //         .post(`/cartAdd/${this.proId}`, this.$data.form)
+        //         .then(response => {
+        //             this.loading = false;
+        //             eventBus.$emit("StoprogEvent");
+        //             if (response.data.errors) {
+        //                 eventBus.$emit("errorRequest", response.data.errors);
+
+        //                 return (this.err_ms = response.data.errors);
+        //             } else {
+        //                 eventBus.$emit("StoprogEvent");
+        //                 eventBus.$emit("alertRequest", "Cart Added");
+        //                 eventBus.$emit("cartEvent", response.data);
+        //             }
+        //             // this.close();
+        //             // this.resetForm();
+        //             // this.$parent.brands.push(response.data)
+        //         })
+        //         .catch(error => {
+        //             this.loading = false;
+        //             this.errors = error.response.data.errors;
+        //         });
+        //     // }
+        // },
 
         hoverCard(selectedIndex) {
             this.selectedCard = selectedIndex;
@@ -283,72 +196,62 @@ export default {
         wishList(item) {
             eventBus.$emit("WishListEvent", item);
         },
+
+
         getProduct() {
-            this.proId = this.$route.params.id;
-            eventBus.$emit("progressEvent");
-            axios
-                .get(`/show_product/${this.proId}`)
-                .then(response => {
-                    eventBus.$emit("ScollEvent");
-                    eventBus.$emit("StoprogEvent");
-                    this.loader = false;
-                    this.getReviews();
-                    this.getRelated();
-                    this.getAvgReviews();
-                    this.getCategory(response.data.id);
-                    this.products = response.data;
-                    this.originalImage = response.data.image;
-                    this.sizes = response.data.sizes;
-                })
-                .catch(error => {
-                    this.loader = false;
-                    eventBus.$emit("StoprogEvent");
-                    this.errors = error.response.data.errors;
-                });
+            var payload = {
+                model: 'products',
+                update: 'updateProductsList',
+                id: this.$route.params.id,
+            }
+            this.$store.dispatch('showItem', payload)
         },
+
+
+        // getProduct() {
+        //     this.proId = this.$route.params.id;
+        //     eventBus.$emit("progressEvent");
+        //     axios
+        //         .get(`/show_product/${this.proId}`)
+        //         .then(response => {
+        //             eventBus.$emit("ScollEvent");
+        //             eventBus.$emit("StoprogEvent");
+        //             this.getReviews();
+        //             this.getRelated();
+        //             this.getAvgReviews();
+        //             this.getCategory(response.data.id);
+        //             this.products = response.data;
+        //             this.originalImage = response.data.image;
+        //             this.sizes = response.data.sizes;
+        //         })
+        //         .catch(error => {
+        //             eventBus.$emit("StoprogEvent");
+        //             this.errors = error.response.data.errors;
+        //         });
+        // },
 
         getRelated() {
-            axios
-                .get(`/related/${this.proId}`)
-                .then(response => {
-                    // eventBus.$emit("StoprogEvent");
-                    this.loader = false;
-                    this.relatedProducts = response.data;
-                })
-                .catch(error => {
-                    this.loader = false;
-                    // eventBus.$emit("StoprogEvent");
-                    this.errors = error.response.data.errors;
-                });
+            var payload = {
+                model: 'related',
+                update: 'updateRelatedList',
+                id: this.$route.params.id,
+            }
+            this.$store.dispatch('showItem', payload)
         },
         getReviews() {
-            eventBus.$emit("progressEvent");
-            axios
-                .get(`/getReviews/${this.proId}`)
-                .then(response => {
-                    eventBus.$emit("StoprogEvent");
-                    this.reviews = response.data;
-                })
-                .catch(error => {
-                    eventBus.$emit("StoprogEvent");
-                    this.errors = error.response.data.errors;
-                });
+            var payload = {
+                model: 'reviews',
+                update_list: 'updateReviewsList',
+            }
+            this.$store.dispatch('getItems', payload)
         },
-
         getAvgReviews() {
-            axios
-                .get(`/ratings/${this.proId}`)
-                .then(response => {
-                    if (response.data) {
-                        this.avgRating = response.data;
-                    } else {
-                        this.avgRating = 0;
-                    }
-                })
-                .catch(error => {
-                    // eventBus.$emit("StoprogEvent");
-                    this.errors = error.response.data.errors;
-                });
+            var payload = {
+                model: 'ratings',
+                update: 'updatAvgReviewsList',
+                id: this.proId,
+            }
+            this.$store.dispatch('showItem', payload)
         },
 
         next(page) {
@@ -364,16 +267,23 @@ export default {
                     this.errors = error.response.data.errors;
                 });
         },
+
         getCategory(id) {
-            axios
-                .get(`categories/${id}`)
-                .then(response => {
-                    this.categories = response.data;
-                })
-                .catch(error => {
-                    this.errors = error.response.data.errors;
-                });
+            var payload = {
+                model: 'categories',
+                update: 'updateCategoryList',
+                id: id,
+            }
+            this.$store.dispatch('showItem', payload)
         },
+        // priceChange(data) {
+        //     var payload = {
+        //         model: 'product_attribute',
+        //         update: 'updateCategoryList',
+        //         id: id,
+        //     }
+        //     this.$store.dispatch('showItem', payload)
+        // },
 
         priceChange(data) {
             eventBus.$emit("progressEvent");
@@ -390,10 +300,9 @@ export default {
         }
     },
     mounted() {
-        this.loader = true;
         this.getProduct();
         eventBus.$emit("ScollEvent");
-        // this.getRelated();
+        this.getRelated();
         // this.getReviews();
         // this.getAvgReviews();
     },
@@ -402,6 +311,14 @@ export default {
             this.getReviews();
             this.getAvgReviews();
         });
+    },
+    computed: {
+        categories() {
+            return this.$store.getters.categories
+        },
+        products() {
+            return this.$store.getters.products
+        },
     },
     // beforeRouteEnter(to, from, next) {
     //     next(vm => {
