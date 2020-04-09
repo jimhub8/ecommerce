@@ -12,7 +12,6 @@ class ProductController extends Controller
     {
         $products = Product::paginate(10);
         return $this->transform_product($products);
-
     }
     /**
      * Display a listing of the resource.
@@ -28,31 +27,37 @@ class ProductController extends Controller
 
         $setting = ProductSettings::first();
 
-        $featured_id = CategoryProduct::whereIn('category_id', $setting->featured)->get('product_id');
-        $featured = [];
-        foreach ($featured_id as $key => $value) {
-            $featured[] = $value->product_id;
+        if ($setting->featured) {
+            $featured_id = CategoryProduct::whereIn('category_id', $setting->featured)->get('product_id');
+            $featured = [];
+            foreach ($featured_id as $key => $value) {
+                $featured[] = $value->product_id;
+            }
+        }
+
+        if ($setting->newproduct) {
+
+            $newproduct_id = CategoryProduct::whereIn('category_id', $setting->newproduct)->get('product_id');
+            $newproduct = [];
+            foreach ($newproduct_id as $key => $value) {
+                $newproduct[] = $value->product_id;
+            }
         }
 
 
-        $newproduct_id = CategoryProduct::whereIn('category_id', $setting->newproduct)->get('product_id');
-        $newproduct = [];
-        foreach ($newproduct_id as $key => $value) {
-            $newproduct[] = $value->product_id;
+
+        if ($setting->bestsellers) {
+            $bestsellers_id = CategoryProduct::whereIn('category_id', $setting->bestsellers)->get('product_id');
+            $bestsellers = [];
+            foreach ($bestsellers_id as $key => $value) {
+                $bestsellers[] = $value->product_id;
+            }
         }
 
 
-
-        $bestsellers_id = CategoryProduct::whereIn('category_id', $setting->bestsellers)->get('product_id');
-        $bestsellers = [];
-        foreach ($bestsellers_id as $key => $value) {
-            $bestsellers[] = $value->product_id;
-        }
-
-
-        $featured = Product::whereIn('id', $setting->featured)->paginate(10);
-        $newproduct = Product::whereIn('id', $setting->newproduct)->paginate(10);
-        $bestsellers = Product::whereIn('id', $setting->bestsellers)->paginate(10);
+        $featured = ($setting->featured) ? Product::whereIn('id', $setting->featured)->paginate(10) : Product::where('id', 0)->paginate(10);
+        $newproduct = ($setting->newproduct) ? Product::whereIn('id', $setting->newproduct)->paginate(10) : Product::where('id', 0)->paginate(10);
+        $bestsellers = ($setting->bestsellers) ? Product::whereIn('id', $setting->bestsellers)->paginate(10) : Product::where('id', 0)->paginate(10);
 
 
         // $featured_t = $this->transform_product($featured);
@@ -95,12 +100,11 @@ class ProductController extends Controller
                     $product->quantity = $product->skus[0]->quantity;
                 }
             } else {
-
             }
             foreach ($product->images as  $pro_image) {
                 if ($pro_image->display) {
-            $product->image =  $pro_image->image;
-        }
+                    $product->image =  $pro_image->image;
+                }
             }
             return $product;
         });
@@ -111,7 +115,6 @@ class ProductController extends Controller
     {
         $setting = ProductSettings::first();
         return $setting;
-
     }
 
     public function related($id)
@@ -135,5 +138,4 @@ class ProductController extends Controller
         $products = $this->transform_product($products);
         return $products;
     }
-
 }
