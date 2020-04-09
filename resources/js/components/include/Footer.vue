@@ -163,14 +163,14 @@ export default {
         }
     },
     mounted() {
-        axios
-            .get("/catLimit")
-            .then(response => {
-                this.categories = response.data;
-            })
-            .catch(error => {
-                this.errors = error.response.data.errors;
-            });
+        // axios
+        //     .get("/catLimit")
+        //     .then(response => {
+        //         this.categories = response.data;
+        //     })
+        //     .catch(error => {
+        //         this.errors = error.response.data.errors;
+        //     });
 
         axios
             .get("/brands")
@@ -181,14 +181,14 @@ export default {
                 this.errors = error.response.data.errors;
             });
 
-        axios
-            .get("/bestRated")
-            .then(response => {
-                this.ratings = response.data;
-            })
-            .catch(error => {
-                this.errors = error.response.data.errors;
-            });
+        // axios
+        //     .get("/bestRated")
+        //     .then(response => {
+        //         this.ratings = response.data;
+        //     })
+        //     .catch(error => {
+        //         this.errors = error.response.data.errors;
+        //     });
     },
 }
 </script>

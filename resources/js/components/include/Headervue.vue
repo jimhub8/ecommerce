@@ -58,7 +58,7 @@
                     <span class="header-icons-noti">{{ wishItems.length }}</span>
 
                     <!-- Header cart noti -->
-                    <myWish></myWish>
+                    <!-- <myWish></myWish> -->
                 </div>
             </div>
         </div>
@@ -111,7 +111,7 @@
                         <img src="/storage/icons/wish.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
                         <span class="header-icons-noti">{{ wishItems.length }}</span>
                         <!-- Header cart noti -->
-                        <myWish></myWish>
+                        <!-- <myWish></myWish> -->
                     </div>
                 </div>
             </div>
@@ -214,7 +214,7 @@
                         <span class="header-icons-noti">{{ wishItems.length }}</span>
 
                         <!-- Header cart noti -->
-                        <myWish></myWish>
+                        <!-- <myWish></myWish> -->
                     </div>
                 </div>
 
@@ -295,7 +295,7 @@ import {
     vueTopprogress
 } from "vue-top-progress";
 import myCart from "../cart/Cartvue";
-import myWish from "../wish/Wishvue";
+// import myWish from "../wish/Wishvue";
 import myShop from "../Shop/Shop";
 import CartHome from "../cart/CartHome";
 import Logout from "./Logout";
@@ -308,7 +308,7 @@ export default {
     components: {
         myCartmenu,
         vueTopprogress,
-        myWish,
+        // myWish,
         myShop,
         CartHome,
         myCart,

@@ -13,3 +13,13 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css');
+
+
+   mix.styles([
+    'public/vendor/animsition/css/animsition.min.css',
+    'public/css/main.css',
+    'public/css/menu.css',
+    'public/css/util.css',
+    'public/css/main1.css'
+], 'public/css/all.css');
+
