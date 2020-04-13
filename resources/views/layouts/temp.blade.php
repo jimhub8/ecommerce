@@ -9,11 +9,11 @@
     <link rel="icon" type="image/png" href="/storage/icons/favicon.png" />
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/all.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="{{ asset('js/jquery.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
+    <link href="{{ asset('css/all.css') }}" rel="stylesheet">
     {{--  <link rel="stylesheet" href="https://d29u17ylf1ylz9.cloudfront.net/bege-v2/css/ionicons.min.css">  --}}
     {{--  <link rel="stylesheet" href="https://d29u17ylf1ylz9.cloudfront.net/bege-v2/css/css-plugins-call.css">  --}}
     {{--  <link rel="stylesheet" href="https://d29u17ylf1ylz9.cloudfront.net/bege-v2/css/bundle.css">  --}}

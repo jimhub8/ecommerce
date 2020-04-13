@@ -10,14 +10,14 @@
                 <div class="wrap-slick3 flex-sb flex-w">
                     <div class="wrap-slick3-dots">
                         <div class="wrap-pic-w" v-for="image in products.images" :key="image.id">
-                            <img :src="image.image" :alt="image.mimetype" style="height: 100px; margin-bottom: 10px;" @click="products.image = image.image">
+                            <img :src="image.image" :alt="image.mimetype" style="height: 100px; margin-bottom: 10px;" @click="products.image = image.image"  @error="imageUrlAlt">
                         </div>
-                        <img :src="originalImage" style="height: 100px; margin-bottom: 10px;" @click="products.image = originalImage">
+                        <img :src="originalImage" style="height: 100px; margin-bottom: 10px;" @click="products.image = originalImage"  @error="imageUrlAlt">
                     </div>
                     <div class="slick3">
                         <div class="item-slick3">
                             <div class="wrap-pic-w">
-                                <img :src="products.image" :alt="products.product_name">
+                                <img :src="products.image" :alt="products.product_name"  @error="imageUrlAlt">
                                 <div class="text-xs-center">
                                     <v-rating v-model="avgRating" readonly half-increments></v-rating>
                                 </div>
@@ -70,7 +70,7 @@
                 <div slot="header">Reviews</div>
                 <v-card>
                     <v-card-text v-for="review in reviews.data" :key="review.id">
-                        <img :src="review.profile" alt="" style="width: 50px; height: 50px; border-radius: 50%; text-align: center;">
+                        <img :src="review.profile" alt="" style="width: 50px; height: 50px; border-radius: 50%; text-align: center;" @error="imageUrlAlt">
                         <h2>{{ review.user_name }}</h2>
                         <small>{{ review.comments }}</small>
                         <div>
@@ -207,29 +207,6 @@ export default {
             this.$store.dispatch('showItem', payload)
         },
 
-
-        // getProduct() {
-        //     this.proId = this.$route.params.id;
-        //     eventBus.$emit("progressEvent");
-        //     axios
-        //         .get(`/show_product/${this.proId}`)
-        //         .then(response => {
-        //             eventBus.$emit("ScollEvent");
-        //             eventBus.$emit("StoprogEvent");
-        //             this.getReviews();
-        //             this.getRelated();
-        //             this.getAvgReviews();
-        //             this.getCategory(response.data.id);
-        //             this.products = response.data;
-        //             this.originalImage = response.data.image;
-        //             this.sizes = response.data.sizes;
-        //         })
-        //         .catch(error => {
-        //             eventBus.$emit("StoprogEvent");
-        //             this.errors = error.response.data.errors;
-        //         });
-        // },
-
         getRelated() {
             var payload = {
                 model: 'related',
@@ -276,14 +253,10 @@ export default {
             }
             this.$store.dispatch('showItem', payload)
         },
-        // priceChange(data) {
-        //     var payload = {
-        //         model: 'product_attribute',
-        //         update: 'updateCategoryList',
-        //         id: id,
-        //     }
-        //     this.$store.dispatch('showItem', payload)
-        // },
+
+        imageUrlAlt(e) {
+                event.target.src = "/assets/notfound/notfound.jpg"
+        },
 
         priceChange(data) {
             eventBus.$emit("progressEvent");

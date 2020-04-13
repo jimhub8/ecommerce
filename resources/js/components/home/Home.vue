@@ -3,7 +3,7 @@
     <section class="bgwhite p-t-55 p-b-65">
         <myCarousel></myCarousel>
         <myProduct></myProduct>
-                <Show></Show>
+        <Show></Show>
     </section>
 </div>
 </template>

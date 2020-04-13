@@ -28,6 +28,9 @@ import myAccount from './components/account';
 // import InstantSearch from 'vue-instantsearch';
 
 
+import myExample from './components/ExampleComponent'; 
+
+
 const routes = [
     { path: '/', component: myHome },
     { path: '/filter', component: myFilter },
@@ -41,6 +44,9 @@ const routes = [
     { path: '/account', component: myAccount },
     { path: '/checkout', component: myCheckout, name: 'checkout' },
     { path: '/help_center', component: myFaq },
+
+    { path: '/example', component: myExample },
+
 
 
 ]

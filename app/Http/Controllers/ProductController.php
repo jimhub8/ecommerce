@@ -23,41 +23,42 @@ class ProductController extends Controller
         // dd(env('APP_NAME', 'http://admin.jim'));
         $setting = ProductSettings::first();
         // $featured = $setting->featured;
-        // $newproduct = $setting->newproduct;
+        // return  $setting->newproduct;
 
         $setting = ProductSettings::first();
 
+        $featured = [];
         if ($setting->featured) {
             $featured_id = CategoryProduct::whereIn('category_id', $setting->featured)->get('product_id');
-            $featured = [];
             foreach ($featured_id as $key => $value) {
                 $featured[] = $value->product_id;
             }
         }
 
+        $newproduct = [];
         if ($setting->newproduct) {
 
             $newproduct_id = CategoryProduct::whereIn('category_id', $setting->newproduct)->get('product_id');
-            $newproduct = [];
             foreach ($newproduct_id as $key => $value) {
                 $newproduct[] = $value->product_id;
             }
         }
+        // return $newproduct;
 
 
 
+        $bestsellers = [];
         if ($setting->bestsellers) {
             $bestsellers_id = CategoryProduct::whereIn('category_id', $setting->bestsellers)->get('product_id');
-            $bestsellers = [];
             foreach ($bestsellers_id as $key => $value) {
                 $bestsellers[] = $value->product_id;
             }
         }
 
-
-        $featured = ($setting->featured) ? Product::whereIn('id', $setting->featured)->paginate(10) : Product::where('id', 0)->paginate(10);
-        $newproduct = ($setting->newproduct) ? Product::whereIn('id', $setting->newproduct)->paginate(10) : Product::where('id', 0)->paginate(10);
-        $bestsellers = ($setting->bestsellers) ? Product::whereIn('id', $setting->bestsellers)->paginate(10) : Product::where('id', 0)->paginate(10);
+        // dd($bestsellers, $newproduct, $featured);
+        $featured = ($setting->featured) ? Product::whereIn('id', $featured)->paginate(10) : Product::where('id', 0)->paginate(10);
+        $newproduct = ($setting->newproduct) ? Product::whereIn('id', $newproduct)->paginate(10) : Product::where('id', 0)->paginate(10);
+        $bestsellers = ($setting->bestsellers) ? Product::whereIn('id', $bestsellers)->paginate(10) : Product::where('id', 0)->paginate(10);
 
 
         // $featured_t = $this->transform_product($featured);
@@ -66,8 +67,8 @@ class ProductController extends Controller
 
         $product = array(
             'featured' => $this->transform_product($featured),
-            'bestsellers' => $this->transform_product($newproduct),
-            'newproduct' => $this->transform_product($bestsellers)
+            'newproduct' => $this->transform_product($newproduct),
+            'bestsellers' => $this->transform_product($bestsellers)
         );
 
         return $product;
@@ -121,7 +122,7 @@ class ProductController extends Controller
     {
         $product = Product::with('categories')->find($id);
 
-
+        $categories = [];
         foreach ($product->categories as  $value) {
             // return $value;
             $categories[] = $value['pivot']['category_id'];

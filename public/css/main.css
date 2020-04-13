@@ -196,3 +196,16 @@ table.vgt-table {
 .v-application .text-center, h3, .h3 {
     color: #1564c0 !important;
 }
+
+.v-btn--fab.v-size--default {
+    height: 26px !important;
+    width: 26px !important;
+}
+
+
+@media only screen and (max-width: 991px) {
+
+    .carousel-inner {
+        max-height: 30vh;
+    }
+}

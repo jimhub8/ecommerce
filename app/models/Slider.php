@@ -8,7 +8,7 @@ class Slider extends Model
 {
     public function getImageAttribute($value)
     {
-        return $this->attributes['image'] = env('ADMIN_URL', 'http://admin.jim') . $value;
+        return $this->attributes['image'] = env('ADMIN_URL', 'http://192.168.43.81:82') . $value;
     }
 
 }

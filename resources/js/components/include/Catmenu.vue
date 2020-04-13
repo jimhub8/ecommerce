@@ -1,5 +1,6 @@
 <template>
-<div style="col-xl-3 col-lg-3 hidden-md hidden-sm pull-left category-wrapper; margin-left: -70%;">
+<div class="row">
+<div style="col-xl-3 col-lg-3 hidden-md hidden-sm pull-left category-wrapper;">
     <div class="categori-menu" @mouseleave="show_menu = false">
         <p @mouseover="show_menu = true" style="font-size: 23px;font-weight: 600;padding: 10px; color: #fff">
             <span> <VIcon color="white">menu</VIcon> </span>
@@ -30,10 +31,19 @@
         </ul>
     </div>
 </div>
+<div class="col-md-6">
+    <mySearch />
+
+</div>
+</div>
 </template>
 
 <script>
+import mySearch from './Search'
 export default {
+    components: {
+        mySearch,
+    },
     data() {
         return {
             show_menu: false,
@@ -101,3 +111,9 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+.categori-menu {
+    margin-left: 140px !important;
+}
+</style>

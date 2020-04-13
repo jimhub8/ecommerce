@@ -72,4 +72,10 @@ class Product extends Model
         }
         // dd($discount);
     }
+
+
+    public function wishes()
+    {
+        return $this->hasMany(wish::class);
+    }
 }

@@ -64,6 +64,7 @@ Route::resource('address', 'AddressController');
 Route::resource('shipping', 'ShippingaddressController');
 Route::resource('billing', 'BillingaddressController');
 Route::resource('slider', 'SliderController');
+Route::resource('wish', 'WishController');
 
 Route::get('/ecommerce', 'HomeController@ecommerce')->name('ecommerce')->middleware('verified');
 Route::get('/getReviews/{id}', 'ReviewController@getReviews')->name('getReviews');

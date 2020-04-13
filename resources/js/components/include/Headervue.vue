@@ -120,24 +120,6 @@
 
                 <myCartmenu :menus="menus" :categories="categories"></myCartmenu>
             </div>
-            <v-layout wrap>
-                <v-flex sm5 class="form-group" style="margin-top: 10px">
-                    <!-- <v-text-field v-model="form.search" color="blue darken-2" label="Menu Name" required></v-text-field> -->
-                    <input type="text" class="form-control" placeholder="Search..." v-model="search" @keyup.enter="productSearch">
-                    <!-- <mySearch></mySearch> -->
-                </v-flex>
-                <v-flex sm2 style="margin-top: 5px">
-
-                    <v-tooltip right>
-                        <template v-slot:activator="{ on }">
-                            <v-btn icon v-on="on" slot="activator" class="mx-0" @click="productSearch">
-                                <v-icon color="blue darken-2" small>search</v-icon>
-                            </v-btn>
-                        </template>
-                        <span>search</span>
-                    </v-tooltip>
-                </v-flex>
-            </v-layout>
         </div>
 
         <div class="wrap_header">
@@ -168,111 +150,10 @@
             <!-- Header Icon -->
             <div class="header-icons"></div>
         </div>
-        </div>
         <!-- Big navigation End -->
 
-        <!-- Header Mobile -->
-        <div class="wrap_header_mobile">
-            <!-- Logo moblie -->
-            <a href="index.html" class="logo-mobile">
-                <img src="/storage/logo/dellmat.png" alt="Delmat" style="max-width: 100px;">
-            </a>
-
-            <!-- Button show menu -->
-            <div class="btn-show-menu">
-                <!-- Header Icon mobile -->
-                <div class="header-icons-mobile">
-                    <!-- <a href="/login" class="header-wrapicon1 dis-block" v-if="user">
-              <img src="/storage/icons/icon-header-01.png" class="header-icon1" alt="ICON">
-            </a> -->
-                    <v-tooltip bottom id="mobile">
-                        <a href="/vendor">
-                            <v-btn slot="activator" icon class="mx-0">
-                                <v-icon small color="indigo darken-2">login</v-icon>
-                            </v-btn>
-                        </a>
-                        <span>Become a seller</span>
-                    </v-tooltip>
-                    <!-- <a href="/vendor" class="v-btn v-btn--text theme--light primary--text" style="text-decoration: none;">Become a seller</a> -->
-                    <Logout :user="user" v-if="user"></Logout>
-
-                    <!-- <a href="/login" class="v-btn v-btn--text theme--light primary--text" style="text-decoration: none;" v-else>Login</a> -->
-                    <v-btn color="primary" href="/login" v-else>Login</v-btn>
-
-                    <span class="linedivide2"></span>
-
-                    <div class="header-wrapicon2">
-                        <img src="/storage/icons/cart.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-                        <!-- <span class="header-icons-noti">{{ cart_count.length }}</span> -->
-
-                        <!-- Header cart noti -->
-                        <myCart></myCart>
-                    </div>
-                    <span class="linedivide2"></span>
-                    <div class="header-wrapicon2">
-                        <img src="/storage/icons/wish.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-                        <span class="header-icons-noti">{{ wishItems.length }}</span>
-
-                        <!-- Header cart noti -->
-                        <!-- <myWish></myWish> -->
-                    </div>
-                </div>
-
-                <div class="btn-show-menu-mobile hamburger hamburger--squeeze">
-                    <span class="hamburger-box">
-                        <span class="hamburger-inner"></span>
-                    </span>
-                </div>
-            </div>
-        </div>
-
         <!-- Menu Mobile -->
-        <div class="wrap-side-menu">
-            <nav class="side-menu">
-                <ul class="main-menu">
-                    <!-- <li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
-                    <span class="topbar-child1">Free shipping for standard order over Ksh1000</span>
-                </li> -->
-
-                    <li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
-                        <div class="topbar-child2-mobile">
-                            <span class="topbar-email"><a href="mailto:info@dellmat.com" target="_blank">info@dellmat.com</a></span>
-                            <!--
-                            <div class="topbar-language rs1-select2" style="margin-left: 10px !important">
-                                <select class="selection-1" name="time">
-                                    <option>KSH</option>
-                                </select>
-                            </div> -->
-                        </div>
-                    </li>
-
-                    <li class="item-topbar-mobile p-l-10">
-                        <div class="topbar-social-mobile">
-                            <a href="https://www.facebook.com/DellmatGroup" target="_blank" class="topbar-social-item fa fa-facebook"></a>
-                            <!-- <a href="#" class="topbar-social-item fa fa-instagram"></a>
-                            <a href="#" class="topbar-social-item fa fa-pinterest-p"></a>
-                            <a href="#" class="topbar-social-item fa fa-snapchat-ghost"></a>
-                            <a href="#" class="topbar-social-item fa fa-youtube-play"></a> -->
-                        </div>
-                    </li>
-
-                    <li>
-                        <router-link @click.native="progressBar" to="/" style="color: #333">Home</router-link>
-                    </li>
-
-                    <li>
-                        <router-link @click.native="progressBar" to="/shop" style="color: #333">Shop</router-link>
-                    </li>
-
-                    <li>
-                        <router-link @click.native="progressBar" to="/cartHome" style="color: #333">Cart</router-link>
-                    </li>
-                    <li>
-                        <router-link @click.native="progressBar" to="/about" style="color: #333">About</router-link>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+        <mobileNav :user="user" />
         <!-- Menu Mobile -->
 
     </header>
@@ -299,7 +180,7 @@ import myCart from "../cart/Cartvue";
 import myShop from "../Shop/Shop";
 import CartHome from "../cart/CartHome";
 import Logout from "./Logout";
-// import mySearch from './Search'
+import mobileNav from './header/Mobile'
 
 import myCartmenu from './Catmenu'
 export default {
@@ -312,7 +193,8 @@ export default {
         myShop,
         CartHome,
         myCart,
-        Logout
+        Logout,
+        mobileNav,
     },
     data() {
         return {
@@ -391,23 +273,6 @@ export default {
         addToCart(cart) {
             // console.log(cart);
             eventBus.$emit("progressEvent");
-            // // eventBus.$emit("loadingRequest");
-            // var payload = {
-            //     model: 'cart',
-            //     update: 'updateCartList',
-            //     id: cart,
-            // }
-
-            // this.$store.dispatch('showItem', payload).then((res) => {
-            //     eventBus.$emit("StoprogEvent");
-            //     if (response.data.errors) {
-            //         eventBus.$emit("errorRequest", response.data.errors);
-            //         return (this.err_ms = response.data.errors);
-            //     }
-            //     eventBus.$emit("cartEvent", response.data);
-            //     eventBus.$emit("alertRequest", "Cart Added");
-            // })
-
             var payload = {
                 model: 'cartAdd',
                 id: cart.id,
@@ -419,27 +284,21 @@ export default {
                 this.get_cart_total()
                 this.get_cart_count()
             })
-            // axios
-            //     .post(`/cart/${cart}`)
-            //     .then(response => {
-            //         eventBus.$emit("StoprogEvent");
-            //         if (response.data.errors) {
-            //             eventBus.$emit("errorRequest", response.data.errors);
+        },
+        addToWish(wish) {
+            console.log(wish);
+            eventBus.$emit("progressEvent");
+            var payload = {
+                model: 'wish',
+                id: wish.id,
+                data: wish,
+            }
 
-            //             return (this.err_ms = response.data.errors);
-            //         } else {
-            //             eventBus.$emit("cartEvent", response.data);
-            //             // this.cart = response.data
-            //             // this.message = "added";
-            //             eventBus.$emit("alertRequest", "Cart Added");
-            //         }
-            //         // this.snackbar = true;
-            //     })
-            //     .catch(error => {
-            //         eventBus.$emit("StoprogEvent");
-            //         this.loading = false;
-            //         this.errors = error.response.data.errors;
-            //     });
+            this.$store.dispatch('postItem', payload).then((res) => {
+                this.getWish()
+                this.get_wish_total()
+                this.get_wish_count()
+            })
         },
         categoryPro(data) {
             // console.log(data)
@@ -479,6 +338,23 @@ export default {
             // axios.get("/cart_count").then(response => {
             //     this.cart_count = response.data;
             // });
+        },
+        get_wish_total() {
+
+            var payload = {
+                model: 'cart_count',
+                update_list: 'updateCartCountList',
+            }
+            this.$store.dispatch('getItems', payload)
+        },
+        get_wish_count() {
+
+            var payload = {
+                model: 'cart_count',
+                update_list: 'updateCartCountList',
+            }
+
+            this.$store.dispatch('getItems', payload)
         },
 
         getCategory() {
@@ -561,7 +437,6 @@ export default {
             });
         },
 
-
         redirect(id) {
             // alert('oooo')
             this.$router.push({
@@ -613,11 +488,9 @@ export default {
             this.showerror(data);
         });
 
-
         eventBus.$on("Productdetails", data => {
             this.redirect(data);
         });
-
 
         this.timer = window.setInterval(() => {
             this.getCart();
@@ -687,8 +560,6 @@ export default {
 </script>
 
 <style scoped>
-
-
 #header1 .main_menu>li>a:hover {
     color: #f0aca1;
 }

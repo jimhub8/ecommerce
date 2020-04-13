@@ -39,7 +39,7 @@
                                         </v-tooltip>
                                         <v-tooltip bottom>
                                             <template v-slot:activator="{ on }">
-                                                <v-btn icon v-on="on">
+                                                <v-btn icon v-on="on" @click="addToWish(item)">
                                                     <v-icon color="primary">favorite</v-icon>
                                                 </v-btn>
                                             </template>
@@ -109,8 +109,7 @@
 
 <script>
 export default {
-    components: {
-    },
+    components: {},
     data() {
         return {
             itemsPerPageArray: [4, 8, 12],
@@ -162,11 +161,16 @@ export default {
             cart.order_qty = 1
             eventBus.$emit("addCartEvent", cart);
         },
-        wishList(item) {
-            eventBus.$emit("WishListEvent", item);
+        addToWish(wish) {
+            eventBus.$emit("WishListEvent", wish);
         },
         Productdetails(id) {
             eventBus.$emit('Productdetails', id)
+        },
+        imageUrlAlt(e) {
+            alert('tedst')
+                event.target.src = "/assets/notfound/notfound.jpg"
+
         }
     },
 }

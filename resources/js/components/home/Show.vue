@@ -13,7 +13,7 @@
             <v-card-text>
                 <v-layout wrap>
                     <v-flex sm6>
-                        <img :src="productD.image" alt="" style="height: 300px; width: 300px;">
+                        <img :src="productD.image" alt="" style="height: 300px; width: 300px;"  @error="imageUrlAlt">
                     </v-flex>
                     <v-divider vertical></v-divider>
                     <v-flex sm4 offset-sm1>
@@ -124,6 +124,10 @@ export default {
                     eventBus.$emit("StoprogEvent");
                     this.errors = error.response.data.errors;
                 });
+        },
+        imageUrlAlt(e) {
+                event.target.src = "/assets/notfound/notfound.jpg"
+
         }
     },
     created() {

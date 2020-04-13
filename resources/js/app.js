@@ -37,6 +37,9 @@ import myNav from './components/include/Headervue';
 
 import * as VueGoogleMaps from 'vue2-google-maps'
 
+import InstantSearch from 'vue-instantsearch';
+
+Vue.use(InstantSearch);
 
 // Vue.use(VueGoodTablePlugin);
 Vue.use(ElementUI, { locale });

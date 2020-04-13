@@ -37,7 +37,7 @@
                             <!-- Block2 -->
                             <div class="block2">
                                 <div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew" v-if="product.new_product === 1">
-                                    <img :src="product.image" alt="IMG-PRODUCT">
+                                    <img :src="product.image" @error="imageUrlAlt">
 
                                     <div class="block2-overlay trans-0-4">
                                         <v-tooltip bottom style="margin-left: 90%;" v-if="product.wish_list === 1">
@@ -62,7 +62,7 @@
                                 </div>
 
                                 <div class="block2-img wrap-pic-w of-hidden pos-relative" v-else>
-                                    <img :src="product.image" alt="IMG-PRODUCT">
+                                    <img :src="product.image" @error="imageUrlAlt">
 
                                     <div class="block2-overlay trans-0-4">
                                         <v-tooltip bottom style="margin-left: 90%;" v-if="product.wish_list === 1">
@@ -248,6 +248,10 @@ export default {
         },
         addToWish(item) {
             eventBus.$emit("WishListEvent", item);
+        },
+
+        imageUrlAlt(e) {
+                event.target.src = "/assets/notfound/notfound.jpg"
         }
     },
     mounted() {

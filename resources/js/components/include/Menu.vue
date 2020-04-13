@@ -15,7 +15,7 @@
                         <ul class="nav navbar-nav menu" id="menu">
 
                             <li class="dropdown mega-dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mega Menu <span class="caret"></span></a>
+                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mega Menu <span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <div class="container">
                                         <div class="mega-dropdown-menu">

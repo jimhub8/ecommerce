@@ -4,6 +4,7 @@ namespace App;
 
 use App\models\Billingaddress;
 use App\models\Shippingaddress;
+use App\models\wish;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -50,5 +51,10 @@ class User extends Authenticatable
     public function shipping()
     {
         return $this->hasOne(Shippingaddress::class);
+    }
+
+    public function wishes()
+    {
+        return $this->hasMany(wish::class);
     }
 }
