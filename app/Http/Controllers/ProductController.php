@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\models\CategoryProduct;
 use App\models\Product;
 use App\models\ProductSettings;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -98,14 +99,24 @@ class ProductController extends Controller
                     // dd(($product->skus[0]->price));
                     $product->sku_no = $product->skus[0]->sku_no;
                     $product->price = $product->skus[0]->price;
+                    $product->description = $product->skus[0]->description;
                     $product->quantity = $product->skus[0]->quantity;
                 }
             } else {
             }
-            foreach ($product->images as  $pro_image) {
-                if ($pro_image->display) {
-                    $product->image =  $pro_image->image;
+            if (count($product->images) > 0) {
+
+                foreach ($product->images as  $pro_image) {
+                    if ($pro_image->display) {
+                        $product->image = $pro_image->image;
+                    } else {
+                        $product->image = 'http://192.168.43.81:82/assets/default.jpg';
+                        // $product->image = 'https://cdn.pixabay.com/photo/2018/09/15/19/53/online-3680202_960_720.jpg';                        $product->image = 'https://cdn.pixabay.com/photo/2018/09/15/19/53/online-3680202_960_720.jpg';
+                    }
                 }
+            } else {
+                $product->image = 'http://192.168.43.81:82/assets/default.jpg';
+                // $product->image = 'https://cdn.pixabay.com/photo/2018/09/15/19/53/online-3680202_960_720.jpg';                $product->image = 'https://cdn.pixabay.com/photo/2018/09/15/19/53/online-3680202_960_720.jpg';
             }
             return $product;
         });
@@ -120,6 +131,9 @@ class ProductController extends Controller
 
     public function related($id)
     {
+        // return $id;
+        // DB::enableQueryLog(); // Enable query log
+
         $product = Product::with('categories')->find($id);
 
         $categories = [];
@@ -138,5 +152,8 @@ class ProductController extends Controller
 
         $products = $this->transform_product($products);
         return $products;
+        // dd($products);
+        // dd(DB::getQueryLog()); // Show results of log
     }
 }
+
