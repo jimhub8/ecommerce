@@ -24,7 +24,7 @@ class SaleController extends Controller
             //     $total += $product->price;
             // }
             $sale->sub_total = $sale->sub_total;
-            $sale->image = 'http://192.168.43.81:82/assets/default.jpg';
+            $sale->image = env('APP_URL').'/assets/default.jpg';
             $sale->total = $sale->sub_total - $sale->discount;
             // $sale->client_name = $sale->client->name;
             // $sale->user = Auth::user();
