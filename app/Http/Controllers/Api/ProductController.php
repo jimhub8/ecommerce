@@ -19,7 +19,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(8);
+        $products = Product::where('id', '>' , 2)->paginate(8);
         $transform_p = new ControllersProductController;
         return $transform_p->transform_product($products);
 
