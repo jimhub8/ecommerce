@@ -69,6 +69,12 @@ Route::resource('wish', 'WishController');
 Route::get('/ecommerce', 'HomeController@ecommerce')->name('ecommerce')->middleware('verified');
 Route::get('/getReviews/{id}', 'ReviewController@getReviews')->name('getReviews');
 
+Route::get('/category_products/{category}', 'ProductController@category_products')->name('category_products');
+
+
+Route::get('/all_products', 'ProductController@all_products')->name('all_products');
+Route::get('/onSale', 'ProductController@onSale')->name('onSale');
+
 Route::get('/getsP', 'SliderController@getsP')->name('getsP');
 Route::get('/getTP', 'SliderController@getTP')->name('getTP');
 Route::get('/getTPN', 'SliderController@getTPN')->name('getTPN');

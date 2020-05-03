@@ -1,25 +1,15 @@
 <template>
 <div>
+
+    <div class="box-title" style="margin: 30px 0;">
+        <h3><span>New items</span></h3>
+    </div>
     <v-data-iterator :items="products.newproduct.data" :items-per-page.sync="itemsPerPage" :page="page" :search="search" :sort-by="sortBy.toLowerCase()" :sort-desc="sortDesc" hide-default-footer>
-        <template v-slot:header>
+        <!-- <template v-slot:header>
             <v-toolbar dark color="blue darken-3" class="mb-1">
-                <!-- <v-text-field v-model="search" clearable flat solo-inverted hide-details prepend-inner-icon="search" label="Search"></v-text-field>
-                    <template v-if="$vuetify.breakpoint.mdAndUp">
-                        <v-spacer></v-spacer>
-                        <v-select v-model="sortBy" flat solo-inverted hide-details :items="keys" prepend-inner-icon="search" label="Sort by"></v-select>
-                        <v-spacer></v-spacer>
-                        <v-btn-toggle v-model="sortDesc" mandatory>
-                            <v-btn large depressed color="blue" :value="false">
-                                <v-icon>mdi-arrow-up</v-icon>
-                            </v-btn>
-                            <v-btn large depressed color="blue" :value="true">
-                                <v-icon>mdi-arrow-down</v-icon>
-                            </v-btn>
-                        </v-btn-toggle>
-                    </template> -->
-                Best Sellers
+                New Products
             </v-toolbar>
-        </template>
+        </template> -->
 
         <template v-slot:default="props">
             <v-row>
@@ -48,7 +38,7 @@
                                         <v-tooltip bottom>
                                             <template v-slot:activator="{ on }">
                                                 <v-btn icon v-on="on" @click="addToCart(item)">
-                                                    <v-icon color="primary">mdi-cart</v-icon>
+                                                    <v-icon color="primary">shopping_cart</v-icon>
                                                 </v-btn>
                                             </template>
                                             <span>add to cart</span>
@@ -58,7 +48,7 @@
                             </v-img>
                             <v-card-text class="pt-6" style="position: relative;">
                                 <!-- <v-btn absolute color="orange" class="white--text" fab large right top  @click="addToCart(item)">
-                                <v-icon>mdi-cart</v-icon>
+                                <v-icon>shopping_cart</v-icon>
                             </v-btn> -->
                                 <div style="cursor: pointer" class="font-weight-light grey--text title mb-2" @click="Productdetails(item.id)">{{ item.product_name }}</div>
                                 <div class="font-weight-light title mb-2">

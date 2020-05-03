@@ -1,13 +1,29 @@
 /*!
-  * vue-scrollto v2.17.1
+  * vue-scrollto v2.18.1
   * (c) 2019 Randjelovic Igor
   * @license MIT
   */
 
 /*!
+ * @overview es6-promise - a tiny implementation of Promises/A+.
+ * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
+ * @license   Licensed under MIT license
+ *            See https://raw.githubusercontent.com/stefanpenner/es6-promise/master/LICENSE
+ * @version   v4.2.8+1e68dce6
+ */
+
+/*!
  * Vue.js v2.6.11
  * (c) 2014-2019 Evan You
  * Released under the MIT License.
+ */
+
+/*!
+ * escape-html
+ * Copyright(c) 2012-2013 TJ Holowaychuk
+ * Copyright(c) 2015 Andreas Lubbe
+ * Copyright(c) 2015 Tiancheng "Timothy" Gu
+ * MIT Licensed
  */
 
 /*!
@@ -17,8 +33,8 @@
  */
 
 /*!
- * vue2-transitions v0.2.3
- * (c) 2018-present cristij <joracristi@gmail.com>
+ * vue2-transitions v0.3.0
+ * (c) 2019-present cristij <joracristi@gmail.com>
  * Released under the MIT License.
  */
 
@@ -35,6 +51,8 @@
 /*! ../../../mixins/themeable */
 
 /*! ../../../util/colorUtils */
+
+/*! ../../../util/dateTimeUtils */
 
 /*! ../../../util/helpers */
 
@@ -159,6 +177,8 @@
 /*! ../../util/colors */
 
 /*! ../../util/console */
+
+/*! ../../util/dateTimeUtils */
 
 /*! ../../util/dedupeModelListeners */
 
@@ -968,7 +988,7 @@
 
 /*! exports provided: Mutate, default */
 
-/*! exports provided: PARSE_REGEX, PARSE_TIME, DAYS_IN_MONTH, DAYS_IN_MONTH_LEAP, DAYS_IN_MONTH_MIN, DAYS_IN_MONTH_MAX, MONTH_MAX, MONTH_MIN, DAY_MIN, DAYS_IN_WEEK, MINUTES_IN_HOUR, HOURS_IN_DAY, FIRST_HOUR, getStartOfWeek, getEndOfWeek, getStartOfMonth, getEndOfMonth, parseTime, validateTimestamp, parseTimestamp, parseDate, getDayIdentifier, getTimeIdentifier, getTimestampIdentifier, updateRelative, updateMinutes, updateWeekday, updateFormatted, getWeekday, isLeapYear, daysInMonth, copyTimestamp, padNumber, getDate, getTime, nextMinutes, nextDay, prevDay, relativeDays, diffMinutes, findWeekday, getWeekdaySkips, createDayList, createIntervalList, createNativeLocaleFormatter */
+/*! exports provided: PARSE_REGEX, PARSE_TIME, DAYS_IN_MONTH, DAYS_IN_MONTH_LEAP, DAYS_IN_MONTH_MIN, DAYS_IN_MONTH_MAX, MONTH_MAX, MONTH_MIN, DAY_MIN, DAYS_IN_WEEK, MINUTES_IN_HOUR, HOURS_IN_DAY, FIRST_HOUR, OFFSET_YEAR, OFFSET_MONTH, OFFSET_HOUR, OFFSET_TIME, getStartOfWeek, getEndOfWeek, getStartOfMonth, getEndOfMonth, parseTime, validateTimestamp, parseTimestamp, parseDate, getDayIdentifier, getTimeIdentifier, getTimestampIdentifier, updateRelative, updateMinutes, updateWeekday, updateFormatted, getWeekday, daysInMonth, copyTimestamp, padNumber, getDate, getTime, nextMinutes, nextDay, prevDay, relativeDays, diffMinutes, findWeekday, getWeekdaySkips, createDayList, createIntervalList, createNativeLocaleFormatter */
 
 /*! exports provided: Presets */
 
@@ -1208,6 +1228,8 @@
 
 /*! exports provided: stack */
 
+/*! exports provided: weekNumber, isLeapYear */
+
 /*! no static exports found */
 
 /*! vue */
@@ -1406,6 +1428,10 @@
 
 /*!***********************************!*\
   !*** ./src/services/goto/util.ts ***!
+  \***********************************/
+
+/*!***********************************!*\
+  !*** ./src/util/dateTimeUtils.ts ***!
   \***********************************/
 
 /*!************************************!*\
@@ -3029,7 +3055,7 @@
  */
 
 /**
- * vuex v3.1.3
+ * vuex v3.3.0
  * (c) 2020 Evan You
  * @license MIT
  */

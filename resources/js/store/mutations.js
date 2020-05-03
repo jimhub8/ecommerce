@@ -105,7 +105,16 @@ export default {
         state.order_address = payload
     },
 
+    updateSlideProductsList(state, payload) {
+        state.product_slide = payload
+    },
+    updateonSaleList(state, payload) {
+        state.onSale = payload
+    },
 
+    updateCategortProductsList(state, payload) {
+        state.category_products = payload
+    },
     updateCartList(state, payload) {
         state.cart = payload
 

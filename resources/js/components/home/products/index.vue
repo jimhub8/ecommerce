@@ -1,13 +1,18 @@
 <template>
 <!-- <VBtn color="success" @click="getProducts">text</VBtn> -->
-<div class="container">
-    <myCategory></myCategory>
-    <myVariants></myVariants>
+<div>
+    <img src="/banners/banner1.jpg" style="margin: 20px 0" />
+    <div>
+        <myCategory style="padding: 0 30px" />
+        <myVariants style="padding: 0 30px" />
+        <myFeatured style="padding: 0 30px" />
+        <mySlide style="padding: 0 30px" />
+        <myNew></myNew>
+        <img src="/banners/banner-02.jpg" />
 
-    <myFeatured></myFeatured>
-    <myNew></myNew>
-    <myBest></myBest>
+        <myBest style="padding: 0 30px" />
 
+    </div>
 </div>
 </template>
 
@@ -18,6 +23,7 @@ import myVariants from './variants'
 import myBest from './Best'
 import myFeatured from './Featured'
 import myNew from './New'
+import mySlide from "./Slide";
 
 import {
     slider,
@@ -32,6 +38,7 @@ export default {
         myCategory,
         myVariants,
         myNew,
+        mySlide,
         myFeatured
     },
     data() {

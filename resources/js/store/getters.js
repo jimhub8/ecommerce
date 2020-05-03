@@ -33,6 +33,12 @@ export default {
     related(state) {
         return state.related
     },
+    product_slide(state) {
+        return state.product_slide
+    },
+    category_products(state) {
+        return state.category_products
+    },
     customers(state) {
         return state.customers
     },
@@ -73,6 +79,9 @@ export default {
     },
     orders(state) {
         return state.orders;
+    },
+    onSale(state) {
+        return state.onSale;
     },
 
 

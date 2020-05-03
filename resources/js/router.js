@@ -28,7 +28,7 @@ import myAccount from './components/account';
 // import InstantSearch from 'vue-instantsearch';
 
 
-import myExample from './components/ExampleComponent'; 
+import myExample from './components/home/products/Slide';
 
 
 const routes = [

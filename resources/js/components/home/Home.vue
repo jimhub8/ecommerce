@@ -1,6 +1,6 @@
 <template>
 <div>
-    <section class="bgwhite p-t-55 p-b-65">
+    <section class="bgwhite">
         <myCarousel></myCarousel>
         <myProduct></myProduct>
         <Show></Show>
@@ -88,9 +88,6 @@ export default {
     computed: {
         slider() {
             return this.$store.getters.slider;
-        },
-        sliderS() {
-            return this.$store.getters.sliderS;
         },
     },
     mounted() {

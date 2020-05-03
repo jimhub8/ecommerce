@@ -16,7 +16,7 @@ class SliderController extends Controller
      */
     public function index()
     {
-        return Slider::skip(1)->take(7)->get();
+        return Slider::take(7)->get();
     }
 
     /**

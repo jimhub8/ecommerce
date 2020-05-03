@@ -27,9 +27,12 @@ export default {
         wish_count: null,
         option_values: [],
         orders: [],
+        category_products: [],
+        product_slide: [],
         cart_total: null,
         // Deleted
         deleted_clients: [],
+        onSale: [],
 
         // Api
         options: [],

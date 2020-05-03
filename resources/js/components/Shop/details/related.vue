@@ -48,7 +48,7 @@
                                         <v-tooltip bottom>
                                             <template v-slot:activator="{ on }">
                                                 <v-btn icon v-on="on" @click="addToCart(item)">
-                                                    <v-icon color="primary">mdi-cart</v-icon>
+                                                    <v-icon color="primary">shopping_cart</v-icon>
                                                 </v-btn>
                                             </template>
                                             <span>add to cart</span>
@@ -58,7 +58,7 @@
                             </v-img>
                             <v-card-text class="pt-6" style="position: relative;">
                                 <!-- <v-btn absolute color="orange" class="white--text" fab large right top  @click="addToCart(item)">
-                                <v-icon>mdi-cart</v-icon>
+                                <v-icon>shopping_cart</v-icon>
                             </v-btn> -->
                                 <div class="font-weight-light grey--text title mb-2">{{ item.product_name }}</div>
                                 <div class="font-weight-light title mb-2">

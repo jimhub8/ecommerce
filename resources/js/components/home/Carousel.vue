@@ -1,52 +1,68 @@
 <template>
-<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-    <ol class="carousel-indicators">
-        <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-        <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-        <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
-    </ol>
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img :src="sliderS.image" class="d-block w-100" alt="...">
-            <!-- <div class="carousel-caption d-none d-md-block">
-                <h5>First slide label</h5>
-                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-            </div> --> 
-        </div>
-        <div class="carousel-item" v-for="item in slider" :key="item.id">
-            <img :src="item.image" class="d-block w-100" alt="...">
-            <!-- <div class="carousel-caption d-none d-md-block">
-                <h5>Second slide label</h5>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div> -->
-        </div>
-    </div>
-    <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
+<div id="mainslider">
+    <el-carousel indicator-position="outside">
+        <el-carousel-item v-for="item in slider" :key="item.id">
+            <img :src="item.image" />
+            <div class="container">
+                <div class="overlay" v-html="item.content"></div>
+            </div>
+        </el-carousel-item>
+    </el-carousel>
+
 </div>
 </template>
 
 <script>
 export default {
+    data() {
+        return {
+            overlay: true,
+        }
+    },
     computed: {
         slider() {
+
             return this.$store.getters.slider;
         },
-        sliderS() {
-            return this.$store.getters.sliderS;
-        },
+        // sliderS() {
+        //     return this.$store.getters.sliderS;
+        // },
     },
 }
 </script>
 
-<style scoped>
-.carousel, img {
-    max-height: 60vh !important;
+<style>
+#mainslider .el-carousel__container {
+    height: 60vh !important;
+}
+
+/* Make the image to responsive */
+#mainslider .image {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* The overlay effect - lays on top of the container and over the image */
+#mainslider .overlay {
+    position: absolute;
+    bottom: 20%;
+    background: #c7b9b926;
+    /* Black see-through */
+    width: 100%;
+    transition: .5s ease;
+    opacity: 0;
+    color: black;
+    font-size: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+/* When you mouse over the container, fade in the overlay title */
+#mainslider .container .overlay {
+    opacity: 1;
+    opacity: 1;
+    width: 70%;
+    margin: auto;
 }
 </style>

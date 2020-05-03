@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\models\Category;
 use App\models\CategoryProduct;
 use App\models\Product;
 use App\models\ProductSettings;
@@ -11,7 +12,7 @@ class ProductController extends Controller
 {
     public function shop()
     {
-        $products = Product::paginate(10);
+        $products = Product::paginate(12);
         return $this->transform_product($products);
     }
     /**
@@ -110,12 +111,12 @@ class ProductController extends Controller
                     if ($pro_image->display) {
                         $product->image = $pro_image->image;
                     } else {
-                        $product->image = 'http://192.168.43.81:82/assets/default.jpg';
+                        $product->image = env('APP_URL') . '/assets/default.jpg';
                         // $product->image = 'https://cdn.pixabay.com/photo/2018/09/15/19/53/online-3680202_960_720.jpg';                        $product->image = 'https://cdn.pixabay.com/photo/2018/09/15/19/53/online-3680202_960_720.jpg';
                     }
                 }
             } else {
-                $product->image = 'http://192.168.43.81:82/assets/default.jpg';
+                $product->image = env('APP_URL') . '/assets/default.jpg';
                 // $product->image = 'https://cdn.pixabay.com/photo/2018/09/15/19/53/online-3680202_960_720.jpg';                $product->image = 'https://cdn.pixabay.com/photo/2018/09/15/19/53/online-3680202_960_720.jpg';
             }
             return $product;
@@ -155,5 +156,26 @@ class ProductController extends Controller
         // dd($products);
         // dd(DB::getQueryLog()); // Show results of log
     }
-}
 
+    public function all_products()
+    {
+        $products = Product::paginate(200);
+        return $products = $this->transform_product($products);
+    }
+
+
+    public function category_products($category)
+    {
+        $category =  Category::with('products')->where('category', $category)->first();
+        // $category = Category::first();
+        if ($category) {
+            $products = $category->products()->paginate(10);
+            return $this->transform_product($products);
+        }
+    }
+    public function onSale()
+    {
+        $products = Product::paginate(3);
+        return $products = $this->transform_product($products);
+    }
+}

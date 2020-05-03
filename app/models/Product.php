@@ -2,6 +2,7 @@
 
 namespace App\models;
 
+use App\Scopes\ProductScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -77,5 +78,13 @@ class Product extends Model
     public function wishes()
     {
         return $this->hasMany(wish::class);
+    }
+
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new ProductScope);
+
     }
 }
