@@ -65,4 +65,25 @@ export default {
     width: 70%;
     margin: auto;
 }
+
+/* .el-carousel--horizontal {
+    height: 40vh;
+} */
+
+@media only screen and (max-width: 991px) {
+
+    #mainslider img {
+        width: 100vw;
+        height: 40vh;
+    }
+
+    #mainslider .container .overlay {
+        display: none;
+    }
+
+    .el-carousel--horizontal {
+    height: 40vh;
+        overflow: hidden;
+    }
+}
 </style>

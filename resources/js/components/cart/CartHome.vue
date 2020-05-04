@@ -52,7 +52,7 @@
                                     </v-btn>
                                 </div>
                             </td>
-                            <td class="column-5">{{ cart.subtotal }}</td>
+                            <td class="column-5">{{ cart.quantity * cart.price }}</td>
                         </tr>
                     </table>
                 </div>

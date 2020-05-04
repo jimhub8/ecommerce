@@ -14,7 +14,7 @@ class CartController extends Controller
 {
     public function cartAdd(Request $request, $id)
     {
-        return $request->all();
+        // return $request->all();
         // Cart::clear();
         $product = $request->all();
         // return $product['sku_no'];

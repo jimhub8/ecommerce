@@ -1,14 +1,14 @@
 <template>
 <!-- <VBtn color="success" @click="getProducts">text</VBtn> -->
 <div>
-    <img src="/banners/banner1.jpg" style="margin: 20px 0" />
+    <img src="/banners/banner1.jpg" style="margin: 20px 0; width: 100vw" />
     <div>
         <myCategory style="padding: 0 30px" />
         <myVariants style="padding: 0 30px" />
         <myFeatured style="padding: 0 30px" />
         <mySlide style="padding: 0 30px" />
         <myNew></myNew>
-        <img src="/banners/banner-02.jpg" />
+        <img src="/banners/banner-02.jpg"  style="margin: 20px 0; width: 100vw" />
 
         <myBest style="padding: 0 30px" />
 

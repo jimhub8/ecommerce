@@ -1,5 +1,5 @@
 <template>
-<VCard style="padding: 20px;width: 80%; margin: auto;box-shadow: 7px 7px 8px -4px rgb(210, 225, 246),0 12px 17px 2px rgb(210, 225, 246),0 5px 22px 4px rgb(210, 225, 246) !important; margin-bottom: 50px">
+<VCard>
     <div class="container" style="margin-top: 30px">
         <el-tabs :tab-position="tabPosition">
             <el-tab-pane label="My Account">
@@ -67,9 +67,27 @@ export default {
                 }
             ],
             right: null,
-            tabPosition: 'left'
+            tabPosition: 'top'
 
         }
     }
 }
 </script>
+
+<style scoped>
+.v-card:not(.v-sheet--tile):not(.v-card--shaped) {
+    padding: 20px;
+    width: 80%;
+    margin: auto;
+    box-shadow: 7px 7px 8px -4px rgb(210, 225, 246), 0 12px 17px 2px rgb(210, 225, 246), 0 5px 22px 4px rgb(210, 225, 246) !important;
+    margin-bottom: 50px
+}
+
+@media only screen and (max-width: 991px) {
+    .v-card:not(.v-sheet--tile):not(.v-card--shaped) {
+    padding: 0;
+    width: 100%;
+}
+}
+
+</style>

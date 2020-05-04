@@ -41,7 +41,9 @@
         <a href="tel:+254792877803" style="margin: 0 10px">+254792877803</a>
         <div class="header-wrapicon2">
             <img src="/storage/icons/cart.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-            <span class="header-icons-noti">1</span>
+            <span class="header-icons-noti">{{ cart_count }}</span>
+
+
 
             <!-- Header cart noti -->
             <myCart></myCart>
@@ -75,6 +77,11 @@ export default {
         myCart,
         Logout,
         mySearch
+    },
+    computed: {
+        cart_count() {
+            return this.$store.getters.cart_count
+        },
     },
 }
 </script>

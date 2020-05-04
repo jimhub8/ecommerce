@@ -30,7 +30,7 @@
                                 <li class="list-group-item"><b>Status</b> <span style="float: right">{{ form.status }}</span></li>
                             </ul> -->
 
-                            <table class="table table-striped table-hover">
+                            <table class="table table-striped table-hover table-responsive">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
@@ -67,7 +67,7 @@
                             </table>
                             <VDivider />
                             <span class="headline text-center" style="margin: auto;">Shipping Details</span>
-                            <table class="table table-striped table-hover">
+                            <table class="table table-striped table-hover table-responsive">
                                 <thead>
                                     <tr>
                                         <th scope="col">Client Name</th>
