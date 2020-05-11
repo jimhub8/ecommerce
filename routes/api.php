@@ -51,3 +51,5 @@ Route::get('/cart_count', 'Api\CartController@cart_count')->name('cart_count');
 Route::get('scroll_products', 'Api\ProductController@scroll_products')->name('scroll_products');
 Route::get('/related/{id}', 'Api\ProductController@related')->name('related');
 
+// Route::get('/category_product/{id}', 'Api\CategoryController@category_product')->name('category_product');
+

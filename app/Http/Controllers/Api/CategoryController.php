@@ -35,9 +35,11 @@ class CategoryController extends Controller
      * @param  \App\models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
-        //
+        // return Category::find($id)->products();
+        $category = Category::find($id);
+        return $category->products()->paginate(10);
     }
 
     /**
@@ -47,7 +49,7 @@ class CategoryController extends Controller
      * @param  \App\models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -58,7 +60,7 @@ class CategoryController extends Controller
      * @param  \App\models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
         //
     }
