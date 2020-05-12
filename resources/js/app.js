@@ -27,15 +27,15 @@ import lang from 'element-ui/lib/locale/lang/en'
 import locale from 'element-ui/lib/locale'
 // import StoreData from './store/store'
 
-import VueCarousel from 'vue-carousel';
-Vue.use(VueCarousel);
+// import VueCarousel from 'vue-carousel';
+// Vue.use(VueCarousel);
 
 import myNavmenu from './components/include/Menu.vue';
 import myRegister from './components/register/Register.vue';
 import myFooter from './components/include/Footer.vue';
 import myNav from './components/include/Headervue';
 
-import * as VueGoogleMaps from 'vue2-google-maps'
+// import * as VueGoogleMaps from 'vue2-google-maps'
 
 import InstantSearch from 'vue-instantsearch';
 
@@ -46,13 +46,13 @@ Vue.use(ElementUI, { locale });
 
 // Vue.use(VueLazyload)
 // Vue.use(VueCarousel);
-Vue.use(VueGoogleMaps, {
-    load: {
-        key: 'AIzaSyBNzKeF6ZwxlAOUCyeH8UxvvYRHP_w_Guk',
-        libraries: ['geometry', 'places'],
-        // libraries: 'places',
-    },
-})
+// Vue.use(VueGoogleMaps, {
+//     load: {
+//         key: 'AIzaSyBNzKeF6ZwxlAOUCyeH8UxvvYRHP_w_Guk',
+//         libraries: ['geometry', 'places'],
+//         // libraries: 'places',
+//     },
+// })
 Vue.use(VueScrollTo, {
     container: "body",
     duration: 500,

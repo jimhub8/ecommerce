@@ -1,5 +1,18 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
+    "/Home.js": "/Home.js",
+    "/account.js": "/account.js",
+    "/category.js": "/category.js",
+    "/checkout.js": "/checkout.js",
+    "/details.js": "/details.js",
+    "/example.js": "/example.js",
+    "/filter.js": "/filter.js",
+    "/help_center.js": "/help_center.js",
+    "/search.js": "/search.js",
+    "/thankyou.js": "/thankyou.js",
+    "/vendors~Home.js": "/vendors~Home.js",
+    "/vendors~help_center.js": "/vendors~help_center.js",
+    "/wishList.js": "/wishList.js",
     "/css/all.css": "/css/all.css"
 }
