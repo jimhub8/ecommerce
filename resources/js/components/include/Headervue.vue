@@ -12,7 +12,7 @@
                 <myCartmenu :menus="menus" :categories="categories"></myCartmenu>
             </div>
             <router-link @click.native="progressBar" to="/" class="logo">
-                <img src="storage/logo/dellmat.png" alt="Delmat">
+                <img :src="logo" alt="Delmat">
             </router-link>
             <!-- Mini Menu Start -->
             <div class="wrap_menu" id="header2">
@@ -77,7 +77,7 @@
 
                 <!-- Logo2 -->
                 <router-link to="/" class="logo2">
-                    <img src="/storage/logo/dellmat.png" alt="Delmat" style="height: 50px !important;">
+                    <img :src="logo" alt="Delmat" style="height: 50px !important;">
                 </router-link>
 
                 <div class="topbar-child2">
@@ -218,7 +218,9 @@ export default {
             easing: "easeInOutCubic",
             // easings: Object.keys(easings),
             type: "number",
-            wishItems: []
+            wishItems: [],
+            logo: process.env.MIX_LOGO,
+            app_name: process.env.MIX_APP_NAME,
         };
     },
     methods: {
