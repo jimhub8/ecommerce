@@ -38,7 +38,7 @@
 
                     <div class="header-wrapicon2 m-r-13">
                         <img
-                src="/storage/icons/cart.png"
+                src="https://storage.cloud.google.com/ecomerce_bucket/icons/cart.png?authuser=1"
                 class="header-icon1 js-show-header-dropdown"
                 alt="ICON"
               >
@@ -49,7 +49,7 @@
                     </div>
                     <div class="header-wrapicon2 m-r-13">
                         <img
-                src="/storage/icons/wish.png"
+                src="https://storage.cloud.google.com/ecomerce_bucket/icons/wish.png?authuser=1"
                 class="header-icon1 js-show-header-dropdown"
                 alt="ICON"
               >

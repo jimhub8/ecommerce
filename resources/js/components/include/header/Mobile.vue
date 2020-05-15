@@ -40,7 +40,7 @@
         </v-tooltip>
         <a href="tel:+254792877803" style="margin: 0 10px">+254792877803</a>
         <div class="header-wrapicon2">
-            <img src="/storage/icons/cart.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+            <img src="https://storage.cloud.google.com/ecomerce_bucket/icons/cart.png?authuser=1" class="header-icon1 js-show-header-dropdown" alt="ICON">
             <span class="header-icons-noti">{{ cart_count }}</span>
 
 
@@ -50,7 +50,7 @@
         </div>
         <span class="linedivide2"></span>
         <div class="header-wrapicon2">
-            <img src="/storage/icons/wish.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+            <img src="https://storage.cloud.google.com/ecomerce_bucket/icons/wish.png?authuser=1" class="header-icon1 js-show-header-dropdown" alt="ICON">
             <span class="header-icons-noti">0</span>
 
             <!-- Header cart noti -->

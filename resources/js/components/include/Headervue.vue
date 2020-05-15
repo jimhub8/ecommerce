@@ -46,7 +46,7 @@
                 <span class="linedivide1"></span>
 
                 <div class="header-wrapicon2">
-                    <img src="/storage/icons/cart.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+                    <img src="https://storage.cloud.google.com/ecomerce_bucket/icons/cart.png?authuser=1" class="header-icon1 js-show-header-dropdown" alt="ICON">
                     <span class="header-icons-noti">{{ cart_count }}</span>
 
                     <!-- Header cart noti -->
@@ -54,7 +54,7 @@
                 </div>
                 <span class="linedivide2"></span>
                 <div class="header-wrapicon2">
-                    <img src="/storage/icons/wish.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+                    <img src="https://storage.cloud.google.com/ecomerce_bucket/icons/wish.png?authuser=1" class="header-icon1 js-show-header-dropdown" alt="ICON">
                     <span class="header-icons-noti">{{ wishItems.length }}</span>
 
                     <!-- Header cart noti -->
@@ -101,14 +101,14 @@
                     <span class="linedivide1"></span>
 
                     <div class="header-wrapicon2 m-r-13">
-                        <img src="/storage/icons/cart.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+                        <img src="https://storage.cloud.google.com/ecomerce_bucket/icons/cart.png?authuser=1" class="header-icon1 js-show-header-dropdown" alt="ICON">
                         <span class="header-icons-noti">{{ cart_count }}</span>
 
                         <!-- Header cart noti -->
                         <myCart></myCart>
                     </div>
                     <div class="header-wrapicon2 m-r-13">
-                        <img src="/storage/icons/wish.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+                        <img src="https://storage.cloud.google.com/ecomerce_bucket/icons/wish.png?authuser=1" class="header-icon1 js-show-header-dropdown" alt="ICON">
                         <span class="header-icons-noti">{{ wishItems.length }}</span>
                         <!-- Header cart noti -->
                         <!-- <myWish></myWish> -->
