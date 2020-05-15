@@ -22,7 +22,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "paypal/rest-api-sdk-php": "*",
-        "spatie/laravel-permission": "^3.11"
+        "spatie/laravel-permission": "^3.11",
+        "superbalist/flysystem-google-storage": "^7.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
