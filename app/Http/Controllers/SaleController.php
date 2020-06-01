@@ -47,14 +47,17 @@ class SaleController extends Controller
      */
     public function sale($carts, $method, $payment, $data)
     {
-        $client_id = Auth::id();
-        $total_price = $this->cart_total();
-        $sub_total_price = $this->cart_total();
+        // $client_id = Auth::id();
+        $client_id = 1;
+        // $total_price = $this->cart_total();
+        $total_price = 2000;
+        $sub_total_price = $total_price;
         $sale = new Sale;
         $sale->total_price = $total_price;
         $sale->sub_total = $sub_total_price;
         // $sale->discount = $discount;
-        $sale->user_id = Auth::id();
+        $sale->user_id = 1;
+        // $sale->user_id = Auth::id();
         $sale->client_id = $client_id;
         $order_no = new AutoGenerate;
         $sale->order_no = $order_no->order_no();

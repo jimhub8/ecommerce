@@ -140,11 +140,11 @@ Route::get('show_product/{id}', 'ProductController@show_product')->name('show_pr
 
 // Route::group(['middleware' => ['client.auth:client']], function () {
 // });
+Route::post('createpayment', 'PaymentController@create')->name('create');
 
 // Auth::routes();
 // Route::group(['middleware' => ['verified']], function () {
 Route::group(['middleware' => ['auth']], function () {
-    Route::post('createpayment', 'PaymentController@create')->name('create');
     Route::get('execute-payment', 'PaymentController@execute')->name('execute');
     Route::post('cash_delivery', 'PaymentController@cash_delivery')->name('cash_delivery');
     // Route::get('sales', 'PaymentController@sales')->name('sales');

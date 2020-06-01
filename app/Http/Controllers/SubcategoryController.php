@@ -40,7 +40,7 @@ class SubcategoryController extends Controller
         $products_a = Product::whereIn('id', $products)->paginate();
         // dd(DB::getQueryLog()); // Show results of log
         $prod_trans = new ProductController;
-        return $prod_trans->transform_product($products_a);
+        return $prod_trans->transform_product($products_a, '');
     }
 
     /**

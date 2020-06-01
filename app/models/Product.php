@@ -87,4 +87,16 @@ class Product extends Model
         static::addGlobalScope(new ProductScope);
 
     }
+    // protected $appends = array('featured');
+
+
+    // public function getFeaturedAttribute()
+    // {
+    //     $setting = ProductSettings::first();
+    //     // dd($setting->featured);
+    //     $featured_id = CategoryProduct::whereIn('category_id', $setting->featured)->first('product_id');
+    //     // dd($featured_id);
+
+    //     return 'test';
+    // }
 }

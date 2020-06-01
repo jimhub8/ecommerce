@@ -43,12 +43,14 @@ class CartController extends Controller
                 $request->choices
             )
         ]);
+        return $this->getCart();
     }
     public function update_cart(Request $request, $id)
     {
         // return $request->all();
-
-        $sku_id = Sku::where('sku_no', $request->name['sku_no'])->first('id');
+        $cart_item = $request->cart;
+        // return $cart_item['name']['sku_no'];
+        $sku_id = Sku::where('sku_no', $cart_item['name']['sku_no'])->first('id');
         $sku_id = $sku_id->id;
 
         // return $sku_id;
@@ -70,7 +72,7 @@ class CartController extends Controller
     }
     public function getCart()
     {
-        $cart_d =  Cart::getContent();
+        return $cart_d =  Cart::getContent();
         foreach ($cart_d as $cart) {
             $sku = Sku::where('id', (int) $cart->id)->first('product_id');
             // return $sku;

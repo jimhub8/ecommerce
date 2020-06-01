@@ -56,6 +56,7 @@ class PaymentController extends Controller
     {
         $usd = Currency::select('rate')->where('currency_code', 'USD')->first();
         $kes = Currency::select('rate')->where('currency_code', 'KES')->first();
+        // dd($kes);
         $rate = $kes->rate / $usd->rate;
         $apiContext = new \PayPal\Rest\ApiContext(
             new \PayPal\Auth\OAuthTokenCredential(
@@ -421,7 +422,8 @@ class PaymentController extends Controller
 
     public function cart_total()
     {
-        return $cart = Cart::getSubTotal();
+        return \Cart::getTotal();
+
         return str_replace(',', '', $cart);
     }
 

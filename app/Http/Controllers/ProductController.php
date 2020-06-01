@@ -6,6 +6,9 @@ use App\models\Category;
 use App\models\CategoryProduct;
 use App\models\Product;
 use App\models\ProductSettings;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
@@ -13,7 +16,7 @@ class ProductController extends Controller
     public function shop()
     {
         $products = Product::paginate(12);
-        return $this->transform_product($products);
+        return $this->transform_product($products, '');
     }
     /**
      * Display a listing of the resource.
@@ -57,10 +60,14 @@ class ProductController extends Controller
             }
         }
 
+        // dd($featured,
+        // $newproduct,
+        // $bestsellers);
+
         // dd($bestsellers, $newproduct, $featured);
-        $featured = ($setting->featured) ? Product::whereIn('id', $featured)->paginate(10) : Product::where('id', 0)->paginate(10);
-        $newproduct = ($setting->newproduct) ? Product::whereIn('id', $newproduct)->paginate(10) : Product::where('id', 0)->paginate(10);
-        $bestsellers = ($setting->bestsellers) ? Product::whereIn('id', $bestsellers)->paginate(10) : Product::where('id', 0)->paginate(10);
+        $featured = ($setting->featured) ? Product::whereIn('id', $featured)->take(10)->get() : Product::where('id', 0)->take(10)->get();
+        $newproduct = ($setting->newproduct) ? Product::whereIn('id', $newproduct)->take(10)->get() : Product::where('id', 0)->take(10)->get();
+        $bestsellers = ($setting->bestsellers) ? Product::whereIn('id', $bestsellers)->take(10)->get() : Product::where('id', 0)->take(10)->get();
 
 
         // $featured_t = $this->transform_product($featured);
@@ -68,13 +75,24 @@ class ProductController extends Controller
         // $bestsellers_t = $this->transform_product($bestsellers);
 
         $product = array(
-            'featured' => $this->transform_product($featured),
-            'newproduct' => $this->transform_product($newproduct),
-            'bestsellers' => $this->transform_product($bestsellers)
+            'featured' => $this->transform_product($featured, 'featured'),
+            'newproduct' => $this->transform_product($newproduct, 'new_product'),
+            'bestsellers' => $this->transform_product($bestsellers, 'best_seller')
         );
+        $collapsed = collect($product)->collapse();
 
-        return $product;
+        // return $collapsed->forPage(1, 5);
+        return $this->paginate_products($collapsed);
     }
+
+
+    public function paginate_products($items, $perPage = 15, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    }
+
 
     /**
      * Display the specified resource.
@@ -85,14 +103,28 @@ class ProductController extends Controller
     public function show($id)
     {
         $products = Product::where('id', $id)->get();
-        $products = $this->transform_product($products);
+        $products = $this->transform_product($products, '');
         return $products[0];
     }
 
-    public function transform_product($products)
+    public function transform_product($products, $feature)
     {
 
-        $products->transform(function ($product) {
+
+        $products->transform(function ($product) use ($feature) {
+
+            $product->featured = false;
+            $product->new_product = false;
+            $product->best_seller = false;
+            if ($feature == 'featured') {
+                $product->featured = true;
+            }
+            if ($feature == 'new_product') {
+                $product->new_product = true;
+            }
+            if ($feature == 'best_seller') {
+                $product->best_seller = true;
+            }
             // dd($product->skus);
             // dd(count($product->product_variants));
             if (count($product->product_variants) == 0) {
@@ -151,7 +183,7 @@ class ProductController extends Controller
         }
         $products = Product::whereIn('id', $product)->paginate(10);
 
-        $products = $this->transform_product($products);
+        $products = $this->transform_product($products, '');
         return $products;
         // dd($products);
         // dd(DB::getQueryLog()); // Show results of log
@@ -160,7 +192,7 @@ class ProductController extends Controller
     public function all_products()
     {
         $products = Product::paginate(200);
-        return $products = $this->transform_product($products);
+        return $products = $this->transform_product($products, '');
     }
 
 
@@ -170,12 +202,12 @@ class ProductController extends Controller
         // $category = Category::first();
         if ($category) {
             $products = $category->products()->paginate(10);
-            return $this->transform_product($products);
+            return $this->transform_product($products, '');
         }
     }
     public function onSale()
     {
         $products = Product::paginate(3);
-        return $products = $this->transform_product($products);
+        return $products = $this->transform_product($products, '');
     }
 }

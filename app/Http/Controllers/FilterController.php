@@ -74,6 +74,6 @@ class FilterController extends Controller
 
         $products = $products->paginate(12);
         $pro_transform = new ProductController;
-        return $pro_transform->transform_product($products);
+        return $pro_transform->transform_product($products, '');
     }
 }

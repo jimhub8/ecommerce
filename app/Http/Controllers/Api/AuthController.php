@@ -21,6 +21,7 @@ class AuthController extends Controller
      */
     public function signup(Request $request)
     {
+        // return $request->all();
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
@@ -118,10 +119,10 @@ class AuthController extends Controller
     public function user(Request $request)
     {
         // return ($request->all());
-        // $user = User::first();
+        //  $user = User::first();
         $user = auth('api')->user();
         // $user = response()->json($request->user());
-        $user->image = 'http://192.168.43.81:82/profile/jim_profile.jpeg';
+//        $user->image = 'http://192.168.43.81:82/profile/jim_profile.jpeg';
         return $user = response()->json($user);
     }
 

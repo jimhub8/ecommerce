@@ -39,66 +39,66 @@ const routes = [
         name: 'home',
         component: () => import(/* webpackChunkName: "Home" */ './components/home/Home')
     },
-    { 
-        path: '/shop',  
+    {
+        path: '/shop',
         name: 'Shop',
         component: () => import(/* webpackChunkName: "Shop" */ './components/Shop/Shop.vue')
-    }, 
-    { 
-        path: '/filter',  
+    },
+    {
+        path: '/filter',
         name: 'filter',
         component: () => import(/* webpackChunkName: "filter" */ './components/filter/Filter.vue')
-    }, 
-    { 
-        path: '/thankyou',  
+    },
+    {
+        path: '/thankyou',
         name: 'thankyou',
         component: () => import(/* webpackChunkName: "thankyou" */ './components/Shop/Thankyou')
-    }, 
-    { 
-        path: '/wishList',  
+    },
+    {
+        path: '/wishList',
         name: 'wishList',
         component: () => import(/* webpackChunkName: "wishList" */ './components/wish/Wish.vue')
-    }, 
-    { 
-        path: '/cartHome',  
+    },
+    {
+        path: '/cartHome',
         name: 'cartHome',
         component: () => import(/* webpackChunkName: "cartHome" */ './components/cart/CartHome.vue')
-    },  
-    { 
-        path: '/details/:id',  
+    },
+    {
+        path: '/details/:id',
         name: 'details',
         component: () => import(/* webpackChunkName: "details" */ './components/Shop/Details')
-    },  
-    { 
-        path: '/category/:id',  
+    },
+    {
+        path: '/category/:id',
         name: 'category',
         component: () => import(/* webpackChunkName: "category" */ './components/filter/Category.vue')
-    },  
-    { 
-        path: '/search/:search',  
+    },
+    {
+        path: '/search/:search',
         name: 'search',
         component: () => import(/* webpackChunkName: "search" */ './components/Shop/Search')
-    },  
-    { 
-        path: '/account',  
+    },
+    {
+        path: '/account',
         name: 'account',
         component: () => import(/* webpackChunkName: "account" */ './components/account')
-    }, 
-    { 
-        path: '/checkout',  
+    },
+    {
+        path: '/checkout',
         name: 'checkout',
         component: () => import(/* webpackChunkName: "checkout" */ './components/checkout')
-    }, 
-    { 
-        path: '/help_center',  
+    },
+    {
+        path: '/help_center',
         name: 'help_center',
         component: () => import(/* webpackChunkName: "help_center" */ './components/content/faq')
-    }, 
-    { 
-        path: '/example',  
+    },
+    {
+        path: '/example',
         name: 'example',
         component: () => import(/* webpackChunkName: "example" */ './components/home/products/Slide')
-    }, 
+    },
 
     // { path: '/wishList', component: mywishList },
     // { path: '/cartHome', component: myCartHome },
