@@ -22,6 +22,7 @@ class SaleController extends Controller
      */
     public function index()
     {
+        // return $request->all();
 
         $sales = Sale::where('client_id', Auth::id())->paginate(500);
         $sales->transform(function ($sale) {

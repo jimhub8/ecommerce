@@ -22,7 +22,7 @@ Route::group([
     Route::post('signup', 'api\AuthController@signup');
     // Route::get('signup/activate/{token}', 'api\AuthController@signupActivate');
     Route::group([
-        // 'middleware' => 'auth:api',
+        'middleware' => 'auth:api',
     ], function () {
         Route::get('logout', 'Api\AuthController@logout');
         Route::get('user', 'Api\AuthController@user');
@@ -60,8 +60,11 @@ Route::group([
 
 
 
-
-
+Route::group([
+    'middleware' => 'auth:api',
+], function () {
+    Route::resource('sales', 'SaleController');
+});
 
 
 
@@ -187,7 +190,6 @@ Route::get('show_product/{id}', 'ProductController@show_product')->name('show_pr
     Route::resource('coupons', 'CouponController');
     Route::resource('sizes', 'SizeController');
     Route::resource('images', 'ProductimgController');
-    Route::resource('sales', 'SaleController');
 
     Route::get('/logoutOther', 'UserController@logoutOther')->name('logoutOther');
     Route::post('/logOtherDevices', 'UserController@logOtherDevices')->name('logOtherDevices');
